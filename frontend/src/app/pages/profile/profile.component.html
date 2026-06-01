@@ -1,0 +1,132 @@
+<gf-top-nav [showSearch]="false"></gf-top-nav>
+
+<div class="flex pt-16 min-h-screen">
+  <!-- Sidebar -->
+  <aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 py-8 flex-col justify-between bg-slate-50 border-r border-slate-200 text-sm uppercase tracking-widest overflow-y-auto custom-scrollbar hidden md:flex">
+    <div class="px-6">
+      @if (user(); as u) {
+        <div class="mb-10">
+          <div class="w-16 h-16 rounded-full mb-4 bg-primary-container flex items-center justify-center text-white text-xl font-bold">{{ initials(u.name) }}</div>
+          <h2 class="text-on-surface text-base lowercase tracking-normal font-bold">{{ u.name }}</h2>
+          <p class="text-[11px] text-outline lowercase tracking-normal">{{ u.email }}</p>
+        </div>
+      }
+      <nav class="space-y-1">
+        <a class="flex items-center gap-3 py-3 text-slate-900 font-bold border-l-4 border-slate-900 pl-4" href="#account">
+          <span class="material-symbols-outlined text-[20px]">person</span><span>Account</span>
+        </a>
+        <a class="flex items-center gap-3 py-3 text-slate-500 pl-5 hover:bg-slate-100 hover:text-slate-900 transition-all" href="#preferences">
+          <span class="material-symbols-outlined text-[20px]">travel_explore</span><span>Travel Preferences</span>
+        </a>
+        <a class="flex items-center gap-3 py-3 text-slate-500 pl-5 hover:bg-slate-100 hover:text-slate-900 transition-all" href="#history">
+          <span class="material-symbols-outlined text-[20px]">history</span><span>Travel History</span>
+        </a>
+      </nav>
+    </div>
+    <div class="px-6 mt-8">
+      <button (click)="logout()" class="flex items-center gap-3 py-3 text-error pl-5 hover:bg-error-container/20 transition-all rounded w-full">
+        <span class="material-symbols-outlined text-[20px]">logout</span><span>Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="md:ml-64 flex-1 p-8 md:p-12 max-w-[1024px]">
+    <header class="mb-12">
+      <h1 class="font-h1 text-h1 text-primary mb-2">Account Settings</h1>
+      <p class="text-body-lg text-outline">Manage your profile, preferences, and travel history across the GeoFlow network.</p>
+    </header>
+
+    <div class="space-y-12">
+      <!-- Profile -->
+      <section id="account" class="bg-white p-8 border border-slate-200 shadow-[0_20px_40px_-15px_rgba(15,44,92,0.04)]">
+        <div class="mb-8">
+          <h2 class="font-h3 text-h3 text-primary mb-1">Profile</h2>
+          <p class="text-sm text-outline">Your personal identity on the platform</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+          <div class="space-y-2">
+            <label class="font-label-caps text-xs text-outline block">Full Name</label>
+            <input [(ngModel)]="form.name" type="text" class="w-full border-0 border-b border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 bg-transparent" />
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-xs text-outline block">Email Address</label>
+            <input [value]="user()?.email" disabled type="email" class="w-full border-0 border-b border-outline-variant px-0 py-2 bg-transparent text-outline" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Travel Preferences -->
+      <section id="preferences" class="bg-white p-8 border border-slate-200 shadow-[0_20px_40px_-15px_rgba(15,44,92,0.04)]">
+        <div class="mb-8">
+          <h2 class="font-h3 text-h3 text-primary mb-1">Travel Preferences</h2>
+          <p class="text-sm text-outline">Tailor your exploration experience</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg mb-10">
+          <div class="space-y-2">
+            <label class="font-label-caps text-xs text-outline block">Home Airport</label>
+            <select [(ngModel)]="form.homeAirport" class="w-full border-0 border-b border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 bg-transparent cursor-pointer">
+              @for (a of airports; track a) { <option [value]="a">{{ a }}</option> }
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-xs text-outline block">Preferred Currency</label>
+            <select [(ngModel)]="form.currency" class="w-full border-0 border-b border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 bg-transparent cursor-pointer">
+              @for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-xs text-outline block">Language</label>
+            <select [(ngModel)]="form.language" class="w-full border-0 border-b border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 bg-transparent cursor-pointer">
+              @for (l of languages; track l) { <option [value]="l">{{ l }}</option> }
+            </select>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center justify-between py-4 border-t border-slate-100">
+            <div>
+              <h4 class="font-semibold text-primary">Reduce motion</h4>
+              <p class="text-xs text-outline">Minimize animations for a calmer experience</p>
+            </div>
+            <button (click)="reduceMotion.set(!reduceMotion())" class="w-12 h-6 rounded-full relative flex items-center transition-colors px-1" [class]="reduceMotion() ? 'bg-primary justify-end' : 'bg-slate-200'">
+              <div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+            </button>
+          </div>
+          <div class="flex items-center justify-between py-4 border-t border-slate-100">
+            <div>
+              <h4 class="font-semibold text-primary">High contrast</h4>
+              <p class="text-xs text-outline">Increase visual distinction between elements</p>
+            </div>
+            <button (click)="highContrast.set(!highContrast())" class="w-12 h-6 rounded-full relative flex items-center transition-colors px-1" [class]="highContrast() ? 'bg-primary justify-end' : 'bg-slate-200'">
+              <div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+            </button>
+          </div>
+        </div>
+        <div class="mt-8 flex justify-end items-center gap-4">
+          @if (savedMsg()) { <span class="text-green-600 text-sm font-semibold">{{ savedMsg() }}</span> }
+          <button (click)="save()" class="px-8 py-3 bg-primary text-white font-label-caps text-xs tracking-widest hover:bg-primary-container transition-colors">SAVE CHANGES</button>
+        </div>
+      </section>
+
+      <!-- Travel History -->
+      <section id="history" class="bg-white p-8 border border-slate-200 shadow-[0_20px_40px_-15px_rgba(15,44,92,0.04)]">
+        <div class="mb-8">
+          <h2 class="font-h3 text-h3 text-primary mb-1">Saved Destinations</h2>
+          <p class="text-sm text-outline">Your global footprint over time</p>
+        </div>
+        <div class="flex gap-4 flex-wrap">
+          @for (d of saved(); track d.code) {
+            <div class="bg-slate-50 border border-slate-200 px-4 py-3 rounded flex flex-col items-center gap-2 hover:border-primary transition-colors">
+              <span class="text-2xl">{{ d.flag }}</span>
+              <span class="font-label-caps text-[10px] text-primary">{{ d.name }}</span>
+              <span class="text-[10px] text-outline">${{ d.cheapestFlight }}</span>
+            </div>
+          } @empty {
+            <p class="text-sm text-outline">No saved destinations yet.</p>
+          }
+        </div>
+      </section>
+    </div>
+    <div class="h-20"></div>
+  </main>
+</div>

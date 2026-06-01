@@ -1,0 +1,126 @@
+<gf-top-nav></gf-top-nav>
+
+<!-- Filter sidebar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] z-[90] flex flex-col pt-6 pb-6 w-80 bg-white border-r border-[#E5E5E0] text-sm">
+  <div class="px-8 mb-4">
+    <h2 class="font-h3 text-h3 text-primary-container">Filters</h2>
+    <p class="text-slate-500 text-xs">Refine your discovery</p>
+  </div>
+  <div class="flex-1 overflow-y-auto custom-scrollbar px-4">
+    <div class="space-y-4">
+      <!-- Departure -->
+      <div class="px-4 py-3 rounded-lg hover:bg-slate-50 transition-all">
+        <div class="flex items-center gap-3 mb-1">
+          <span class="material-symbols-outlined text-primary text-[20px]">flight_takeoff</span>
+          <span class="font-bold text-primary-container">Departure</span>
+        </div>
+        <div class="text-slate-500 text-sm pl-8">Istanbul IST</div>
+      </div>
+      <!-- Dates -->
+      <div class="px-4 py-3 rounded-lg bg-slate-50 border-l-4 border-primary-container">
+        <div class="flex items-center gap-3 mb-1">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">calendar_today</span>
+          <span class="font-bold text-primary-container">Dates</span>
+        </div>
+        <div class="text-primary-container text-sm pl-8">May 15 – 25</div>
+      </div>
+      <!-- Travelers -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">groups</span>
+          <span class="text-slate-500">Travelers</span>
+        </div>
+        <div class="flex items-center justify-between bg-slate-50/50 p-1 rounded-full border border-slate-100">
+          <button (click)="travelers.set(travelers() > 1 ? travelers() - 1 : 1)" class="material-symbols-outlined w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary">remove</button>
+          <span class="font-bold text-primary-container">{{ travelers() }} {{ travelers() === 1 ? 'Adult' : 'Adults' }}</span>
+          <button (click)="travelers.set(travelers() + 1)" class="material-symbols-outlined w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary">add</button>
+        </div>
+      </div>
+      <!-- Budget -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">payments</span>
+          <span class="text-slate-500">Budget</span>
+        </div>
+        <div class="pl-8 pr-4">
+          <div class="h-1 bg-slate-200 rounded-full relative">
+            <div class="absolute left-1/4 right-1/4 h-full bg-secondary"></div>
+            <div class="absolute left-1/4 -top-1.5 w-4 h-4 bg-white border-2 border-secondary rounded-full shadow-sm"></div>
+            <div class="absolute right-1/4 -top-1.5 w-4 h-4 bg-white border-2 border-secondary rounded-full shadow-sm"></div>
+          </div>
+          <div class="flex justify-between mt-3 text-[10px] font-bold text-slate-400">
+            <span>$200</span><span>$1500</span>
+          </div>
+        </div>
+      </div>
+      <!-- Continents -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">public</span>
+          <span class="text-slate-500">Continents</span>
+        </div>
+        <div class="flex flex-wrap gap-2 pl-8">
+          @for (c of continents; track c) {
+            <button (click)="toggleContinent(c)"
+              [class]="activeContinent() === c ? 'bg-primary text-white' : 'border border-slate-200 text-slate-500 hover:bg-slate-50'"
+              class="px-3 py-1 rounded-full text-[11px] font-medium transition-all">{{ c }}</button>
+          }
+        </div>
+      </div>
+      <!-- Interests -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">auto_awesome</span>
+          <span class="text-slate-500">Interests</span>
+        </div>
+        <div class="flex flex-wrap gap-2 pl-8">
+          @for (i of interests; track i) {
+            <button (click)="toggleInterest(i)"
+              [class]="activeInterest() === i ? 'bg-secondary-container text-on-secondary-container' : 'border border-slate-200 text-slate-500 hover:border-secondary hover:text-secondary'"
+              class="px-3 py-1 rounded-full text-[11px] font-medium transition-all">{{ i }}</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-8 pt-4 border-t border-slate-100">
+    <button (click)="applyFilters()" class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-primary-container transition-all shadow-md active:scale-[0.98]">Apply Filters</button>
+  </div>
+</aside>
+
+<!-- Map canvas -->
+<main class="fixed top-16 left-80 right-0 bottom-0 bg-surface overflow-hidden">
+  <div #mapEl class="w-full h-full"></div>
+
+  <!-- Map controls -->
+  <div class="absolute right-8 bottom-44 z-[500] flex flex-col gap-2">
+    <button (click)="zoom(1)" class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-container hover:bg-slate-50 transition-all"><span class="material-symbols-outlined">add</span></button>
+    <button (click)="zoom(-1)" class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-container hover:bg-slate-50 transition-all"><span class="material-symbols-outlined">remove</span></button>
+  </div>
+  <button class="absolute right-8 bottom-28 z-[500] bg-primary text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3 hover:bg-primary-container transition-all active:scale-95">
+    <span class="material-symbols-outlined text-[20px]">help_center</span>
+    <span class="font-bold text-sm">Help?</span>
+  </button>
+
+  <!-- Trending carousel -->
+  <div class="absolute bottom-8 left-8 right-32 z-[500]">
+    <p class="font-label-caps text-label-caps text-primary-container mb-2 uppercase bg-white/70 backdrop-blur-sm inline-block px-2 py-1 rounded">Trending now</p>
+    <div class="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
+      @for (c of trending; track c.code) {
+        <button (click)="open(c.code)"
+          class="bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/50 shadow-xl flex items-center gap-4 w-64 flex-shrink-0 cursor-pointer hover:bg-white transition-all hover:-translate-y-1 text-left">
+          <div class="w-12 h-12 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
+            <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs">{{ c.flag }}</span>
+              <span class="font-bold text-primary-container text-sm">{{ c.name }}</span>
+            </div>
+            <span class="text-[10px] text-slate-400 block uppercase tracking-widest font-bold">From ${{ c.cheapestFlight }}</span>
+          </div>
+        </button>
+      }
+    </div>
+  </div>
+</main>

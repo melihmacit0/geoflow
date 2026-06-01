@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#efedf2",
+                      "on-tertiary-container": "#c9855a",
+                      "surface-container-low": "#f4f3f8",
+                      "surface-container-high": "#e9e7ec",
+                      "surface-tint": "#455e90",
+                      "surface": "#faf8fd",
+                      "secondary-fixed-dim": "#f3be65",
+                      "surface-container-highest": "#e3e2e7",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb689",
+                      "primary-container": "#0f2c5c",
+                      "tertiary-fixed": "#ffdbc8",
+                      "surface-bright": "#faf8fd",
+                      "on-primary-fixed-variant": "#2d4677",
+                      "surface-dim": "#dbd9de",
+                      "secondary-fixed": "#ffdeac",
+                      "primary-fixed-dim": "#aec6ff",
+                      "primary": "#00173d",
+                      "on-surface-variant": "#44474f",
+                      "outline-variant": "#c4c6d0",
+                      "on-tertiary-fixed": "#321300",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e3e2e7",
+                      "secondary": "#7e5700",
+                      "on-secondary-fixed-variant": "#604100",
+                      "on-primary-container": "#7d95cb",
+                      "on-tertiary-fixed-variant": "#6c3915",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#aec6ff",
+                      "secondary-container": "#ffc96f",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#2d1100",
+                      "inverse-on-surface": "#f1f0f5",
+                      "on-secondary-container": "#785300",
+                      "on-secondary-fixed": "#281900",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1a1b1f",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#d8e2ff",
+                      "on-primary-fixed": "#001a42",
+                      "background": "#faf8fd",
+                      "outline": "#747780",
+                      "inverse-surface": "#2f3034",
+                      "on-background": "#1a1b1f",
+                      "tertiary-container": "#4d2100"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "section-gap": "120px",
+                      "margin-page": "64px",
+                      "gutter": "32px",
+                      "base": "4px",
+                      "stack-lg": "24px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "h2": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "h1": ["Inter"],
+                      "hero-display": ["Inter"],
+                      "h3": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .map-dots {
+            background-image: radial-gradient(#D4A24C 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .route-path {
+            stroke-dasharray: 4;
+            stroke-width: 1;
+            stroke: #D4A24C;
+            fill: none;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<main class="flex min-h-screen w-full overflow-hidden">
+<!-- Left Section: Visual Brand -->
+<section class="relative hidden w-1/2 flex-col justify-between bg-primary-container p-12 md:flex overflow-hidden">
+<!-- Background Illustration Layer -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<svg class="w-full h-full" viewbox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+<!-- Stylized World Map Contours -->
+<path class="route-path" d="M150,300 Q200,250 250,300 T350,350 T450,300 T600,250"></path>
+<path class="route-path" d="M100,500 Q250,450 400,550 T700,500"></path>
+<!-- Dotted routes connecting specific points -->
+<circle cx="200" cy="200" fill="#D4A24C" r="3"></circle> <!-- New York -->
+<circle cx="350" cy="220" fill="#D4A24C" r="3"></circle> <!-- Paris -->
+<circle cx="420" cy="280" fill="#D4A24C" r="3"></circle> <!-- Istanbul -->
+<circle cx="450" cy="350" fill="#D4A24C" r="3"></circle> <!-- Cairo -->
+<circle cx="650" cy="250" fill="#D4A24C" r="3"></circle> <!-- Tokyo -->
+<!-- Flight paths -->
+<path class="route-path" d="M200,200 Q275,180 350,220"></path>
+<path class="route-path" d="M350,220 Q385,250 420,280"></path>
+<path class="route-path" d="M420,280 Q435,315 450,350"></path>
+<path class="route-path" d="M420,280 Q535,230 650,250"></path>
+</svg>
+</div>
+<!-- Content -->
+<div class="relative z-10">
+<div class="flex items-center gap-stack-sm">
+<img alt="GeoFlow Logo" class="h-10 w-10 rounded-lg" data-alt="A minimalist vector logo for GeoFlow, featuring a geometric interpretation of a compass or globe. The logo is rendered in a sophisticated gold and navy color scheme, reflecting a high-end travel technology brand. It sits against a deep navy background, conveying authority and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY3y33DGEWHM0Vg8yaKk5MrppGOACgpHzLs-TMBnxBU_n52bVU0wdyVufUqvL8Dgkd7rSHmi6XIU93I3qMaUChrMu6OOEGDQWa0QKWAoiWTxAoOtTHFxTU5LYRy6O61JP9W8xvpy0vhTbcwqNS12tytIKufU9A62tnJbqXFpo8rqJPV5KGXVafA6KGDCuzNCIej0bUU493CWQkd35Kaxgtrni91WFlmOAJv46GGLYxhE7ZUfXatG4udKW7c9ltnMttgH9pLmlIzT7q"/>
+<span class="text-2xl font-h1 font-bold tracking-tighter text-white">GeoFlow</span>
+</div>
+</div>
+<div class="relative z-10">
+<p class="font-h1 text-h1 text-white max-w-md leading-tight">
+                    Your unified travel companion
+                </p>
+<div class="mt-stack-lg flex gap-stack-md items-center">
+<span class="material-symbols-outlined text-secondary-fixed text-2xl" data-icon="flight_takeoff">flight_takeoff</span>
+<span class="material-symbols-outlined text-secondary-fixed text-2xl" data-icon="public">public</span>
+<span class="material-symbols-outlined text-secondary-fixed text-2xl" data-icon="explore">explore</span>
+</div>
+</div>
+<!-- Illustration with data-alt requirement -->
+<div class="absolute bottom-[-10%] right-[-10%] w-[80%] h-[60%] opacity-40 mix-blend-overlay">
+<img class="w-full h-full object-cover grayscale" data-alt="A high-contrast, artistic overhead photograph of a vintage world map overlaid with modern digital data visualizations. Glowing golden lines represent flight routes connecting global cities like Tokyo, Paris, and New York. The lighting is moody and sophisticated, with deep navy shadows and bright amber highlights, evoking a sense of luxury exploration and global connectivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZEs12cuTkRz1IDwwj8Cq3To9Z3yxy1lVUDU1y7uojKU2bamh9jeXUzAJYHwFHPLOBmB-VdkZEizLW4h3EMiRurJpXn4khB9xLRB3I8Guef_F6ZhT8Xip5Q2ckyKso08KZFeQTuuwSVkQDF2fRv8O2uMA3FGXy0s2TZlllL8pW4XS5zSS5nmBNN0NEejM8M-XXfAq1Hx809r61sGqrcbdVBGEZJKxRmOSiZNrYMS7HoYPujYx_iS8sY8JvKSI3bG-uvFak0rTPUczT"/>
+</div>
+</section>
+<!-- Right Section: Sign In Form -->
+<section class="flex w-full flex-col bg-surface-container-lowest md:w-1/2">
+<!-- Top Navigation Toggle -->
+<div class="flex justify-end p-8">
+<div class="flex items-center gap-stack-sm rounded-full bg-surface-container-low p-1 border border-outline-variant">
+<button class="rounded-full px-6 py-2 text-sm font-semibold transition-all bg-primary-container text-white">Sign In</button>
+<button class="rounded-full px-6 py-2 text-sm font-semibold text-on-surface-variant hover:text-primary transition-all">Sign Up</button>
+</div>
+</div>
+<!-- Center Form Container -->
+<div class="flex flex-1 items-center justify-center px-8 sm:px-12 md:px-24">
+<div class="w-full max-w-md">
+<header class="mb-stack-lg">
+<h1 class="font-h2 text-h2 text-primary mb-2">Welcome back</h1>
+<p class="text-on-surface-variant font-body-md">Sign in to continue exploring</p>
+</header>
+<form class="space-y-stack-md" onsubmit="return false;">
+<div class="space-y-base">
+<label class="font-label-caps text-on-surface-variant uppercase" for="email">Email Address</label>
+<input class="w-full border-b border-outline-variant bg-transparent py-3 focus:border-primary focus:outline-none transition-colors" id="email" name="email" placeholder="explorer@geoflow.com" type="email"/>
+</div>
+<div class="space-y-base relative">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-on-surface-variant uppercase" for="password">Password</label>
+<a class="font-label-caps text-on-tertiary-container hover:underline transition-all" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<input class="w-full border-b border-outline-variant bg-transparent py-3 pr-10 focus:border-primary focus:outline-none transition-colors" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white font-h3 py-4 rounded-lg hover:bg-on-primary-fixed-variant transition-all active:scale-[0.98] mt-stack-lg" type="submit">
+                            Sign In
+                        </button>
+</form>
+<!-- Divider -->
+<div class="relative my-10">
+<div class="absolute inset-0 flex items-center">
+<span class="w-full border-t border-outline-variant"></span>
+</div>
+<div class="relative flex justify-center text-sm uppercase">
+<span class="bg-surface-container-lowest px-4 font-label-caps text-on-surface-variant">or</span>
+</div>
+</div>
+<!-- Social Logins -->
+<div class="space-y-stack-md">
+<button class="flex w-full items-center justify-center gap-stack-md border border-outline-variant bg-surface py-3 px-4 rounded-lg hover:bg-surface-container-low transition-all">
+<img alt="Google" class="h-5 w-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_vBITGhTRltAvnUqxYJLdDNQbS5DLKYnOLDaewtUQ7EffJIot3NyAb7DERbpaNyGKVxdEVY165czW2RxPvCeWBUGxyL8Qb6VvdvQ7E9arAuZW8hYLyPHbHyO_7wma3JRGlQ5uxAFBFgzdn7omea1HaLFXhvy78MeEtEA_J_vozeTG0kViqjWkHT_iwjV-th29w4Fr-ZEsRp8YRAOqLyKk4t2tjEIRJOH4W1yKMaQ57DRI8M6d0-wqsVB2rezUNawvMevYhrNsm8Y2"/>
+<span class="font-body-md font-semibold text-on-surface">Continue with Google</span>
+</button>
+<button class="flex w-full items-center justify-center gap-stack-md border border-outline-variant bg-surface py-3 px-4 rounded-lg hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-on-surface" data-icon="apple" data-weight="fill">ios</span>
+<span class="font-body-md font-semibold text-on-surface">Continue with Apple</span>
+</button>
+</div>
+<!-- Footer -->
+<p class="mt-12 text-center text-on-surface-variant font-body-md">
+                        Don't have an account? 
+                        <a class="font-semibold text-on-tertiary-container hover:underline ml-1" href="#">Sign up</a>
+</p>
+</div>
+</div>
+<!-- Footer Small -->
+<footer class="p-8 text-center md:text-left">
+<p class="font-label-caps text-outline text-[10px] uppercase tracking-[0.2em]">© 2024 GeoFlow Explorer. All Rights Reserved.</p>
+</footer>
+</section>
+</main>
+</body></html>

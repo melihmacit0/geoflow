@@ -1,0 +1,187 @@
+<gf-top-nav></gf-top-nav>
+
+<main class="fixed top-16 left-0 right-0 bottom-0 flex overflow-hidden">
+  <!-- Map (left ~58%) -->
+  <section class="hidden lg:block w-[58%] relative bg-surface-container">
+    <div #mapEl class="w-full h-full"></div>
+  </section>
+
+  <!-- Sliding info panel (right) -->
+  <aside class="w-full lg:w-[42%] h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
+    @if (country(); as c) {
+      <!-- Header -->
+      <div class="px-8 pt-6 pb-0 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-20">
+        <h1 class="font-h2 text-h2 text-primary flex items-center gap-2">{{ c.name }} {{ c.flag }}</h1>
+        <div class="flex items-center gap-2">
+          <button (click)="toggleSave()" class="p-2 hover:bg-surface-container-low rounded-full transition-all" [class.text-secondary]="saved()" [class.text-stone-600]="!saved()">
+            <span class="material-symbols-outlined" [class.fill]="saved()">bookmark</span>
+          </button>
+          <button (click)="close()" class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-600">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero image -->
+      <div class="px-8 pt-4 pb-6">
+        <div class="h-[180px] rounded-xl overflow-hidden shadow-sm">
+          <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="px-8 flex gap-8 border-b border-stone-100">
+        <button (click)="tab.set('culture')" class="pb-4 font-semibold text-sm transition-colors"
+          [class]="tab() === 'culture' ? 'text-primary border-b-2 border-primary-container' : 'text-stone-400 hover:text-stone-600'">Culture &amp; History</button>
+        <button (click)="tab.set('flights')" class="pb-4 font-medium text-sm transition-colors relative"
+          [class]="tab() === 'flights' ? 'text-primary border-b-2 border-primary-container' : 'text-stone-400 hover:text-stone-600'">
+          Flights &amp; Logistics
+          <span class="absolute top-0 -right-2 w-2 h-2 bg-error rounded-full"></span>
+        </button>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar">
+        @if (tab() === 'culture') {
+          <div class="px-8 py-6 space-y-8">
+            <p class="text-on-surface-variant leading-relaxed font-body-md">{{ c.intro }}</p>
+
+            <div class="p-6 bg-[#FDF6E3] rounded-xl border border-gold/20 flex gap-4">
+              <span class="material-symbols-outlined fill text-gold">lightbulb</span>
+              <div>
+                <p class="text-label-caps font-label-caps text-on-secondary-fixed-variant mb-1">DID YOU KNOW?</p>
+                <p class="text-sm text-stone-700 leading-snug">{{ c.didYouKnow }}</p>
+              </div>
+            </div>
+
+            <section>
+              <h2 class="text-label-caps font-label-caps text-stone-500 mb-4">ESSENTIAL FACTS</h2>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Capital</p>
+                  <p class="font-semibold text-primary">{{ c.facts.capital }}</p>
+                </div>
+                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Language</p>
+                  <p class="font-semibold text-primary">{{ c.facts.language }}</p>
+                </div>
+                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Currency</p>
+                  <p class="font-semibold text-primary">{{ c.facts.currency }}</p>
+                </div>
+                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Best Time</p>
+                  <p class="font-semibold text-primary">{{ c.facts.bestTime }}</p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-label-caps font-label-caps text-stone-500 mb-4">TOP CULTURAL HIGHLIGHTS</h2>
+              <div class="grid grid-cols-2 gap-4">
+                @for (h of c.highlights; track h.title) {
+                  <div class="group cursor-pointer">
+                    <div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100 flex items-center justify-center"
+                      [style.background]="c.accent + '22'">
+                      <span class="material-symbols-outlined text-4xl" [style.color]="c.accent">photo_camera</span>
+                    </div>
+                    <p class="text-sm font-semibold text-primary">{{ h.title }}</p>
+                    <p class="text-xs text-stone-500">{{ h.note }}</p>
+                  </div>
+                }
+              </div>
+            </section>
+            <div class="h-4"></div>
+          </div>
+        } @else {
+          <div class="px-8 py-6 space-y-6">
+            <!-- Route card -->
+            <div class="p-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-4 flex-1">
+                  <div class="text-center">
+                    <p class="font-label-caps text-[10px] text-outline">FROM</p>
+                    <p class="font-h3 text-lg text-primary">IST</p>
+                  </div>
+                  <span class="material-symbols-outlined text-outline-variant scale-125">swap_horiz</span>
+                  <div class="text-center">
+                    <p class="font-label-caps text-[10px] text-outline">TO</p>
+                    <p class="font-h3 text-lg text-primary">{{ c.iata }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-3 flex-wrap">
+                <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
+                  <span class="material-symbols-outlined text-sm">calendar_today</span> May 15 — May 25
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
+                  <span class="material-symbols-outlined text-sm">person</span> 1 Adult
+                </div>
+              </div>
+            </div>
+
+            <!-- Filter chips -->
+            <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              @for (f of ['cheapest','fastest','direct']; track f) {
+                <button (click)="flightFilter.set($any(f))"
+                  [class]="flightFilter() === f ? 'bg-primary-container text-white border-primary-container' : 'bg-white text-outline-variant border-outline-variant hover:border-primary hover:text-primary'"
+                  class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium border transition-all capitalize">{{ f }}</button>
+              }
+            </div>
+
+            <!-- Flight list -->
+            <div class="space-y-4">
+              @for (f of filteredFlights; track f.id) {
+                <div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow flex items-center gap-5">
+                  <div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-outline">flight_takeoff</span>
+                  </div>
+                  <div class="flex-1 grid grid-cols-3 items-center">
+                    <div>
+                      <p class="font-h3 text-lg text-primary">{{ f.depart }}</p>
+                      <p class="text-[10px] text-outline font-label-caps">{{ f.from }}</p>
+                    </div>
+                    <div class="text-center px-2">
+                      <p class="text-xs text-outline mb-1">{{ f.duration }}</p>
+                      <div class="relative flex items-center justify-center">
+                        <div class="h-px bg-outline-variant w-full"></div>
+                        <div class="absolute w-1.5 h-1.5 rounded-full" [class]="f.stops === 'Direct' ? 'bg-outline-variant' : 'bg-primary-container'"></div>
+                      </div>
+                      <p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">{{ f.stops }}</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="font-h3 text-lg text-primary">{{ f.arrive }}</p>
+                      <p class="text-[10px] text-outline font-label-caps">{{ f.to }}</p>
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0 border-l border-outline-variant pl-5">
+                    <p class="font-h2 text-xl text-primary-container mb-1">${{ f.price }}</p>
+                    <a [href]="f.deepLink" target="_blank" rel="noopener" class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
+                      View <span class="material-symbols-outlined text-xs">north_east</span>
+                    </a>
+                  </div>
+                </div>
+              }
+              <p class="text-[11px] text-outline py-2 italic leading-relaxed">
+                Prices fetched from partners. GeoFlow does not process payments — booking redirects to the partner site.
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Sticky save button -->
+      <div class="px-8 py-4 bg-white border-t border-surface-container">
+        <button (click)="toggleSave()"
+          class="w-full text-white py-4 font-bold tracking-widest uppercase text-xs transition-colors rounded-lg shadow-md active:scale-[0.98]"
+          [class]="saved() ? 'bg-primary-container hover:bg-primary' : 'bg-gold hover:bg-[#b88c42]'">
+          {{ saved() ? 'Saved ✓ — remove' : 'Save this destination' }}
+        </button>
+      </div>
+    } @else if (loading()) {
+      <div class="flex-1 flex items-center justify-center text-outline">
+        <span class="material-symbols-outlined animate-spin">progress_activity</span>
+      </div>
+    }
+  </aside>
+</main>

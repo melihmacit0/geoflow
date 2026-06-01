@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7d95cb",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#4d2100",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e3e2e7",
+                        "surface-container-low": "#f4f3f8",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#00173d",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#604100",
+                        "on-tertiary-fixed": "#321300",
+                        "surface-container-highest": "#e3e2e7",
+                        "on-surface": "#1a1b1f",
+                        "secondary": "#7e5700",
+                        "surface-container-high": "#e9e7ec",
+                        "surface-container": "#efedf2",
+                        "outline": "#747780",
+                        "inverse-on-surface": "#f1f0f5",
+                        "primary-container": "#0f2c5c",
+                        "surface-tint": "#455e90",
+                        "on-surface-variant": "#44474f",
+                        "inverse-primary": "#aec6ff",
+                        "surface-bright": "#faf8fd",
+                        "outline-variant": "#c4c6d0",
+                        "on-secondary-fixed": "#281900",
+                        "primary-fixed-dim": "#aec6ff",
+                        "tertiary-fixed": "#ffdbc8",
+                        "surface-dim": "#dbd9de",
+                        "on-secondary-container": "#785300",
+                        "background": "#faf8fd",
+                        "tertiary": "#2d1100",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#c9855a",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#ffc96f",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001a42",
+                        "surface": "#faf8fd",
+                        "on-tertiary-fixed-variant": "#6c3915",
+                        "on-primary-fixed-variant": "#2d4677",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-fixed": "#ffdeac",
+                        "secondary-fixed-dim": "#f3be65",
+                        "tertiary-fixed-dim": "#ffb689"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "gutter": "32px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px",
+                        "section-gap": "120px",
+                        "base": "4px",
+                        "margin-page": "64px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "hero-display": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased">
+<!-- TopNavBar -->
+<header class="bg-white dark:bg-slate-950 fixed top-0 w-full z-50 border-b border-slate-100 dark:border-slate-800 shadow-[0_4px_20px_rgba(15,44,92,0.04)] font-['Inter'] antialiased tracking-tight">
+<nav class="flex justify-between items-center h-20 px-8 max-w-[1280px] mx-auto w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white">GeoFlow</span>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200" href="#">Explore</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200" href="#">Itineraries</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200" href="#">Experiences</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200" href="#">Guides</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:block relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary-container w-64" placeholder="Search destinations..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-900 dark:text-white border-b-2 border-slate-900 dark:border-white pb-1 scale-100 active:scale-95 transition-transform">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all scale-100 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all scale-100 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Header Section -->
+<section class="h-[120px] bg-[#F8F8F5] flex items-center">
+<div class="max-w-[1280px] mx-auto w-full px-8 flex justify-between items-center">
+<div>
+<h1 class="text-[28px] font-bold text-[#0F2C5C] leading-tight">Your Saved Destinations</h1>
+<p class="text-on-surface-variant font-body-md">12 places waiting for your next adventure</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-primary-container font-medium">
+<span class="text-sm">Recently added</span>
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<button class="text-primary-container"><span class="material-symbols-outlined">grid_view</span></button>
+<button class="text-outline-variant"><span class="material-symbols-outlined">view_list</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content: Destination Grid -->
+<section class="max-w-[1280px] mx-auto px-8 py-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter justify-items-center">
+<!-- Japan Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A serene landscape of Mount Fuji in Japan during cherry blossom season, with soft morning sunlight illuminating the snow-capped peak and pink flowers. The composition is clean and minimalist, following a sophisticated travel editorial style. The overall mood is peaceful and professional, featuring a palette of soft whites, pale pinks, and deep navy accents in the shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0Ic9KQRYrR-8AUh8Y59eOPpxu_IPuq700uEHzmhe2BBl6MpBYWneZce-5xFoLn46M1uBO9p-jlQMY1c8cBmqaR7Bq4ajBf29Ax2asAbBnbvwAe_4f83LIhkaAsDTGI2dFkDeCRnfX19IxxKNbQ6JhcEwEFi6rodzd84Tdls50S0kgxBL-4k9I1KdpjOjlhjR6smudkBq0oAdLmbbLsBqLTl4uH4_zduXb-ZqD-dat9azJ7Ut7nl0lRNdWc6NoCuAWRQXDEuJa6Xbj"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇯🇵</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Japan</h3>
+<p class="text-label-caps text-on-surface-variant">Land of the Rising Sun</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A minimalist overhead satellite view map fragment of Tokyo city streets with a single clean navy blue location pin in the center." data-location="Tokyo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOHlbf1RVbJRyssFmuOOzdmBbx5YgCrv_36T_UtmXg9I_SRmZmdMtFC0TIPu6SpZVPgKNgDBgdEubUTS9UtreNWpNBhv0nkh7fiuLCOkZZYjwb8yA5utfK3vm6VTDZAzuXYT8XkXLuv74cV3uJz6h7O4foKeFZMJe18IKmgOGGNVJbTJpi3m3igGm9pKCLSscF0JVrLlybON5RMHsxQYBNPT1cNxfOXen2GkiJ7t85uoUj58chlu-QAa0sWhA90O5-VbPr1Syg_Rwp"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $840
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- France Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="The Eiffel Tower in Paris seen through a classic stone archway during the golden hour, with warm amber light washing over the architecture. The image is captured with a high-end photography aesthetic, featuring deep navy shadows and bright highlights. The scene feels romantic and authoritative, perfect for a curated travel experience gallery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAStxe8QPeXYUig9Q-NOEOJoTcAWMwrmKdrkm2AexrkqdydSN_vAMU1M_bfGDbZg68NRiOkCr2N2YSMEIgx94fw7qoRhoJuYtA4f6OTUUfTAQ0DvnGthJY7CB_FNGnTZuBu7RnvIiqsWV4wAorhWxdIeyaOSOI3vnQ9mB4bLlp_CyIWwSzjgHPaOSviUBSa02zHTWuSmKIQRzcjaEcqokmbtJC4ZoFUDgVCl6kQsHKlL-XCcKVKIMUzY4a3QgkV1o1pwleov1hazAbp"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇫🇷</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">France</h3>
+<p class="text-label-caps text-on-surface-variant">The Art of Living</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean topographic map section of central Paris with a prominent navy blue icon indicating a specific landmark location." data-location="Paris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB89j7MnenoYck3n9ByEGDnSVTe_hW9QFveyTA6RaI0RZ3-CTf6cRPPAks-3vnRIAOCnx-dUgEW6OeumqIPhV8nekUy7oLcRFmFmcREUEkyLGZXlq2rLuKam8WYt-3t483kvdTt18KRktdxkOKCXFm3oSGU6u8ADkxNfJt-W6RF5gupRp85F6GNHkLdi3R3xBFaZTQcArld7POSqUAX3BZnlBgmqASrw-ZlhGmKUopwBmoHodLp2QLByH9kcGPuPzwl93RWtutCY4SK"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $520
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Greece Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="The white-washed buildings of Santorini, Greece, overlooking the deep blue Aegean Sea under a bright, high-noon sun. The visual style is crisp and modern-minimalist, with high contrast between the stark white walls and the primary navy blue of the sea. The lighting is intense and clear, reflecting a premium editorial travel aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-Q1Ba8QXHQ8CPqgEc0ymosVGMWUA6TiDdC5vcBM2UM1CWJnhjKsMXMZ1M-iwKanCiKMf0dzOB4oj3aDeZ8fTAMujkSjmdF6PHdx7UdlbskDjnFssuqm05Jf39dnYooPNru0fvQjycs3eI1GcPZJRi8mEzGApEC19IntYKhX6R9gqHPM7l7EuiYDets2MfF2V2P0OPCmaMHXKYRBSz0f6kmNuvdekzTIscshKI1ZCFemrMqX0lO5mFSTD1ZEXmPCW5coew7q30RD8w"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇬🇷</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Greece</h3>
+<p class="text-label-caps text-on-surface-variant">Cradle of Civilization</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A minimalist map rendering of the Greek islands with a clean navy blue pointer focused on Santorini." data-location="Athens" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXJ0RAvpw7rvFurj2M-qrQLMp9THo7guBXFasWC-CkaDTc2Ym8tU2uf9ra7FSzZnL-RkcF0_HKhiT_mlUK8iCOqVcT-Wj1Mh9gre_GmWK1197F3SWPhhHOULUqWgqZKVmgvSqpPTE2LDf5LNZ7UMmPh8miAeYwvusLw9D-qZztfybKcnazPRE8dT6VfMFOfVX8bdt4CxCrSqQ1sKXH_WTfYWPm2MBHUl50VpRM6a8Q9jXGf4Z-VD2ykPMIarPOKXXVn2f-Cdr6o8Ov"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $610
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Turkey Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Hot air balloons floating over the fairy chimneys of Cappadocia, Turkey, at sunrise. The sky is filled with soft gradients of orange and purple, creating a magical and adventurous mood. The photograph uses a professional travel photography style with sharp details and a balanced, high-key lighting approach consistent with a sophisticated brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMrYP1BOUWdxjnE1jj5MzaVHrXU1hQ0YVw7W9OTCdnV5u0ByJGZtcuBR2H6Fb7KiZSXyrU_NB_Fn87ujXhbmdf7Rtir76linJBAXXlLxNzuGbRYjL_ymC-UWnoYNYmNALreC7zbwqJq-eF9EdunaBaHAxQU0E8dPk2HhaAN3OyQIgC8VqGLwRz8klSNptC9WRoKXqES0ue-k6RDUp6KIsDhUU2SloV4QEa3mpGIS8w6QD1lokl5J2kVTKMXd6sj1ykGbjOnOs4Ry5i"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇹🇷</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Turkey</h3>
+<p class="text-label-caps text-on-surface-variant">East Meets West</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean, modern cartographic detail of Istanbul showing the Bosphorus Strait with a minimal navy location marker." data-location="Istanbul" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChjil3Kz_EXoWxr6DJoDT3lKhPiDGzIQQRgw9Y06hXSR4fHSAbVkYkhdFRWXvxisHK8l7l-vPlKzPhTNi7tWIoDScpC3QuJBBsmyqLj34hqngpnIiT13wnxP3FdcRsK2-opSiIV7Vkp27TEDbYzhV6F98FfFtln7zb1SYMHNtcV25eAI5SBwbnVwYr4sTpBy26ZAZpeA4dx1MU9NBjpe8ovCffW28rsUKVE9pyP-2Gj55h-yL7YDlVP5PlWM_oqCsDFc_PEgSqM9mw"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $495
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Iceland Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="The dramatic black sand beach of Vik in Iceland, with towering basalt columns and crashing white waves under a moody, overcast sky. The aesthetic is extremely minimalist and quiet, utilizing a palette of deep grays, blacks, and cold blues. The lighting is diffused and atmospheric, perfect for a high-intent explorer's destination card." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3-KQAoWTxNlyAfKZDaV_PPzcqA1oiIn4jRi1ep2gLA9iTzXbssGWD4jftKJOnlaiAnsqontrK_ed9fngsryWJNHLznJSybMM6MiSgTNi1BRBu8kARgFYyxeK09j50HrcZw-_UTHpuc8HHBN4XCrr_4WPkggVlvzP23gKyqsgLHpOfqYrtGBR_c7bHi3fZ1dX-D2mMyMU5a9nUHTup1-iYz7JRejol67zAiBbBNshTvwSGHL3Vk-hve02ZSvzFVG6UYlVs0EXhMrR0"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇮🇸</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Iceland</h3>
+<p class="text-label-caps text-on-surface-variant">Fire and Ice</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A stylized map of Iceland's coastline with a clear navy blue pin positioned in the southern region." data-location="Reykjavik" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRGLbU1iHqccnTLzvZuAeDZcgZ40KfOhWd19XN8q7g2TsFYHF3OkcXVMOh6qiyGOSmkPPLoWrsXyN1sBgXIBirz4WhMyHqtqwr6DSmhesd8E6DYHQQvZWbXqr9GzgvwvaUy8BuquZFZPj208ShbaRqnxlnIuyTkub0Jk8_7WqVS44wHXeNlC6IBsb40mH0RCjZzUMXxCAF4xUqUcFzwkyEPSmNTBSAFFkGT_tqc5heklfw0QUwYbvwuVK0fsRsFsa4XGFY9NKxVsSx"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $310
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Thailand Card -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Traditional long-tail boats moored in the emerald waters of Railay Beach, Thailand, with limestone cliffs rising in the background. The lighting is bright and tropical, with a clean color palette of vibrant greens and turquoises. The composition is balanced and elegant, echoing a professional travel curator's visual language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSZhg9nhNiqnvBI-w8ufFOKKZZw91NQf5DhToficCI_RQfOibm5wlhMaWfltEdBocMdBvXUeiwb8pvICWzeVSolmxsxsoQJZmhUx8QRBwgkvhlFK36yRDMf1FXvwNHeabBNYJolb0YzBSxdB27w1WdNmmjkgYyiQs2l6rGz0V9S10gQd-Vvs4tdIyqkOFjr_mOa5Fn971YwxEy9v8xAmLhsgOp-K83ksmnJD9oFzKBE46TRNviMbpkFFfkXZPJueRS3kNUloDC8n2p"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇹🇭</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Thailand</h3>
+<p class="text-label-caps text-on-surface-variant">Land of Smiles</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A minimalist map layout of the Thai peninsula with a navy location pin marking the Krabi province." data-location="Bangkok" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMUYJRBlG_MoyQFLp_sACfonhS01J0Jl7siJuN_1XPHHaRiXv3ttsoJ33DPtErCYDh37iIA5FnhHSK0eV7VjXB_BhVmQ9CrXskMW5QEZOxA8vqaDPVQPr2YEEJekRCdNQ1sKH3bU__HljOkd7FWZBm1nF8XhptDkqhRPmrLwU14Ir9rl2G87u7DfbIi0wbv3HqsMNsyJAlrp5Pp7LcpUP6aYF-sLpYUBm81p6ymFp79Pv6WkXFgH-OEVumPJ5fVew48eGb1llI7h7r"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $690
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Additional cards for Peru, Italy, Egypt, Morocco, Australia, Portugal -->
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Machu Picchu in Peru, with the ancient stone ruins nestled between lush green mountain peaks under a soft, misty sky. The lighting is diffused and calm, with a palette of deep forest greens and earth tones, following the Sophisticated Explorer's aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmkFDOLs-sn50nVcBcBb1eX-vGZq-b38YSEJi3cdaGz0Wh5T3UtnvbdoesRS7zECzFVjEfcopcvZXMR3wQywzmYk2LMiFEcuIONcMAXNRluKrZYD-zh1bcT6btG2NBhWYQIWxfPer410X2eu-usOJxNnJPcfLWfZgLnm8F2p98E58qWaHpm5GF6PC9bFGoYFohGLlt4IK1w9hWU4edhpF1OvzpIdd4o7UGm1-cpXeYhaRf4csbo096KpezDWi7rej0q2CcpkOi1gCe"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇵🇪</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Peru</h3>
+<p class="text-label-caps text-on-surface-variant">Lost City of the Incas</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Minimalist terrain map of the Andes mountains with a navy blue marker on Cusco." data-location="Cusco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSDp2JVDacBk4edS0puY5sMsljjtbktiXmk3JF2jb9HzN59myqCwc1Hiq5WPxWH8Omz0faTCL2dloZ-ZOZgYumi2dT46QDe6878D6iqewFedXzUkcGBW-KbjcZC-HDiKdh05HH3h_mTLpumVdAMloh5B61hjts-uLe3Dw-fcBz5pUosxffdkjC-O7sVz6SS6fQmGMpX553487bjR7C2HElUp4UDuSEmjPfkNMBqPAtV-910NyHa9uKGgwdpvXHvGYjwQeM4id_-eDG"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $725
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A narrow canal in Venice, Italy, with historic brick buildings and a single gondola reflecting in the calm water. Warm sunlight hits the facades, creating high contrast against the deep navy shadows. Professional travel editorial style with a focus on architecture and light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgi2Wl45XbHcxm732NgkkIwG0x7IoRwEeGhG851jWmQUYYA3m3wqIgMf3BdYLVZQ-U0_s7AYOll1LqCmhezF4cLgRlW90fpyCFSyQoCYhzd8I39D6dy99YFX1GVfigL-VH-QFHi8fHUiG6NRzfedR6jVoxR7P3u-cI25K35NHu_uN_Cna_cg7Si8rfN3qcPwxv4g4Fa4Rj3PthIqaL_Uj6VNLOO9tT7WWGc5ooswAqmKeAMdPr-DhxEAANFXv6mnxWt2eDSPp7XOdT"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇮🇹</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Italy</h3>
+<p class="text-label-caps text-on-surface-variant">La Dolce Vita</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Clean map segment of the Italian peninsula with a prominent navy marker on Venice." data-location="Venice" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgcgT8Aw0GOH3_nL3VzvPN-qvN4sKfIdCPdJ4m9BwdanlnHLdROe9vyL1TR5zX0iVJ4liYonXpoWkEdsLA8X_ve-625_h4UEgWaud8KlcfoGRZChbzAgVKMAXqJ57lKbnK-rI0oEnGOSLKTd56MRTFp8tbc9fiuByGpKeQfFsomRb51IQ_gSaV-cqsJIsX1l8CvJ4DaPNFJh8ePTwAFjmsk0WzUPyeWeCj3z04wIMc61YanJrywhXrPiA6N0RMVcEws-7_N4twym7o"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $480
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+<article class="w-[320px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.04)]">
+<div class="relative h-[180px] w-full bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="The Great Pyramids of Giza in Egypt during a golden sunset, with silhouettes of camels in the foreground and a warm, hazy atmosphere. High-end minimalist photography with a limited palette of golds, deep navy, and muted browns. A sense of timeless majesty and calm reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGr8A9gSZodES1eIyQLOnOGXxja26dXTqsme1dWFuKNncG-PsYzAi4LPVRn3VSGOHh_D2GZJpc_hUPQbqevbj5_2io4hc2Ild8LcBQEHOmSuvokCpy2MmjUkXED1tibSzv5RRh04zVCC2yKOD3C3how-EZ9aFGkPoaxNP7arK97D01qtQkCaZfgtpSYg_kFZhYN5ZgFamakmV8hWoK7BB9s27ypfCCNmFNLkKbJqkyk3zSqwUQJXf_sXOJogzELyKPdUHF3Klr-Jiy"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">🇪🇬</div>
+<div class="absolute top-3 right-3 text-secondary">
+<span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</div>
+</div>
+<div class="p-stack-lg space-y-3">
+<div>
+<h3 class="font-h3 text-primary-container">Egypt</h3>
+<p class="text-label-caps text-on-surface-variant">Gift of the Nile</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Modern topographic map of the Nile river delta with a navy blue location pin on Cairo." data-location="Cairo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4kDr8EQfA6kw0VG2Dhke22wMUhCkdku4ZI01QWIo9QBUBFK78uylnLDbeJCp2Ki3TLSsBA9MOEvAxFADmXqNpMtPM6JCpdKXweo06_LZq2bx972jV5jnYD1IlB7DDyFjbC2SZe0KIjtzWyy-PCxVm5gj0tqHiegCrGRRc2XpY6bGzglCroSMy_aa4UmDpswpQvshTGXuWHWV9dFC25be453vkAeYGjri0BztCqKmlFmc24ofMRxzZllPbL10EO_0Kujp-8VWP5leq"/>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">
+                                Cheapest flight: $590
+                            </div>
+</div>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">map</span> View on map
+                            </button>
+<button class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-32 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 font-['Inter'] text-sm tracking-wide transition-all duration-300">
+<div class="flex flex-col md:flex-row justify-between items-center py-16 px-8 max-w-[1280px] mx-auto w-full">
+<div class="mb-8 md:mb-0">
+<span class="text-lg font-bold text-slate-900 dark:text-white">GeoFlow</span>
+<p class="mt-2 text-slate-500 dark:text-slate-400">© 2024 GeoFlow. Sophisticated Explorer.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline decoration-slate-300 underline-offset-4" href="#">About</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline decoration-slate-300 underline-offset-4" href="#">Privacy</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline decoration-slate-300 underline-offset-4" href="#">Terms</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline decoration-slate-300 underline-offset-4" href="#">Support</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline decoration-slate-300 underline-offset-4" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>

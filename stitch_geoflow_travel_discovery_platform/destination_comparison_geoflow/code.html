@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoFlow | Multi-Country Comparison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body { font-family: 'Inter', sans-serif; }
+    .map-container { background-color: #F4F3F8; position: relative; overflow: hidden; }
+    /* Simple SVG overlays or backgrounds simulate the map visual request */
+    .country-highlight { transition: all 0.3s ease; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#4d2100",
+            "surface-container": "#efedf2",
+            "primary": "#00173d",
+            "secondary-container": "#ffc96f",
+            "primary-fixed": "#d8e2ff",
+            "on-error": "#ffffff",
+            "on-background": "#1a1b1f",
+            "secondary-fixed": "#ffdeac",
+            "outline-variant": "#c4c6d0",
+            "on-tertiary-fixed-variant": "#6c3915",
+            "on-primary-fixed": "#001a42",
+            "background": "#faf8fd",
+            "tertiary": "#2d1100",
+            "surface-container-highest": "#e3e2e7",
+            "inverse-on-surface": "#f1f0f5",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-bright": "#faf8fd",
+            "primary-container": "#0f2c5c",
+            "secondary": "#7e5700",
+            "on-surface-variant": "#44474f",
+            "tertiary-fixed": "#ffdbc8",
+            "surface-container-low": "#f4f3f8",
+            "secondary-fixed-dim": "#f3be65",
+            "on-surface": "#1a1b1f",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#ffb689",
+            "surface-variant": "#e3e2e7",
+            "on-tertiary-container": "#c9855a",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dbd9de",
+            "outline": "#747780",
+            "surface-tint": "#455e90",
+            "on-tertiary-fixed": "#321300",
+            "on-secondary-container": "#785300",
+            "on-primary-fixed-variant": "#2d4677",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#281900",
+            "inverse-surface": "#2f3034",
+            "surface-container-high": "#e9e7ec",
+            "surface": "#faf8fd",
+            "primary-fixed-dim": "#aec6ff",
+            "on-secondary-fixed-variant": "#604100",
+            "inverse-primary": "#aec6ff",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#7d95cb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-page": "64px",
+            "stack-md": "16px",
+            "stack-sm": "8px",
+            "stack-lg": "24px",
+            "base": "4px",
+            "section-gap": "120px",
+            "gutter": "32px"
+          },
+          "fontFamily": {
+            "label-caps": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "h2": ["Inter"],
+            "h1": ["Inter"],
+            "hero-display": ["Inter"],
+            "h3": ["Inter"]
+          },
+          "fontSize": {
+            "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+            "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+            "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+            "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased overflow-x-hidden">
+<!-- Navigation Shell (Shared Component: TopNavBar) -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-4 max-w-[1280px] mx-auto bg-white dark:bg-slate-950 border-b border-[#E5E5E0] shadow-[0_20px_20px_rgba(15,44,92,0.04)]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#0F2C5C] dark:text-slate-50">GeoFlow</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-slate-500 font-medium hover:text-[#0F2C5C] transition-all duration-200" href="#">Explore</a>
+<a class="text-[#0F2C5C] font-semibold border-b-2 border-[#0F2C5C] pb-1 transition-all duration-200" href="#">Compare</a>
+<a class="text-slate-500 font-medium hover:text-[#0F2C5C] transition-all duration-200" href="#">Journeys</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-500 hover:text-[#0F2C5C]">notifications</button>
+<button class="material-symbols-outlined text-slate-500 hover:text-[#0F2C5C]">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Avatar" data-alt="A professional headshot of a sophisticated traveler against a soft, out-of-focus urban background. The person is smiling gently, wearing a crisp navy blazer. The lighting is bright and high-key, matching a modern light-mode UI aesthetic with clean lines and a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIspsENFtkcepgvYwzh8wRrszUZ_Qt70uoMiACR0GEo86Mn10ND133_TQoy4NUtqpeKG6kb-cidClCCcuHy3pkcjY9X5YqzF-tv_HdvHla7ZAfU18vNShbYSa6vwDC0IUpM_cEGlM38kZMfAq3kze7v5a9cFeuKAv3qlBR0MAJuUh4hc6-z1QonvfnI4BxspLV3baBl9yVfx006ikzle-0cErnxoD_ODw-cQzc0EpJwzBbLXGpPkmkLbrbkkO2mjt6JwySdWVJ0f74"/>
+</div>
+</div>
+</header>
+<main class="pt-20 h-screen flex flex-col max-w-[1280px] mx-auto">
+<!-- Top Section: Interactive Map (60% Height) -->
+<section class="h-[60%] w-full relative flex flex-col">
+<!-- Header Strip -->
+<div class="px-8 py-4 bg-white flex items-center justify-between z-20 border-b border-surface-container">
+<div class="flex items-center gap-4">
+<h1 class="font-h3 text-h3 text-primary">Comparing 3 destinations</h1>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-[#D4A24C] text-white text-label-caps rounded-full">Japan</span>
+<span class="px-3 py-1 bg-[#2D707E] text-white text-label-caps rounded-full">Italy</span>
+<span class="px-3 py-1 bg-[#E07A5F] text-white text-label-caps rounded-full">Morocco</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-primary font-semibold hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+<span class="text-body-md">Add another</span>
+</button>
+<button class="text-slate-400 font-medium hover:text-error transition-colors">Clear all</button>
+</div>
+</div>
+<!-- Map Canvas -->
+<div class="flex-grow map-container relative">
+<!-- Pseudo Map Visualization -->
+<div class="absolute inset-0 opacity-40 grayscale pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="A sophisticated, high-contrast world map illustration for a luxury travel application. The map uses a minimalist aesthetic with light gray landmasses against a soft off-white ocean background. Thin, elegant vector lines define borders. The lighting is flat and modern, focusing on clarity and editorial precision." data-location="World Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6AWhkYvJbu-FI_LlgpvPnJPiBPhiVR1BM8y32a8q3rqWEkAIC_vIHRnn5cWIy3-eGCAQYlyXTZt29O6I3_7I6Ht6S0LDcgvEe0Xw6U3uTy3YMJMscxPwipktrixTaUv5us36h2NQAL2mElnkt8opAQusSL9fskBA3IZntw5xwNWlw9RluOJvIF9NAXlv6dOKlYqOQe_2bRInD3W1DoVfMbSMet8sU-NNViLV4uHnF4vjXMABVoz3rXz0Yi6rh331SKH7_Sr3N81PM"/>
+</div>
+<!-- Highlighted Regions (Japan) -->
+<div class="absolute top-[35%] right-[12%] z-10 flex flex-col items-center">
+<div class="bg-[#D4A24C] p-2 rounded-full shadow-lg border-2 border-white mb-2">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="bg-white px-3 py-1 rounded shadow-sm border border-outline-variant">
+<p class="text-label-caps text-[#D4A24C]">JAPAN</p>
+</div>
+</div>
+<!-- Highlighted Regions (Italy) -->
+<div class="absolute top-[40%] left-[48%] z-10 flex flex-col items-center">
+<div class="bg-[#2D707E] p-2 rounded-full shadow-lg border-2 border-white mb-2">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="bg-white px-3 py-1 rounded shadow-sm border border-outline-variant">
+<p class="text-label-caps text-[#2D707E]">ITALY</p>
+</div>
+</div>
+<!-- Highlighted Regions (Morocco) -->
+<div class="absolute top-[48%] left-[44%] z-10 flex flex-col items-center">
+<div class="bg-[#E07A5F] p-2 rounded-full shadow-lg border-2 border-white mb-2">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="bg-white px-3 py-1 rounded shadow-sm border border-outline-variant">
+<p class="text-label-caps text-[#E07A5F]">MOROCCO</p>
+</div>
+</div>
+<!-- Zoom Controls -->
+<div class="absolute right-8 bottom-8 flex flex-col gap-2 z-30">
+<button class="w-10 h-10 bg-white border border-outline-variant rounded shadow-sm flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-white border border-outline-variant rounded shadow-sm flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-10 h-10 bg-white border border-outline-variant rounded shadow-sm flex items-center justify-center hover:bg-surface-container transition-colors mt-2">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Comparison Table (40% Height) -->
+<section class="h-[40%] bg-white border-t border-surface-container overflow-y-auto">
+<div class="px-8 py-6">
+<table class="w-full border-collapse">
+<thead>
+<tr>
+<th class="w-1/4 pb-6 text-left">
+<p class="text-label-caps text-slate-400">METRICS</p>
+</th>
+<!-- Japan Column -->
+<th class="w-1/4 pb-6 px-4">
+<div class="flex flex-col items-center text-center gap-2">
+<div class="flex items-center gap-2">
+<span class="text-xl">🇯🇵</span>
+<h3 class="font-h3 text-h3 text-primary">Japan</h3>
+</div>
+<img class="rounded-lg object-cover shadow-sm grayscale hover:grayscale-0 transition-all" data-alt="A serene landscape of Mount Fuji during cherry blossom season. The iconic snow-capped peak rises majestically behind a canopy of soft pink sakura blooms. The lighting is the golden hour of dawn, creating a tranquil and ethereal atmosphere. The image uses a clean, editorial composition with high-key whites and soft pastels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALzomm6ReeUqU3mkIBS0pU24D82y7WE3HQ2vnmvPMW7dfDRNqNilb0EtqsmHI2B946rdWJ0uNX8jXcf3vUTWawkF56lMq3fYxtXlcmxaZEV2BLpQEmfWf-gvutgJLIvjY_DlZrFA1CEH-Bz5B0N9RihDjidNq2fspaULeptzhZTI8EahENLmhwt5Cp9M_6NYrRtJ6olG0c5zU6fUOahglGdtsYr1G00mkv5eq51fxJqRY4jdvMco44dAl2K3YmM_EYIOUwYEPl3-0Q"/>
+</div>
+</th>
+<!-- Italy Column -->
+<th class="w-1/4 pb-6 px-4">
+<div class="flex flex-col items-center text-center gap-2">
+<div class="flex items-center gap-2">
+<span class="text-xl">🇮🇹</span>
+<h3 class="font-h3 text-h3 text-primary">Italy</h3>
+</div>
+<img class="rounded-lg object-cover shadow-sm grayscale hover:grayscale-0 transition-all" data-alt="A picturesque view of the Amalfi Coast in Italy, showing colorful buildings perched on steep cliffs overlooking a vibrant turquoise Mediterranean sea. The sun is high and bright, casting sharp, cinematic shadows that emphasize the textures of the ancient architecture. The mood is sophisticated, warm, and inviting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1uc5dkSM18FAullILI2ENjyyhebdpG4HXzX0nrJQ10J_DlY-coUi-RmXRuHp4m7cNAgYqArVjgjJtCOdMJ84ekAq-8l8mnZsw2tNqyr_Ic82QS9Kr87iu3aoQU9Hhzbk6eB_D1k6iCdaJ263F64vFt5I04Q8hC2S4BHxWXO8tw5Ro0vna-X6tfVBQxBbKBCpDtMCCVuORUVyu_hyxLwTBv15FW0wCIIj8afYO5eOFGyLtCyga2vDvTIiiQlbwUUB-mxecl3zYcYqJ"/>
+</div>
+</th>
+<!-- Morocco Column -->
+<th class="w-1/4 pb-6 px-4">
+<div class="flex flex-col items-center text-center gap-2">
+<div class="flex items-center gap-2">
+<span class="text-xl">🇲🇦</span>
+<h3 class="font-h3 text-h3 text-primary">Morocco</h3>
+</div>
+<img class="rounded-lg object-cover shadow-sm grayscale hover:grayscale-0 transition-all" data-alt="The golden sand dunes of the Sahara Desert in Morocco at sunset. Long, dramatic shadows curve across the ridges of the dunes, while the sky is a deep indigo and orange gradient. The scene is quiet, vast, and evocative of adventurous exploration. The aesthetic is high-contrast and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwk08FJxXg6xZuWrUybPjTlJumAv4v2W0YAjMUerVTmPth-DSwQXpo8T2NbCluPjiMCQme3Zn13eZPAKEj2ClK5fonG6ZdUaPINCAwn3kn9JC4yekdGKD4wl6TJMRv0oA1wd1aZR3L7E-5rWz9ebP1ySMcQY8btXsfu1PF_T6f01Jr1QH5FvntYGbqfwiLYEkmYFvkOORUX8nB9H_YxB-cIMf0pQqEu9mf8iCx--BQsHAXaVVa3YMknFsRwCLMKn80JM75GDXMCw05"/>
+</div>
+</th>
+</tr>
+</thead>
+<tbody class="text-body-md">
+<!-- Row: Flights -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Cheapest flight</td>
+<td class="py-4 text-center text-primary">$840</td>
+<td class="py-4 text-center">
+<span class="bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold">$480</span>
+</td>
+<td class="py-4 text-center text-primary">$520</td>
+</tr>
+<!-- Row: Duration -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Flight duration</td>
+<td class="py-4 text-center text-primary">11h 20m</td>
+<td class="py-4 text-center">
+<span class="bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold">3h 15m</span>
+</td>
+<td class="py-4 text-center text-primary">4h 45m</td>
+</tr>
+<!-- Row: Season -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Best season</td>
+<td class="py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-primary">Mar-May</span>
+<span class="text-[10px] text-secondary font-bold tracking-widest uppercase">Current</span>
+</div>
+</td>
+<td class="py-4 text-center text-primary">May-Sept</td>
+<td class="py-4 text-center">
+<div class="flex flex-col items-center">
+<span class="text-primary">Mar-May</span>
+<span class="text-[10px] text-secondary font-bold tracking-widest uppercase">Current</span>
+</div>
+</td>
+</tr>
+<!-- Row: Culture -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Top cultural draw</td>
+<td class="py-4 text-center italic text-slate-500">Zen Temples &amp; Tech</td>
+<td class="py-4 text-center italic text-slate-500">Renaissance Art &amp; Cuisine</td>
+<td class="py-4 text-center italic text-slate-500">Sahara Dunes &amp; Souks</td>
+</tr>
+<!-- Row: Budget -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Estimated daily budget</td>
+<td class="py-4 text-center text-primary">$150</td>
+<td class="py-4 text-center text-primary">$120</td>
+<td class="py-4 text-center text-primary">$60</td>
+</tr>
+<!-- Row: Visa -->
+<tr class="border-t border-surface-container-low">
+<td class="py-4 font-semibold text-slate-600">Visa requirement</td>
+<td class="py-4 text-center text-primary">E-Visa</td>
+<td class="py-4 text-center text-primary">Schengen</td>
+<td class="py-4 text-center text-primary">Visa-free</td>
+</tr>
+<!-- Footer Actions -->
+<tr>
+<td></td>
+<td class="py-8 px-4">
+<button class="w-full py-3 bg-[#D4A24C] text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md">Pick Japan</button>
+</td>
+<td class="py-8 px-4">
+<button class="w-full py-3 bg-[#2D707E] text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md">Pick Italy</button>
+</td>
+<td class="py-8 px-4">
+<button class="w-full py-3 bg-[#E07A5F] text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md">Pick Morocco</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Side Navigation (Shared Component Placeholder Logic) -->
+<!-- Note: Suppressed as per "The Filter" rule since this is a deep Task-Focused comparison view -->
+</body></html>

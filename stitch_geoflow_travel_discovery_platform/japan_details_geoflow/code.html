@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e3e2e7",
+                        "primary": "#00173d",
+                        "on-surface": "#1a1b1f",
+                        "on-secondary-fixed-variant": "#604100",
+                        "on-secondary-container": "#785300",
+                        "surface-container-low": "#f4f3f8",
+                        "surface-tint": "#455e90",
+                        "tertiary-container": "#4d2100",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-fixed": "#321300",
+                        "surface-variant": "#e3e2e7",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#281900",
+                        "inverse-surface": "#2f3034",
+                        "background": "#faf8fd",
+                        "on-tertiary-fixed-variant": "#6c3915",
+                        "surface-bright": "#faf8fd",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e9e7ec",
+                        "on-tertiary-container": "#c9855a",
+                        "inverse-on-surface": "#f1f0f5",
+                        "outline": "#747780",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#aec6ff",
+                        "surface-container": "#efedf2",
+                        "on-primary-fixed": "#001a42",
+                        "surface-dim": "#dbd9de",
+                        "tertiary-fixed-dim": "#ffb689",
+                        "tertiary": "#2d1100",
+                        "secondary-fixed-dim": "#f3be65",
+                        "on-primary-fixed-variant": "#2d4677",
+                        "secondary": "#7e5700",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#ffc96f",
+                        "primary-container": "#0f2c5c",
+                        "surface": "#faf8fd",
+                        "on-surface-variant": "#44474f",
+                        "on-primary-container": "#7d95cb",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-fixed": "#ffdeac",
+                        "tertiary-fixed": "#ffdbc8",
+                        "primary-fixed-dim": "#aec6ff",
+                        "on-background": "#1a1b1f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "stack-md": "16px",
+                        "section-gap": "120px",
+                        "stack-sm": "8px",
+                        "margin-page": "64px",
+                        "base": "4px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "hero-display": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .map-container {
+            background-color: #f1f0f5;
+        }
+        .highlight-japan {
+            filter: drop-shadow(0 0 10px rgba(212, 162, 76, 0.4));
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm dark:shadow-none font-inter tracking-tight">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-blue-900 dark:text-white uppercase">GeoFlow</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-stone-500 hover:text-blue-900 transition-colors" href="#">Explore</a>
+<a class="text-blue-900 font-semibold border-b-2 border-blue-900 pb-1" href="#">Destinations</a>
+<a class="text-stone-500 hover:text-blue-900 transition-colors" href="#">Trips</a>
+<a class="text-stone-500 hover:text-blue-900 transition-colors" href="#">Guides</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-stone-50 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="px-4 py-2 text-sm font-semibold text-blue-900 border border-blue-900 rounded hover:bg-stone-50 transition-all">Sign In</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-stone-50 border-r border-stone-200 flex flex-col p-4 z-40 hidden md:flex">
+<div class="flex items-center gap-3 px-4 py-6 border-b border-stone-200 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">T</div>
+<div>
+<p class="text-blue-900 font-bold font-inter text-sm">Traveler</p>
+<p class="text-stone-500 text-xs">Sophisticated Explorer</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="bg-white text-blue-900 shadow-sm ring-1 ring-stone-200 rounded-md py-3 px-4 flex items-center gap-3 transition-transform duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+<span class="font-inter text-sm">World Map</span>
+</a>
+<a class="text-stone-500 py-3 px-4 flex items-center gap-3 hover:text-blue-900 hover:bg-white rounded-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-inter text-sm">Saved Places</span>
+</a>
+<a class="text-stone-500 py-3 px-4 flex items-center gap-3 hover:text-blue-900 hover:bg-white rounded-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-inter text-sm">My Itineraries</span>
+</a>
+<a class="text-stone-500 py-3 px-4 flex items-center gap-3 hover:text-blue-900 hover:bg-white rounded-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+<span class="font-inter text-sm">Explorer Club</span>
+</a>
+</nav>
+<button class="mt-auto bg-primary-container text-on-primary-container py-3 px-4 rounded-md font-semibold text-sm hover:opacity-90 transition-all">
+            Upgrade to Pro
+        </button>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-64 mt-16 h-[calc(100vh-4rem)] flex overflow-hidden">
+<!-- Left: Interactive Map Area (60%) -->
+<div class="w-full lg:w-3/5 relative map-container flex items-center justify-center overflow-hidden">
+<!-- Simulated Map -->
+<div class="relative w-full h-full p-12">
+<img class="w-full h-full object-cover opacity-20 grayscale brightness-50" data-alt="A stylized digital map of East Asia focused on Japan. Japan is rendered in a vibrant, glowing gold-amber color #D4A24C while surrounding countries and the ocean are dimmed in a sophisticated monochromatic slate grey. The visual style is minimalist and professional, evocative of a high-end travel dashboard with subtle grid lines and a soft atmospheric glow around the Japanese archipelago." data-location="Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvXUf8eN_gxlAf_bTJV0L6LRtfIccOXUrjzpZjk4daE-oMiS2-J8jbjU5BO-suhD-a5Eh0MOrVphkYImd8svoiDmXUTpZyXFpS6ePelWnhp3wA7KtTFwjWqWdjyysiOJGY5o0jwa8LjEOCXSIJSwYp2FGZLnKExJMPvQ2n1nHClIaAn5r2e-U36gH4X5-p45z1F6wFuwD8BtycpGbZW-WJpo1Y3tlhvdpHBCAQH4reke36ntADNDTbOvVsAPgoK_P4nqHGYCrOBDlA"/>
+<!-- Highlighted Japan Overlay (Simulated with a gold glow) -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-1/3 h-1/2 bg-[#D4A24C]/20 border-2 border-[#D4A24C] rounded-full blur-3xl"></div>
+</div>
+<!-- Floating Labels -->
+<div class="absolute top-1/4 left-1/3 p-2 bg-white/80 backdrop-blur-sm rounded border border-stone-200 text-xs font-semibold text-stone-500">Sea of Japan</div>
+<div class="absolute bottom-1/4 right-1/4 p-2 bg-white/80 backdrop-blur-sm rounded border border-stone-200 text-xs font-semibold text-stone-500">Pacific Ocean</div>
+<!-- FAB -->
+<div class="absolute bottom-10 right-10 flex flex-col items-end gap-4">
+<button class="relative flex items-center gap-3 bg-primary-container text-white px-6 py-4 rounded-full shadow-lg hover:scale-105 transition-all group">
+<span class="font-semibold">View Flights</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+<!-- Notification Dot -->
+<span class="absolute top-0 right-0 w-3 h-3 bg-error rounded-full ring-2 ring-white"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right: Sliding Info Panel (40%) -->
+<div class="hidden lg:flex w-2/5 h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex-col z-10 overflow-y-auto border-l border-stone-100">
+<!-- Panel Header -->
+<div class="p-8 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-20">
+<h1 class="text-h2 font-h2 text-primary flex items-center gap-2">
+                    Japan 🇯🇵
+                </h1>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-600">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-600">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- Hero Image -->
+<div class="px-8 pb-6">
+<div class="h-[200px] rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A breathtaking view of Mount Fuji during cherry blossom season. The perfectly symmetrical volcanic peak is capped with crisp white snow, set against a clear blue sky. In the foreground, vibrant pink sakura blossoms frame the scene, with the soft morning light casting a warm, elegant glow over the landscape. The atmosphere is serene and represents high-end editorial travel photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB-lZGbCFmCFM-a3P0WudzIakIk0mO79FYvlaTvDEkMHBgByI5sd5zOrUd4eJJaguQeGze9gzHdcCNY324CcMTNdvJB8PXcUJjuQopxkE0Hwg2cdNk4piZt1f3kXus-mHOkK0A3YBjVZMFn7kP4YsPKrYCodIVaePmNCiXfDWIpaw5dP6XKhJMUA2nCKc29XE5ZGq_BMGgVp2ht5_ZHJTzDUrfTGeYZFYJ2rGWVeBMujqJ8guXkx5n3QNoQL3FPQIvjRnDRAol0JUg"/>
+</div>
+</div>
+<!-- Tabs -->
+<div class="px-8 flex gap-8 border-b border-stone-100 mb-8">
+<button class="pb-4 text-primary font-semibold border-b-2 border-primary-container text-sm">Culture &amp; History</button>
+<div class="relative">
+<button class="pb-4 text-stone-400 font-medium hover:text-stone-600 transition-colors text-sm">Flights &amp; Logistics</button>
+<span class="absolute top-0 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="px-8 space-y-8 pb-12">
+<!-- Intro Paragraph -->
+<div>
+<p class="text-on-surface-variant leading-relaxed font-body-md">
+                        Japan is a land where ancient traditions meld seamlessly with futuristic technology. From the serene Zen gardens of Kyoto to the neon-lit streets of Shibuya, the archipelago offers a profound sensory journey through time and culture.
+                    </p>
+</div>
+<!-- Did you know card -->
+<div class="p-6 bg-[#FDF6E3] rounded-xl border border-[#D4A24C]/20 flex gap-4">
+<div class="text-[#D4A24C]">
+<span class="material-symbols-outlined" data-icon="lightbulb" data-weight="fill">lightbulb</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-[#604100] mb-1">DID YOU KNOW?</p>
+<p class="text-sm text-stone-700 leading-snug">There are more than 6,800 islands in the Japanese archipelago, though most people only ever visit the four largest: Honshu, Hokkaido, Kyushu, and Shikoku.</p>
+</div>
+</div>
+<!-- Key Facts Grid -->
+<section>
+<h2 class="text-label-caps font-label-caps text-stone-500 mb-4">ESSENTIAL FACTS</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+<p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Capital</p>
+<p class="font-semibold text-primary">Tokyo</p>
+</div>
+<div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+<p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Language</p>
+<p class="font-semibold text-primary">Japanese</p>
+</div>
+<div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+<p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Currency</p>
+<p class="font-semibold text-primary">JPY (¥)</p>
+</div>
+<div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+<p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Best Time</p>
+<p class="font-semibold text-primary">Mar – May</p>
+</div>
+</div>
+</section>
+<!-- Highlights Section -->
+<section>
+<h2 class="text-label-caps font-label-caps text-stone-500 mb-4">TOP CULTURAL HIGHLIGHTS</h2>
+<div class="grid grid-cols-2 gap-6">
+<!-- Highlight 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A vibrant street-level view of Shibuya Crossing in Tokyo at night. Neon signs in Japanese characters illuminate the bustling intersection with deep blues, magentas, and whites. The image captures the high-energy, modern essence of Japan's urban heart in a sharp, professional editorial style with a cool-toned, high-contrast palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvwjBr8KrGQJLizQc41eM_4AcQ8Z7PwB6w8aQZwlq9gjWodM-6v6IPkZoaMd9a9KYtUa3vPe3u9VknfFmm2Y_Sq-3F6qP_xjEhEBRKqq2slBPQAUC9lgBBF6ANOQzxjZeJo_toNxJQEUGqsRWVV72M43VZtjBh77Rgt6CMSkUznAlhO1-ZReYAJWP53lDWFbvEAZWSaJTqy1PkrJYC6Ud5GqUQ_s0faKVx6QdryYe3_xXG5igKZByHOrJliIaBRrdSFvg_DvxPkOCC"/>
+</div>
+<p class="text-sm font-semibold text-primary">Tokyo Shibuya</p>
+<p class="text-xs text-stone-500">The world's busiest crossing</p>
+</div>
+<!-- Highlight 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An ethereal view of a historic Kyoto temple surrounded by lush autumn foliage in shades of crimson and orange. The wooden architecture of the pagoda is intricate and weathered, standing timeless against a soft, misty mountain background. The lighting is low and diffused, creating a serene, spiritual atmosphere consistent with the sophisticated explorer aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Dj19dYYvhsJ1p8ebbp3qXAT86odfLuAmj5n5zww1xzPcwa-91V5Xj89uBRRtEuOnQfHtorfp9LK7gy-ZztnfNIBmZ9UO0qh8L4Gj5IBFfN1j_XOlY-eRlfdV2jEKQum3tOq-bMOannpbxdeSFgbyp7xO398x3z2t4QJrk4mP8gLeHfSCX89EdrC3Zw_ovEZv96L8-Tdze3eS1s--sBIDcK5L7xtvGImnUa_4rpgr7TuKFdXfl5aJ7s0u9j_3RwOoxEO65JZKiUID"/>
+</div>
+<p class="text-sm font-semibold text-primary">Kyoto Temples</p>
+<p class="text-xs text-stone-500">Ancient spiritual heritage</p>
+</div>
+<!-- Highlight 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A majestic view of Osaka Castle rising above a moat. The traditional white and green architecture is accented by gold leaf details that catch the afternoon sun. The surrounding park is lush with green trees, and the composition emphasizes the scale and historical significance of the fortress. The image is bright and clean, fitting a modern travel UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh59HJ_WhN8JmkqY4ddqI4xJA-xMecieE3ZOkR3hZzExkdXkgE1M1wedp__alOuSKmHUay-lCGssuAkgerWjmZfTTvv3dgEAROOc_NCS1Hei_dZ6XOU_cvTHjdt6GOvuAo3wSZ5ZTRc7ryr_IAU5822e4I6eO2vVLmaHZ-sJju2O256LZlV-1V9v86gRzD2Gkeh14O5lrzv-e6nc-VDUqo7MOR-7wVjXXRctKquKbNHY0D9fUHh53SA8JPyR9tZ2wiRYP8lcfYYuVI"/>
+</div>
+<p class="text-sm font-semibold text-primary">Osaka Castle</p>
+<p class="text-xs text-stone-500">Historic samurai fortress</p>
+</div>
+<!-- Highlight 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A wide angle shot of the Chureito Pagoda with Mount Fuji in the background during the blue hour. The pagoda's red wood and five stories stand in stark, beautiful contrast against the darkening blue sky and the snow-capped mountain. The image is tranquil, premium, and representative of bucket-list Japanese travel experiences." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-HAojaormQjTG8l9ocFWYsaj9UJMQWngerT-LGXJf7FtOsMIOndg0pTupOwuTW3xJeLjY9lSLkrt_phFmZ97KVx3rdpGrsvZ2anHzBbIVgBDICoKmILi4vpCuIsyAnkiSdOxFuWgJpHmdVtHr2Nhhh2qhNYO-fxpM-t-6cV_qMQPf0VOz3t_H7BT1PUUahh-ss2MrukD_0MPk6LLLbRzrv3KZmszJUhJX1V9wH1MlIsXSKekfXTCrwH6vR1wrZqPmZ4Uf5UHBiKmJ"/>
+</div>
+<p class="text-sm font-semibold text-primary">Mt. Fuji Peaks</p>
+<p class="text-xs text-stone-500">The iconic sacred summit</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

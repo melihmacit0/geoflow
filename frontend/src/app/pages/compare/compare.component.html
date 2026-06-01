@@ -1,0 +1,124 @@
+<gf-top-nav></gf-top-nav>
+
+<main class="pt-16 h-screen flex flex-col">
+  <!-- Header strip -->
+  <div class="px-8 py-4 bg-white flex flex-wrap gap-4 items-center justify-between z-20 border-b border-surface-container">
+    <div class="flex items-center gap-4 flex-wrap">
+      <h1 class="font-h3 text-h3 text-primary">Comparing {{ selected().length }} destination{{ selected().length === 1 ? '' : 's' }}</h1>
+      <div class="flex gap-2 flex-wrap">
+        @for (c of selected(); track c.code) {
+          <span class="px-3 py-1 text-white text-label-caps rounded-full flex items-center gap-1" [style.background]="c.accent">
+            {{ c.name }}
+            <button (click)="removeCountry(c.code)" class="material-symbols-outlined text-sm hover:opacity-70">close</button>
+          </span>
+        }
+      </div>
+    </div>
+    <div class="flex items-center gap-6 relative">
+      <button (click)="showPicker.set(!showPicker())" class="flex items-center gap-2 text-primary font-semibold hover:opacity-70 transition-opacity">
+        <span class="material-symbols-outlined">add</span><span class="text-body-md">Add another</span>
+      </button>
+      @if (showPicker()) {
+        <div class="absolute top-10 right-20 z-[600] bg-white border border-outline-variant rounded-lg shadow-xl py-2 w-56 max-h-72 overflow-y-auto custom-scrollbar">
+          @for (c of available; track c.code) {
+            <button (click)="add(c.code)" class="w-full text-left px-4 py-2 hover:bg-surface-container-low flex items-center gap-3 text-sm">
+              <span>{{ c.flag }}</span><span class="text-primary font-medium">{{ c.name }}</span>
+            </button>
+          } @empty {
+            <p class="px-4 py-2 text-xs text-outline">All destinations added.</p>
+          }
+        </div>
+      }
+      <button (click)="clearAll()" class="text-slate-400 font-medium hover:text-error transition-colors">Clear all</button>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <section class="h-[45%] w-full relative bg-surface-container-low">
+    <div #mapEl class="w-full h-full"></div>
+  </section>
+
+  <!-- Comparison table -->
+  <section class="flex-1 bg-white border-t border-surface-container overflow-auto custom-scrollbar">
+    @if (selected().length) {
+      <div class="px-8 py-6 min-w-[700px]">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr>
+              <th class="w-1/4 pb-6 text-left"><p class="text-label-caps text-slate-400">METRICS</p></th>
+              @for (c of selected(); track c.code) {
+                <th class="pb-6 px-4">
+                  <div class="flex flex-col items-center text-center gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xl">{{ c.flag }}</span>
+                      <h3 class="font-h3 text-h3 text-primary">{{ c.name }}</h3>
+                    </div>
+                    <div class="w-full h-16 rounded-lg overflow-hidden">
+                      <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
+                    </div>
+                  </div>
+                </th>
+              }
+            </tr>
+          </thead>
+          <tbody class="text-body-md">
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Cheapest flight</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center">
+                  <span [class]="isCheapestFlight(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.cheapestFlight }}</span>
+                </td>
+              }
+            </tr>
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Flight duration</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center">
+                  <span [class]="isFastest(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">{{ c.comparison.flightDuration }}</span>
+                </td>
+              }
+            </tr>
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Best season</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center text-primary">{{ c.comparison.bestSeason }}</td>
+              }
+            </tr>
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Top cultural draw</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center italic text-slate-500">{{ c.comparison.culturalDraw }}</td>
+              }
+            </tr>
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Estimated daily budget</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center">
+                  <span [class]="isCheapestBudget(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.comparison.dailyBudget }}</span>
+                </td>
+              }
+            </tr>
+            <tr class="border-t border-surface-container-low">
+              <td class="py-4 font-semibold text-slate-600">Visa requirement</td>
+              @for (c of selected(); track c.code) {
+                <td class="py-4 text-center text-primary">{{ c.comparison.visa }}</td>
+              }
+            </tr>
+            <tr>
+              <td></td>
+              @for (c of selected(); track c.code) {
+                <td class="py-8 px-4">
+                  <button (click)="open(c.code)" class="w-full py-3 text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md" [style.background]="c.accent">Pick {{ c.name }}</button>
+                </td>
+              }
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="text-center py-16">
+        <p class="text-on-surface-variant">No destinations selected. Add some to compare.</p>
+      </div>
+    }
+  </section>
+</main>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sophisticated Explorer | Japan Flight Discovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#2d4677",
+                        "primary-container": "#0f2c5c",
+                        "outline": "#747780",
+                        "inverse-on-surface": "#f1f0f5",
+                        "surface-container-high": "#e9e7ec",
+                        "secondary": "#7e5700",
+                        "surface-container": "#efedf2",
+                        "surface-variant": "#e3e2e7",
+                        "on-tertiary-fixed-variant": "#6c3915",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#c9855a",
+                        "primary": "#00173d",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#604100",
+                        "secondary-container": "#ffc96f",
+                        "surface": "#faf8fd",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#7d95cb",
+                        "tertiary-container": "#4d2100",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#281900",
+                        "on-tertiary-fixed": "#321300",
+                        "surface-bright": "#faf8fd",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#785300",
+                        "secondary-fixed-dim": "#f3be65",
+                        "inverse-primary": "#aec6ff",
+                        "tertiary": "#2d1100",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e2e7",
+                        "background": "#faf8fd",
+                        "tertiary-fixed-dim": "#ffb689",
+                        "outline-variant": "#c4c6d0",
+                        "on-primary-fixed": "#001a42",
+                        "tertiary-fixed": "#ffdbc8",
+                        "primary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#44474f",
+                        "on-surface": "#1a1b1f",
+                        "surface-tint": "#455e90",
+                        "surface-dim": "#dbd9de",
+                        "secondary-fixed": "#ffdeac",
+                        "primary-fixed-dim": "#aec6ff",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f4f3f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "32px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px",
+                        "section-gap": "120px",
+                        "margin-page": "64px"
+                    },
+                    "fontFamily": {
+                        "hero-display": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf8fd;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-white dark:bg-slate-950 border-b border-[#E5E5E0] dark:border-slate-800 shadow-[0_20px_40px_rgba(15,44,92,0.04)] sticky top-0 z-50">
+<div class="flex justify-between items-center h-20 px-8 max-w-[1280px] mx-auto w-full font-inter antialiased tracking-tight text-sm font-medium">
+<div class="flex items-center gap-12">
+<span class="text-lg font-black tracking-tighter text-[#0F2C5C] dark:text-white uppercase cursor-pointer">Sophisticated Explorer</span>
+<nav class="hidden md:flex gap-8">
+<a class="text-slate-400 dark:text-slate-500 hover:text-[#0F2C5C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Discover</a>
+<a class="text-[#0F2C5C] dark:text-white border-b-2 border-[#E1C58E] pb-4 -mb-4 cursor-pointer active:opacity-70" href="#">Flights</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-[#0F2C5C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Hotels</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-[#0F2C5C] dark:hover:text-white transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Curated</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#0F2C5C] cursor-pointer" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-[#0F2C5C] cursor-pointer" data-icon="favorite">favorite</span>
+<img alt="User traveler profile avatar" class="w-10 h-10 rounded-full object-cover border-2 border-surface-container-high" data-alt="A professional headshot of a sophisticated modern traveler in his late 30s. He is smiling warmly, wearing a crisp white linen shirt against a soft bokeh background of a Mediterranean coastal town at sunset. The lighting is golden and warm, perfectly aligning with a high-end travel brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvE0hTEd6O7uY7pSAnKL0cgdf1z-KX6Y_0YCAlY3GbhFez6qNE0lEsMyDUZX4hiVwnjhb6J3khjVnOt4E2JfttpgjCBG9qFvS1JazZS2BEft2Tic8Dmpb-Ht4C18nx7vf1KED2vej2qETAa-NLB4YAPG7NBjKHw8igz6e0ZiVOJjNo-jlr0KiILug7wBYO5X9dCHY9VXIPUDCc_HI0Xj7NPcPcTBD20QP-BfPIGc9oPr8kIurQFHIz50tXRw-fgn1VNrT6RXQwIsB5"/>
+</div>
+</div>
+</header>
+<main class="flex h-[calc(100vh-80px)] overflow-hidden">
+<!-- Map Section (60%) -->
+<section class="w-[60%] relative bg-slate-100 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Map of Japan" class="w-full h-full object-cover grayscale opacity-40" data-alt="A stylized, high-contrast digital map focusing on the archipelago of Japan. The surrounding ocean is rendered in a deep, muted navy blue, while the landmass of Japan is highlighted in a vibrant, glowing gold amber. The lighting is dramatic, with a soft vignette around the edges of the frame to draw the viewer's eye toward the centered Japanese islands. The aesthetic is clean, professional, and minimalist." data-location="Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-m4iNw3tb4-9BVVJbNNRv6N2LWK-AvkxOjgFc99I3Z-YiLuDiVuXtU3n5lIXq7q_rUvC7NGpj-EBzglV4TWyH1Q4qjuu5nEbQcJo9ulURPRJvGTh_Zgsy3AxcvN6bRZqdsmrim-G8o3bb7nXASsc76KGw4Ww_jN6tBWIspErrH1BpIiMYRQmvb0yBReGUpQaMeybzKIZrY5OAAtYrz-P2s46q5JV_bAmayyUrGeSoEmM3ZhfxJxjK1dldl0KLk8sr14i7yKiv5vIg"/>
+<!-- Golden Highlight Overlay -->
+<div class="absolute inset-0 bg-[#D4A24C] mix-blend-color opacity-20"></div>
+</div>
+<!-- Map Interaction Buttons -->
+<div class="absolute bottom-10 left-10 flex flex-col gap-3 z-10">
+<button class="w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center text-primary-container hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<button class="w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center text-primary-container hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+</div>
+</section>
+<!-- Right Panel (40%) -->
+<aside class="w-[40%] bg-white shadow-[-10px_0_30px_rgba(15,44,92,0.05)] z-20 flex flex-col overflow-hidden">
+<!-- Panel Header -->
+<div class="p-gutter pb-6 border-b border-surface-container">
+<div class="flex justify-between items-start mb-4">
+<h2 class="font-h2 text-h2 text-primary">Japan 🇯🇵</h2>
+<div class="flex gap-4">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- Tab Row -->
+<div class="flex gap-8 mt-6">
+<button class="font-label-caps text-label-caps text-outline pb-2 relative">
+                        Culture &amp; History
+                    </button>
+<button class="font-label-caps text-label-caps text-primary pb-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#0F2C5C]">
+                        Flights &amp; Logistics
+                    </button>
+</div>
+</div>
+<!-- Panel Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-gutter space-y-stack-lg custom-scrollbar">
+<!-- Route Card -->
+<div class="p-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between mb-stack-md">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-center">
+<p class="font-label-caps text-[10px] text-outline">FROM</p>
+<p class="font-h3 text-lg text-primary">IST</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant scale-125" data-icon="swap_horiz">swap_horiz</span>
+<div class="text-center">
+<p class="font-label-caps text-[10px] text-outline">TO</p>
+<p class="font-h3 text-lg text-primary">HND</p>
+</div>
+</div>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+                            May 15 — May 25
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="person">person</span>
+                            1 Adult
+                        </div>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+<button class="whitespace-nowrap px-4 py-2 bg-primary-container text-on-primary rounded-full text-xs font-medium border border-primary-container">Cheapest</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white text-outline-variant rounded-full text-xs font-medium border border-outline-variant hover:border-primary hover:text-primary transition-all">Fastest</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white text-outline-variant rounded-full text-xs font-medium border border-outline-variant hover:border-primary hover:text-primary transition-all">Best Value</button>
+<button class="whitespace-nowrap px-4 py-2 bg-white text-outline-variant rounded-full text-xs font-medium border border-outline-variant hover:border-primary hover:text-primary transition-all">Direct only</button>
+</div>
+<!-- Flight Result List -->
+<div class="space-y-4 pb-20">
+<!-- Card 1 -->
+<div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow duration-300 flex items-center gap-6 group">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<div class="flex-1 grid grid-cols-3 items-center">
+<div>
+<p class="font-h3 text-lg text-primary">09:40</p>
+<p class="text-[10px] text-outline font-label-caps">IST</p>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline mb-1">11h 20m</p>
+<div class="relative flex items-center justify-center">
+<div class="h-[1px] bg-outline-variant w-full"></div>
+<div class="absolute w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+<p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">Direct</p>
+</div>
+<div class="text-right">
+<p class="font-h3 text-lg text-primary">23:00</p>
+<p class="text-[10px] text-outline font-label-caps">HND</p>
+</div>
+</div>
+<div class="text-right shrink-0 border-l border-outline-variant pl-6">
+<p class="font-h2 text-xl text-primary-container mb-1">$642</p>
+<button class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
+                                View <span class="material-symbols-outlined text-xs" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow duration-300 flex items-center gap-6">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<div class="flex-1 grid grid-cols-3 items-center">
+<div>
+<p class="font-h3 text-lg text-primary">11:15</p>
+<p class="text-[10px] text-outline font-label-caps">IST</p>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline mb-1">12h 05m</p>
+<div class="relative flex items-center justify-center">
+<div class="h-[1px] bg-outline-variant w-full"></div>
+<div class="absolute w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+<p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">Direct</p>
+</div>
+<div class="text-right">
+<p class="font-h3 text-lg text-primary">01:20</p>
+<p class="text-[10px] text-outline font-label-caps">HND</p>
+</div>
+</div>
+<div class="text-right shrink-0 border-l border-outline-variant pl-6">
+<p class="font-h2 text-xl text-primary-container mb-1">$658</p>
+<button class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
+                                View <span class="material-symbols-outlined text-xs" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow duration-300 flex items-center gap-6">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<div class="flex-1 grid grid-cols-3 items-center">
+<div>
+<p class="font-h3 text-lg text-primary">14:50</p>
+<p class="text-[10px] text-outline font-label-caps">IST</p>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline mb-1">14h 45m</p>
+<div class="relative flex items-center justify-center">
+<div class="h-[1px] bg-outline-variant w-full"></div>
+<div class="absolute w-1.5 h-1.5 rounded-full bg-primary-container"></div>
+</div>
+<p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">1 Stop (DXB)</p>
+</div>
+<div class="text-right">
+<p class="font-h3 text-lg text-primary">07:35</p>
+<p class="text-[10px] text-outline font-label-caps">HND</p>
+</div>
+</div>
+<div class="text-right shrink-0 border-l border-outline-variant pl-6">
+<p class="font-h2 text-xl text-primary-container mb-1">$592</p>
+<button class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
+                                View <span class="material-symbols-outlined text-xs" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow duration-300 flex items-center gap-6">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<div class="flex-1 grid grid-cols-3 items-center">
+<div>
+<p class="font-h3 text-lg text-primary">08:20</p>
+<p class="text-[10px] text-outline font-label-caps">IST</p>
+</div>
+<div class="text-center px-4">
+<p class="text-xs text-outline mb-1">11h 15m</p>
+<div class="relative flex items-center justify-center">
+<div class="h-[1px] bg-outline-variant w-full"></div>
+<div class="absolute w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+<p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">Direct</p>
+</div>
+<div class="text-right">
+<p class="font-h3 text-lg text-primary">21:35</p>
+<p class="text-[10px] text-outline font-label-caps">HND</p>
+</div>
+</div>
+<div class="text-right shrink-0 border-l border-outline-variant pl-6">
+<p class="font-h2 text-xl text-primary-container mb-1">$684</p>
+<button class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
+                                View <span class="material-symbols-outlined text-xs" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+<!-- Disclaimer -->
+<p class="text-[11px] text-outline font-body-md py-4 italic leading-relaxed">
+                        Prices fetched in real-time from partners. GeoFlow does not process payments — booking redirects to the partner site.
+                    </p>
+</div>
+</div>
+<!-- Sticky Bottom Button -->
+<div class="p-gutter pt-4 pb-8 bg-white border-t border-surface-container">
+<button class="w-full bg-[#D4A24C] hover:bg-[#b88c42] text-white py-4 font-bold tracking-widest uppercase text-xs transition-colors rounded-lg shadow-md active:scale-[0.98]">
+                    Save this destination
+                </button>
+</div>
+</aside>
+</main>
+<!-- SideNavBar (Suppressed as per rules for focus view, but logic included for completeness) -->
+<!-- BottomNavBar (Hidden on desktop) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 md:hidden bg-white/90 backdrop-blur-md border-t border-[#E5E5E0]">
+<div class="text-slate-400 flex flex-col items-center justify-center pt-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Explore</span>
+</div>
+<div class="text-[#0F2C5C] flex flex-col items-center justify-center pt-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="flight" style="font-variation-settings: 'FILL' 1;">flight</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Flights</span>
+</div>
+<div class="text-slate-400 flex flex-col items-center justify-center pt-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Saved</span>
+</div>
+<div class="text-slate-400 flex flex-col items-center justify-center pt-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,119 @@
+<!-- Marketing TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm shadow-blue-900/5">
+  <div class="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl font-black tracking-tighter text-primary-container">GeoFlow</span>
+    </div>
+    <div class="hidden md:flex items-center gap-12 tracking-tight font-medium">
+      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#how">How it works</a>
+      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#features">Features</a>
+      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#about">About</a>
+    </div>
+    <div class="flex items-center gap-6">
+      @if (user(); as u) {
+        <a routerLink="/discover" class="text-slate-500 hover:text-primary-container transition-all font-medium">Hi, {{ u.name.split(' ')[0] }}</a>
+        <a routerLink="/discover" class="bg-primary-container text-white px-6 py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium">Open Map</a>
+      } @else {
+        <a routerLink="/signin" class="text-slate-500 hover:text-primary-container transition-all font-medium">Sign In</a>
+        <a routerLink="/discover" class="bg-primary-container text-white px-6 py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium">Get Started</a>
+      }
+    </div>
+  </div>
+</nav>
+
+<main class="pt-20">
+  <!-- Hero -->
+  <section class="relative min-h-[820px] flex flex-col items-center justify-center overflow-hidden py-section-gap">
+    <div class="absolute inset-0 z-0 opacity-[0.07] pointer-events-none bg-cover bg-center"
+      style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7jw7FQKa0q9j2Fpfqqy2DrWX8xQ7lHkNzq5tFzoIq2JzbnLv2Ez2SkiVBmnl_6ffo_dlCOONkX85Q304IOH2tmAZfmscUD81NrPMEUdLfIDbjKRMs5E3ehly4wcGybktiYk6J6B1OIrAYjf-DEHs_qrqRhb-fh6SKx2kUoOjfxzKgq2LwvL7-fFL2wutIJ6BzIpgCUGYanJnFuL3n-T_yUCsDQjRUX89xnOvCCml9ORRSNcTrBav3hsIGaLdFC1Ytx08OhvL67mkb');">
+    </div>
+    <div class="relative z-10 max-w-4xl px-gutter text-center space-y-stack-lg">
+      <h1 class="font-hero-display text-hero-display text-primary uppercase tracking-tight">Discover. Learn. Travel.</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+        Plan your next journey on a single map — culture, history, and flights in one place.
+        Experience the world through a lens of professional precision and boundless curiosity.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center pt-8">
+        <a routerLink="/discover" class="bg-primary-container text-white px-10 py-4 rounded-xl font-semibold shadow-lg shadow-primary-container/20 hover:-translate-y-0.5 transition-all">Start Exploring</a>
+        <a routerLink="/compare" class="bg-white border border-outline-variant text-primary px-10 py-4 rounded-xl font-semibold hover:bg-surface-container transition-all">Compare Destinations</a>
+      </div>
+    </div>
+
+    <!-- Feature cards -->
+    <div id="features" class="relative z-10 max-w-7xl mx-auto px-gutter mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+          <span class="material-symbols-outlined text-primary text-3xl">public</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Interactive Map Discovery</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Navigate the globe with fluid, high-fidelity mapping that surfaces hidden gems and cultural landmarks.</p>
+      </div>
+      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+          <span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Cultural Insights</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Deep dive into history and local traditions with our curated editorial guides for every destination.</p>
+      </div>
+      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+          <span class="material-symbols-outlined text-primary text-3xl">flight</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Real-Time Flights</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Instant connectivity data at your fingertips, allowing you to bridge cities across the world seamlessly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual content -->
+  <section id="how" class="max-w-7xl mx-auto px-gutter py-section-gap">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+      <div class="space-y-stack-lg">
+        <span class="font-label-caps text-label-caps text-secondary uppercase">The New Standard</span>
+        <h2 class="font-h1 text-h1 text-primary">Travel planning without the clutter.</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+          GeoFlow eliminates the friction of jumping between tabs. We combine geospatial data with
+          editorial storytelling to give you a holistic view of your next adventure.
+        </p>
+        <ul class="space-y-stack-md pt-stack-md">
+          <li class="flex items-center gap-3">
+            <span class="material-symbols-outlined fill text-secondary">check_circle</span>
+            <span class="font-body-md">Unified journey timelines</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="material-symbols-outlined fill text-secondary">check_circle</span>
+            <span class="font-body-md">Expertly curated cultural hubs</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="material-symbols-outlined fill text-secondary">check_circle</span>
+            <span class="font-body-md">Dynamic logistical mapping</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative aspect-square">
+        <img
+          alt="Travel dashboard"
+          class="w-full h-full object-cover rounded-xl shadow-2xl"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmOHKOy5gTisEEgRVEPTFiaiYBM-7_9ies1qdi6atgmlN56RqiAUIgF9b0dGJMP2jO5VFJytn_UBfajbeq3olumcFc93J-DDOEBEovTkwa-s333wftoRCR7gpckFgfyRdtyFHr0x7LSwc76_aretGlhmjJpHKXl056jaCczgE_a6rj0DvUxdnyMwWOzBBzezRBM8AmlFFMmmW3mIaXIkj-MeFbk0Cn0YNQozhuK0CjiZsFeLI1j8ym2WGot5gOqIXCw7hgHY4b4VJa"
+        />
+        <div class="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl border border-outline-variant shadow-lg max-w-xs">
+          <p class="font-body-md italic text-primary">"The most intuitive tool I've used for scouting new locations across Europe."</p>
+          <p class="font-label-caps mt-4">— Julian Vance, Explorer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="about" class="bg-primary text-white py-section-gap">
+    <div class="max-w-7xl mx-auto px-gutter text-center space-y-stack-lg">
+      <h2 class="font-h1 text-h1">Ready for your next chapter?</h2>
+      <p class="font-body-lg text-on-primary-container max-w-xl mx-auto">
+        Join thousands of sophisticated explorers using GeoFlow to navigate the world.
+      </p>
+      <a routerLink="/discover" class="inline-block bg-secondary text-on-secondary px-12 py-5 rounded-full font-bold text-lg hover:bg-secondary-container hover:text-on-secondary-container transition-all">Get Started Free</a>
+    </div>
+  </section>
+</main>
+
+<gf-footer></gf-footer>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GeoFlow — Discover. Learn. Travel.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#2d1100",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#f3be65",
+                      "outline-variant": "#c4c6d0",
+                      "surface-dim": "#dbd9de",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f1f0f5",
+                      "on-surface-variant": "#44474f",
+                      "tertiary-fixed-dim": "#ffb689",
+                      "inverse-surface": "#2f3034",
+                      "outline": "#747780",
+                      "surface": "#faf8fd",
+                      "on-background": "#1a1b1f",
+                      "surface-container-low": "#f4f3f8",
+                      "tertiary-fixed": "#ffdbc8",
+                      "on-secondary-fixed-variant": "#604100",
+                      "tertiary-container": "#4d2100",
+                      "primary-container": "#0f2c5c",
+                      "on-surface": "#1a1b1f",
+                      "primary": "#00173d",
+                      "on-secondary-container": "#785300",
+                      "on-primary-fixed-variant": "#2d4677",
+                      "secondary-fixed": "#ffdeac",
+                      "secondary-container": "#ffc96f",
+                      "surface-tint": "#455e90",
+                      "inverse-primary": "#aec6ff",
+                      "on-primary-container": "#7d95cb",
+                      "primary-fixed-dim": "#aec6ff",
+                      "on-tertiary-fixed-variant": "#6c3915",
+                      "surface-container-highest": "#e3e2e7",
+                      "on-tertiary-container": "#c9855a",
+                      "background": "#faf8fd",
+                      "secondary": "#7e5700",
+                      "on-secondary-fixed": "#281900",
+                      "primary-fixed": "#d8e2ff",
+                      "on-primary-fixed": "#001a42",
+                      "surface-container-high": "#e9e7ec",
+                      "surface-container": "#efedf2",
+                      "on-tertiary-fixed": "#321300",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#faf8fd",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#e3e2e7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "32px",
+                      "section-gap": "120px",
+                      "base": "4px",
+                      "stack-sm": "8px",
+                      "stack-lg": "24px",
+                      "stack-md": "16px",
+                      "margin-page": "64px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "h3": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "hero-display": ["Inter"],
+                      "h2": ["Inter"],
+                      "h1": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "h3": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "hero-display": ["60px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "h2": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "h1": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #faf8fd;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm shadow-blue-900/5">
+<div class="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
+<div class="flex items-center gap-2">
+<img alt="GeoFlow Logo" class="w-10 h-10 object-contain" data-alt="A minimalist vector logo for GeoFlow featuring a sleek, abstract globe icon integrated with a fluid line representing motion. The design uses a deep navy blue and crisp white palette, emphasizing professional precision and travel innovation. The style is modern, geometric, and clean, fitting for a premium digital brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzFWOod64Scx93MLZTBL7OaLIWh8VuwKuJOjtgZM4M7LbLb8Kd0dkac-XqcepAHiNivnrNDB0RRJKNqPzMB8dHVz6had-HOJ6Pxn9aDcce4Q7rcfWm_YDpM6D0ol2tD9Ut5O_eT5hkhWwotdZlYzBQLWNO27_Y9P6QjZ1Le3iHVSoYxZTCkznMYsMJXmQTRrshE5rUc_0aXHkSnEgJTjWYY0fCfyeKygyi00SK9G4sx-_xKi0z0i27jHDrRjRBWNNndWB3dUN5qwaj"/>
+<span class="text-2xl font-black tracking-tighter text-blue-900 dark:text-white font-inter">GeoFlow</span>
+</div>
+<div class="hidden md:flex items-center gap-12 font-inter tracking-tight font-medium">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white transition-colors" href="#">How it works</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white transition-colors" href="#">Features</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white transition-all duration-200 font-inter tracking-tight font-medium">Sign In</button>
+<button class="bg-primary-container text-white px-6 py-2.5 rounded-lg hover:bg-primary transition-all duration-200 active:scale-95 ease-in-out font-inter tracking-tight font-medium">Get Started</button>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex flex-col items-center justify-center overflow-hidden py-section-gap">
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+<div class="w-full h-full" data-alt="A highly detailed, faded world map illustration with soft, dotted flight route lines connecting major global hubs. The aesthetic is sophisticated and minimalist, using a deep navy blue background with ivory continents. The lighting is low-contrast and atmospheric, creating a sense of professional exploration and digital cartography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7jw7FQKa0q9j2Fpfqqy2DrWX8xQ7lHkNzq5tFzoIq2JzbnLv2Ez2SkiVBmnl_6ffo_dlCOONkX85Q304IOH2tmAZfmscUD81NrPMEUdLfIDbjKRMs5E3ehly4wcGybktiYk6J6B1OIrAYjf-DEHs_qrqRhb-fh6SKx2kUoOjfxzKgq2LwvL7-fFL2wutIJ6BzIpgCUGYanJnFuL3n-T_yUCsDQjRUX89xnOvCCml9ORRSNcTrBav3hsIGaLdFC1Ytx08OhvL67mkb'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-background"></div>
+</div>
+<div class="relative z-10 max-w-4xl px-gutter text-center space-y-stack-lg">
+<h1 class="font-hero-display text-hero-display text-primary uppercase tracking-tight">
+                    Discover. Learn. Travel.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    Plan your next journey on a single map — culture, history, and flights in one place. Experience the world through a lens of professional precision and boundless curiosity.
+                </p>
+<div class="flex gap-4 justify-center pt-8">
+<button class="bg-primary-container text-white px-10 py-4 rounded-xl font-semibold shadow-lg shadow-primary-container/20 hover:translate-y-[-2px] transition-all">
+                        Start Exploring
+                    </button>
+<button class="bg-white border border-outline-variant text-primary px-10 py-4 rounded-xl font-semibold hover:bg-surface-container transition-all">
+                        View Demo
+                    </button>
+</div>
+</div>
+<!-- Feature Cards Bento-ish -->
+<div class="relative z-10 max-w-7xl mx-auto px-gutter mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">public</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-stack-sm">Interactive Map Discovery</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Navigate the globe with fluid, high-fidelity mapping that surfaces hidden gems and cultural landmarks.
+                    </p>
+</div>
+<div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-stack-sm">Cultural Insights</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Deep dive into history and local traditions with our curated editorial guides for every destination.
+                    </p>
+</div>
+<div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">flight</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-stack-sm">Real-Time Flights</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Instant connectivity data at your fingertips, allowing you to bridge cities across the world seamlessly.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Visual Content Section -->
+<section class="max-w-7xl mx-auto px-gutter py-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+<div class="space-y-stack-lg">
+<span class="font-label-caps text-label-caps text-secondary uppercase">The New Standard</span>
+<h2 class="font-h1 text-h1 text-primary">Travel planning without the clutter.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                        GeoFlow eliminates the friction of jumping between tabs. We combine geospatial data with editorial storytelling to give you a holistic view of your next adventure.
+                    </p>
+<ul class="space-y-stack-md pt-stack-md">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md">Unified journey timelines</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md">Expertly curated cultural hubs</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md">Dynamic logistical mapping</span>
+</li>
+</ul>
+</div>
+<div class="relative aspect-square">
+<img alt="Travel Dashboard" class="w-full h-full object-cover rounded-xl shadow-2xl" data-alt="A premium, clean user interface showing a high-end travel dashboard. The screen displays a sophisticated map with elegant gold pins over an off-white interface. Soft, ambient lighting hits the screen, highlighting the minimal typography and generous whitespace. The composition is professional and evokes a sense of high-intent travel planning." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmOHKOy5gTisEEgRVEPTFiaiYBM-7_9ies1qdi6atgmlN56RqiAUIgF9b0dGJMP2jO5VFJytn_UBfajbeq3olumcFc93J-DDOEBEovTkwa-s333wftoRCR7gpckFgfyRdtyFHr0x7LSwc76_aretGlhmjJpHKXl056jaCczgE_a6rj0DvUxdnyMwWOzBBzezRBM8AmlFFMmmW3mIaXIkj-MeFbk0Cn0YNQozhuK0CjiZsFeLI1j8ym2WGot5gOqIXCw7hgHY4b4VJa"/>
+<div class="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl border border-outline-variant shadow-lg max-w-xs">
+<p class="font-body-md italic text-primary">"The most intuitive tool I've used for scouting new locations across Europe."</p>
+<p class="font-label-caps mt-4">— Julian Vance, Explorer</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="bg-primary text-white py-section-gap">
+<div class="max-w-7xl mx-auto px-gutter text-center space-y-stack-lg">
+<h2 class="font-h1 text-h1">Ready for your next chapter?</h2>
+<p class="font-body-lg text-on-primary-container max-w-xl mx-auto">
+                    Join thousands of sophisticated explorers using GeoFlow to navigate the world.
+                </p>
+<button class="bg-secondary text-on-secondary px-12 py-5 rounded-full font-bold text-lg hover:bg-secondary-container hover:text-on-secondary-container transition-all">
+                    Get Started Free
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="text-xl font-bold text-blue-900 dark:text-white font-inter">GeoFlow</div>
+<p class="text-slate-500 dark:text-slate-400 font-inter text-sm antialiased text-center md:text-left">
+                    © 2024 GeoFlow. All rights reserved.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-inter text-sm antialiased">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white hover:underline underline-offset-4 transition-all" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white hover:underline underline-offset-4 transition-all" href="#">Terms of Service</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white hover:underline underline-offset-4 transition-all" href="#">Cookies</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-900 dark:hover:text-white hover:underline underline-offset-4 transition-all" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

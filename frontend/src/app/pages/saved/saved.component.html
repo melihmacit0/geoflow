@@ -1,0 +1,63 @@
+<gf-top-nav></gf-top-nav>
+
+<main class="pt-16">
+  <!-- Header strip -->
+  <section class="min-h-[120px] bg-[#F8F8F5] flex items-center py-6">
+    <div class="max-w-[1280px] mx-auto w-full px-8 flex flex-wrap gap-4 justify-between items-center">
+      <div>
+        <h1 class="text-[28px] font-bold text-primary-container leading-tight">Your Saved Destinations</h1>
+        <p class="text-on-surface-variant font-body-md">{{ saved().length }} places waiting for your next adventure</p>
+      </div>
+      <div class="flex items-center gap-3 text-primary-container font-medium">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="text-sm">Recently added</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="max-w-[1280px] mx-auto px-8 py-16">
+    @if (loading()) {
+      <div class="text-center text-outline py-20"><span class="material-symbols-outlined animate-spin text-3xl">progress_activity</span></div>
+    } @else if (saved().length === 0) {
+      <div class="text-center py-20">
+        <span class="material-symbols-outlined text-5xl text-outline-variant">bookmark_border</span>
+        <p class="mt-4 text-on-surface-variant">No saved destinations yet.</p>
+        <a routerLink="/discover" class="inline-block mt-6 bg-primary-container text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary transition-all">Explore the map</a>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter justify-items-center">
+        @for (d of saved(); track d.code) {
+          <article (click)="open(d.code)" class="w-full max-w-[340px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.08)] cursor-pointer">
+            <div class="relative h-[180px] w-full bg-surface-variant">
+              <img class="w-full h-full object-cover" [src]="d.image" [alt]="d.name" />
+              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">{{ d.flag }}</div>
+              <div class="absolute top-3 right-3 text-secondary">
+                <span class="material-symbols-outlined fill">bookmark</span>
+              </div>
+            </div>
+            <div class="p-stack-lg space-y-3">
+              <div>
+                <h3 class="font-h3 text-h3 text-primary-container">{{ d.name }}</h3>
+                <p class="text-label-caps text-on-surface-variant">{{ d.tagline }}</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">Cheapest flight: ${{ d.cheapestFlight }}</div>
+              </div>
+              <div class="flex gap-2 pt-2">
+                <button (click)="open(d.code); $event.stopPropagation()" class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors rounded">
+                  <span class="material-symbols-outlined text-sm">map</span> View on map
+                </button>
+                <button (click)="remove(d.code, $event)" class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors rounded">
+                  <span class="material-symbols-outlined text-lg">delete</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</main>
+
+<gf-footer></gf-footer>
