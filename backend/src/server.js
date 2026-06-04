@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
-import { destinations, buildFlights } from './data/destinations.js';
+import { destinations, buildFlights, buildHotels, buildCars } from './data/destinations.js';
+import { amadeus, getCached, setCache, mapOffer, fetchLiveHotels } from './amadeusClient.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -75,14 +76,106 @@ app.get('/api/countries/:code', (req, res) => {
   res.json(dest);
 });
 
-// Logistics — orchestration layer combining a destination with flight offers.
-app.get('/api/countries/:code/flights', (req, res) => {
+// Logistics — real Amadeus Flight Offers Search when credentials are set,
+// otherwise falls back to seeded mock data so the app works out of the box.
+app.get('/api/countries/:code/flights', async (req, res) => {
   const dest = destinations.find((d) => d.code === req.params.code.toUpperCase());
   if (!dest) return res.status(404).json({ error: 'Country not found' });
-  res.json({
+
+  // Default departure: 30 days from today
+  const defaultDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+  const departureDate = req.query.departureDate || defaultDate;
+  const adults = parseInt(req.query.adults) || 1;
+  const origin = req.query.origin || 'IST';
+
+  const base = {
     country: { code: dest.code, name: dest.name, flag: dest.flag, iata: dest.iata },
-    from: 'IST',
-    flights: buildFlights(dest)
+    from: origin,
+    departureDate,
+    source: 'live'
+  };
+
+  if (!amadeus) {
+    // No credentials configured — serve mock data and signal the source.
+    return res.json({ ...base, source: 'mock', flights: buildFlights(dest) });
+  }
+
+  const cacheKey = `flights:${origin}:${dest.iata}:${departureDate}:${adults}`;
+  const cached = getCached(cacheKey);
+  if (cached) return res.json({ ...base, source: 'live-cached', flights: cached });
+
+  try {
+    const response = await amadeus.shopping.flightOffersSearch.get({
+      originLocationCode: origin,
+      destinationLocationCode: dest.iata,
+      departureDate,
+      adults: String(adults),
+      max: '10',
+      currencyCode: 'USD'
+    });
+
+    const carriers = response.result?.dictionaries?.carriers ?? {};
+    const flights = response.data.map((offer) => mapOffer(offer, carriers));
+    setCache(cacheKey, flights);
+    res.json({ ...base, flights });
+  } catch (err) {
+    console.error('Amadeus flight search error:', err.description ?? err.message ?? err);
+    // Degrade gracefully to mock data on API error.
+    res.json({ ...base, source: 'mock-fallback', flights: buildFlights(dest) });
+  }
+});
+
+// Hotel offers — real Amadeus Hotel List + Hotel Offers Search v3 + Hotel Sentiments v2
+// when credentials are present; falls back to seeded mock data otherwise.
+app.get('/api/countries/:code/hotels', async (req, res) => {
+  const dest = destinations.find((d) => d.code === req.params.code.toUpperCase());
+  if (!dest) return res.status(404).json({ error: 'Country not found' });
+
+  const defaultCheckIn  = new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10);
+  const defaultCheckOut = new Date(Date.now() + 33 * 86_400_000).toISOString().slice(0, 10);
+  const checkIn  = req.query.checkIn  || defaultCheckIn;
+  const checkOut = req.query.checkOut || defaultCheckOut;
+  const adults   = parseInt(req.query.adults) || 1;
+
+  const base = {
+    country: { code: dest.code, name: dest.name, flag: dest.flag },
+    checkIn, checkOut, adults, source: 'live'
+  };
+
+  if (!amadeus) {
+    return res.json({ ...base, source: 'mock', hotels: buildHotels(dest) });
+  }
+
+  try {
+    const hotels = await fetchLiveHotels(dest, checkIn, checkOut, adults);
+    if (!hotels.length) {
+      return res.json({ ...base, source: 'mock-fallback', hotels: buildHotels(dest) });
+    }
+    res.json({ ...base, hotels });
+  } catch (err) {
+    console.error('Amadeus hotel search error:', err.description ?? err.message ?? err);
+    res.json({ ...base, source: 'mock-fallback', hotels: buildHotels(dest) });
+  }
+});
+
+// Car rental offers — NOTE: Amadeus car rental is an Enterprise-tier API not included
+// in the free self-service sandbox. Options for real data:
+//   • Rentalcars Connect API (rentalcarsconnect.com) — requires partner agreement
+//   • RapidAPI "Car Rental" by Booking.com — free tier available, set RAPIDAPI_KEY env var
+// Until a real API is wired up this route serves curated mock data with source:'mock'.
+app.get('/api/countries/:code/cars', (req, res) => {
+  const dest = destinations.find((d) => d.code === req.params.code.toUpperCase());
+  if (!dest) return res.status(404).json({ error: 'Country not found' });
+  const { pickupDate, dropoffDate, drivers } = req.query;
+  res.json({
+    country: { code: dest.code, name: dest.name, flag: dest.flag },
+    pickupDate: pickupDate || null,
+    dropoffDate: dropoffDate || null,
+    drivers: parseInt(drivers) || 1,
+    source: 'mock',
+    cars: buildCars(dest)
   });
 });
 

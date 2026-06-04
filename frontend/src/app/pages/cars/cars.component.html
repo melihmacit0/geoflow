@@ -1,0 +1,138 @@
+<gf-top-nav></gf-top-nav>
+
+<main class="min-h-screen bg-surface-container-lowest pt-20 pb-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+
+    <!-- Back + heading -->
+    <div class="flex items-center gap-3 mb-6">
+      <button (click)="back()" class="p-2 hover:bg-surface-container rounded-full transition-all text-stone-500">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      @if (response(); as r) {
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <h1 class="font-h2 text-h2 text-primary">Rent a Car in {{ r.country.name }} {{ r.country.flag }}</h1>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700"
+              title="Amadeus car rental is enterprise-tier only. Wire up Rentalcars Connect or RapidAPI for live data.">
+              SAMPLE
+            </span>
+          </div>
+          <p class="text-sm text-outline">{{ r.cars.length }} vehicles available · Pickup at {{ r.cars[0]?.pickupLocation }}</p>
+        </div>
+      } @else {
+        <h1 class="font-h2 text-h2 text-primary">Rent a Car</h1>
+      }
+    </div>
+
+    <!-- Search bar -->
+    <div class="bg-white rounded-2xl border border-stone-100 shadow-sm p-5 mb-6 flex flex-wrap gap-4 items-end">
+      <div class="flex-1 min-w-[140px]">
+        <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400 block mb-1">Pick-up date</label>
+        <input type="date" [value]="pickupDate()" (change)="pickupDate.set($any($event.target).value)"
+          class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-primary/20" />
+      </div>
+      <div class="flex-1 min-w-[140px]">
+        <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400 block mb-1">Drop-off date</label>
+        <input type="date" [value]="dropoffDate()" (change)="dropoffDate.set($any($event.target).value)"
+          class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-primary/20" />
+      </div>
+      <div class="w-28">
+        <label class="text-[10px] font-bold uppercase tracking-widest text-stone-400 block mb-1">Drivers</label>
+        <input type="number" [value]="drivers()" (change)="drivers.set(+$any($event.target).value)" min="1" max="4"
+          class="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-primary/20" />
+      </div>
+      <button (click)="search()"
+        class="bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-container transition-colors shrink-0">
+        Search
+      </button>
+    </div>
+
+    <!-- Sort + filter chips -->
+    <div class="flex flex-wrap gap-2 mb-5">
+      <span class="text-xs text-stone-400 self-center mr-1">Sort:</span>
+      @for (opt of [['price','Cheapest first'],['category','Category']] ; track opt[0]) {
+        <button (click)="sortBy.set($any(opt[0]))"
+          [class]="sortBy() === opt[0] ? 'bg-primary-container text-white border-primary-container' : 'bg-white text-outline-variant border-outline-variant hover:border-primary hover:text-primary'"
+          class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium border transition-all">{{ opt[1] }}</button>
+      }
+      <span class="text-xs text-stone-400 self-center ml-2 mr-1">Transmission:</span>
+      @for (opt of [['all','All'],['Automatic','Automatic'],['Manual','Manual']] ; track opt[0]) {
+        <button (click)="filterTransmission.set($any(opt[0]))"
+          [class]="filterTransmission() === opt[0] ? 'bg-gold text-white border-gold' : 'bg-white text-outline-variant border-outline-variant hover:border-gold hover:text-stone-700'"
+          class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium border transition-all">{{ opt[1] }}</button>
+      }
+    </div>
+
+    <!-- Car cards -->
+    @if (loading()) {
+      <div class="flex justify-center py-16 text-outline">
+        <span class="material-symbols-outlined animate-spin text-4xl">progress_activity</span>
+      </div>
+    } @else {
+      <div class="space-y-4">
+        @for (c of filteredCars; track c.id) {
+          <div class="bg-white rounded-2xl border border-stone-100 shadow-sm hover:shadow-md transition-shadow p-5 flex gap-5">
+            <!-- Icon -->
+            <div class="w-14 h-14 rounded-xl bg-surface-container flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-2xl text-outline">directions_car</span>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <!-- Agency + category badge -->
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="font-semibold text-primary text-sm">{{ c.agency }}</h2>
+                <span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">{{ c.category }}</span>
+              </div>
+
+              <!-- Model -->
+              <p class="text-xs text-stone-500 mb-2">{{ c.model }}</p>
+
+              <!-- Specs row -->
+              <div class="flex flex-wrap gap-3 text-xs text-stone-500 mb-3">
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">settings</span> {{ c.transmission }}
+                </span>
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">person</span> {{ c.seats }} seats
+                </span>
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">flight_land</span> {{ c.pickupLocation }}
+                </span>
+              </div>
+
+              <!-- Features -->
+              <div class="flex flex-wrap gap-1.5">
+                @for (f of c.features; track f) {
+                  <span class="text-[10px] bg-surface-container text-outline-variant px-2 py-0.5 rounded-full font-medium">{{ f }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Price + CTA -->
+            <div class="flex flex-col items-end justify-between shrink-0 border-l border-stone-100 pl-5">
+              <div class="text-right">
+                <p class="font-h2 text-xl text-primary-container">${{ c.pricePerDay }}</p>
+                <p class="text-[10px] text-stone-400">per day</p>
+              </div>
+              <a [href]="c.deepLink" target="_blank" rel="noopener"
+                class="mt-3 bg-gold hover:bg-[#b88c42] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors flex items-center gap-1">
+                Book <span class="material-symbols-outlined text-xs">north_east</span>
+              </a>
+            </div>
+          </div>
+        }
+
+        @if (filteredCars.length === 0) {
+          <div class="text-center py-12 text-outline">
+            <span class="material-symbols-outlined text-4xl block mb-2">directions_car</span>
+            <p class="text-sm">No vehicles match the current filter.</p>
+          </div>
+        }
+
+        <p class="text-[11px] text-outline py-2 italic leading-relaxed">
+          Prices sourced from partners. GeoFlow does not process payments — booking redirects to the partner site.
+        </p>
+      </div>
+    }
+  </div>
+</main>

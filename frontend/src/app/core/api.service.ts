@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  CarResponse,
   CountryDetail,
   CountrySummary,
   FlightResponse,
+  HotelResponse,
   SavedDestination
 } from './models';
 
@@ -25,8 +27,23 @@ export class ApiService {
     return this.http.get<CountryDetail>(`${API}/countries/${code}`);
   }
 
-  getFlights(code: string): Observable<FlightResponse> {
-    return this.http.get<FlightResponse>(`${API}/countries/${code}/flights`);
+  getFlights(
+    code: string,
+    opts?: { departureDate?: string; origin?: string; adults?: number }
+  ): Observable<FlightResponse> {
+    const params: Record<string, string> = {};
+    if (opts?.departureDate) params['departureDate'] = opts.departureDate;
+    if (opts?.origin) params['origin'] = opts.origin;
+    if (opts?.adults) params['adults'] = String(opts.adults);
+    return this.http.get<FlightResponse>(`${API}/countries/${code}/flights`, { params });
+  }
+
+  getHotels(code: string, params?: { checkIn?: string; checkOut?: string; adults?: number }): Observable<HotelResponse> {
+    return this.http.get<HotelResponse>(`${API}/countries/${code}/hotels`, { params: params as any });
+  }
+
+  getCars(code: string, params?: { pickupDate?: string; dropoffDate?: string; drivers?: number }): Observable<CarResponse> {
+    return this.http.get<CarResponse>(`${API}/countries/${code}/cars`, { params: params as any });
   }
 
   getSaved(): Observable<SavedDestination[]> {

@@ -23,6 +23,16 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'country/:code/hotels',
+    loadComponent: () =>
+      import('./pages/hotels/hotels.component').then((m) => m.HotelsComponent)
+  },
+  {
+    path: 'country/:code/cars',
+    loadComponent: () =>
+      import('./pages/cars/cars.component').then((m) => m.CarsComponent)
+  },
+  {
     path: 'saved',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/saved/saved.component').then((m) => m.SavedComponent)

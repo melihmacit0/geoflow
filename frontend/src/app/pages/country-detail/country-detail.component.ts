@@ -8,7 +8,7 @@ import {
   signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
@@ -18,7 +18,7 @@ import { TopNavComponent } from '../../shared/top-nav.component';
 @Component({
   selector: 'gf-country-detail',
   standalone: true,
-  imports: [CommonModule, TopNavComponent],
+  imports: [CommonModule, RouterLink, TopNavComponent],
   templateUrl: './country-detail.component.html'
 })
 export class CountryDetailComponent implements OnDestroy {
@@ -37,10 +37,17 @@ export class CountryDetailComponent implements OnDestroy {
 
   country = signal<CountryDetail | null>(null);
   flights = signal<Flight[]>([]);
+  flightSource = signal<string>('');
   tab = signal<'culture' | 'flights'>('culture');
   flightFilter = signal<'cheapest' | 'fastest' | 'direct'>('cheapest');
   saved = signal(false);
   loading = signal(true);
+  flightsLoading = signal(false);
+
+  // Default departure: 30 days from today
+  departureDate = signal(
+    new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  );
 
   constructor() {
     this.route.paramMap.subscribe((params) => {
@@ -74,11 +81,25 @@ export class CountryDetailComponent implements OnDestroy {
         this.router.navigate(['/discover']);
       }
     });
-    this.api.getFlights(code).subscribe((res) => this.flights.set(res.flights));
-
+    this.fetchFlights(code);
     if (this.auth.isLoggedIn) {
       this.api.getSaved().subscribe((list) => this.saved.set(list.some((s) => s.code === code)));
     }
+  }
+
+  fetchFlights(code?: string): void {
+    const c = code ?? this.country()?.code;
+    if (!c) return;
+    this.flightsLoading.set(true);
+    this.api.getFlights(c, { departureDate: this.departureDate() }).subscribe((res) => {
+      this.flights.set(res.flights);
+      this.flightSource.set(res.source);
+      this.flightsLoading.set(false);
+    });
+  }
+
+  get isLiveData(): boolean {
+    return this.flightSource().startsWith('live');
   }
 
   private initMap(el: HTMLDivElement): void {

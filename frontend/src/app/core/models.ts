@@ -68,7 +68,56 @@ export interface Flight {
 export interface FlightResponse {
   country: { code: string; name: string; flag: string; iata: string };
   from: string;
+  departureDate: string;
+  source: 'live' | 'live-cached' | 'mock' | 'mock-fallback';
   flights: Flight[];
+}
+
+export interface Hotel {
+  id: string;
+  name: string;
+  chain: string;
+  type: string;
+  stars: number;
+  rating: number;
+  reviews: number;
+  pricePerNight: number;
+  currency: string;
+  amenities: string[];
+  address: string;
+  deepLink: string;
+}
+
+export interface HotelResponse {
+  country: { code: string; name: string; flag: string };
+  checkIn: string | null;
+  checkOut: string | null;
+  adults: number;
+  source: 'live' | 'live-cached' | 'mock' | 'mock-fallback';
+  hotels: Hotel[];
+}
+
+export interface Car {
+  id: string;
+  agency: string;
+  category: string;
+  model: string;
+  transmission: string;
+  seats: number;
+  pricePerDay: number;
+  currency: string;
+  features: string[];
+  pickupLocation: string;
+  deepLink: string;
+}
+
+export interface CarResponse {
+  country: { code: string; name: string; flag: string };
+  pickupDate: string | null;
+  dropoffDate: string | null;
+  drivers: number;
+  source: 'live' | 'mock' | 'mock-fallback';
+  cars: Car[];
 }
 
 export interface SavedDestination {

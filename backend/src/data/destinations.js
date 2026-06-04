@@ -355,3 +355,70 @@ export function buildFlights(dest) {
     deepLink: `https://www.skyscanner.net/transport/flights/ist/${dest.iata.toLowerCase()}/`
   })).sort((a, b) => a.price - b.price);
 }
+
+// Mock hotel offers per destination. In production replace with Amadeus Hotel Offers Search v3:
+// GET /v3/shopping/hotel-offers?hotelIds=...&adults=1&checkInDate=...&checkOutDate=...
+const hotelChains = ['Marriott', 'Hilton', 'Hyatt', 'Radisson', 'Accor'];
+const hotelTypes = ['City Hotel', 'Resort', 'Boutique Hotel', 'Luxury Hotel', 'Budget Hotel'];
+const amenitySets = [
+  ['WiFi', 'Pool', 'Spa', 'Restaurant'],
+  ['WiFi', 'Gym', 'Bar', 'Room Service'],
+  ['WiFi', 'Breakfast', 'Airport Shuttle', 'Parking'],
+  ['WiFi', 'Pool', 'Beach Access', 'Water Sports'],
+  ['WiFi', 'Breakfast', 'Tour Desk', 'Laundry']
+];
+const hotelRatings = [5, 4, 4, 3, 3];
+
+export function buildHotels(dest) {
+  const basePrice = Math.round(dest.cheapestFlight * 0.15);
+  const cityNames = {
+    JP: 'Tokyo', FR: 'Paris', GR: 'Athens', TR: 'Istanbul', IS: 'Reykjavik',
+    TH: 'Bangkok', PE: 'Lima', IT: 'Rome', EG: 'Cairo', MA: 'Marrakech'
+  };
+  const city = cityNames[dest.code] || dest.name;
+  return hotelChains.map((chain, i) => ({
+    id: `${dest.code}-hotel-${i}`,
+    name: `${chain} ${city} ${hotelTypes[i].split(' ')[0]}`,
+    chain,
+    type: hotelTypes[i],
+    stars: hotelRatings[i],
+    rating: parseFloat((3.8 + Math.random() * 1.2).toFixed(1)),
+    reviews: 200 + i * 340,
+    pricePerNight: basePrice + i * 18 - (i === 4 ? 40 : 0),
+    currency: 'USD',
+    amenities: amenitySets[i],
+    address: `${city} City Centre`,
+    deepLink: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}`
+  }));
+}
+
+// Mock car rental offers per destination. In production replace with Amadeus Car Rentals v2:
+// GET /v2/shopping/availability/car-rentals?locationCode=...&pickUpDateTime=...&returnDateTime=...
+const carAgencies = ['Hertz', 'Avis', 'Europcar', 'Sixt', 'Budget'];
+const carCategories = ['Economy', 'Compact', 'SUV', 'Premium', 'Minivan'];
+const carModels = [
+  'Toyota Yaris or similar',
+  'Volkswagen Golf or similar',
+  'Toyota RAV4 or similar',
+  'Mercedes C-Class or similar',
+  'Ford Galaxy or similar'
+];
+const transmissions = ['Manual', 'Automatic', 'Automatic', 'Automatic', 'Automatic'];
+const seatsOptions = [4, 5, 5, 5, 7];
+
+export function buildCars(dest) {
+  const basePrice = Math.round(dest.cheapestFlight * 0.03);
+  return carAgencies.map((agency, i) => ({
+    id: `${dest.code}-car-${i}`,
+    agency,
+    category: carCategories[i],
+    model: carModels[i],
+    transmission: transmissions[i],
+    seats: seatsOptions[i],
+    pricePerDay: basePrice + i * 8 - (i === 4 ? 15 : 0),
+    currency: 'USD',
+    features: ['AC', ...(i > 1 ? ['GPS'] : []), ...(i > 2 ? ['Bluetooth'] : [])],
+    pickupLocation: `${dest.iata} Airport`,
+    deepLink: `https://www.rentalcars.com/en/airport/${dest.iata}/`
+  }));
+}
