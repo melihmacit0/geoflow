@@ -120,18 +120,18 @@ export class CompareComponent implements AfterViewInit, OnDestroy {
     return m ? parseInt(m[1]) * 60 + (parseInt(m[2]) || 0) : Number.MAX_SAFE_INTEGER;
   }
   isCheapestFlight(c: CountryDetail): boolean {
-    return c.cheapestFlight === Math.min(...this.selected().map((s) => s.cheapestFlight));
+    return (c.cheapestFlight ?? 0) === Math.min(...this.selected().map((s) => s.cheapestFlight ?? 0));
   }
   isFastest(c: CountryDetail): boolean {
     return (
-      this.minutes(c.comparison.flightDuration) ===
-      Math.min(...this.selected().map((s) => this.minutes(s.comparison.flightDuration)))
+      this.minutes(c.comparison?.flightDuration ?? '') ===
+      Math.min(...this.selected().map((s) => this.minutes(s.comparison?.flightDuration ?? '')))
     );
   }
   isCheapestBudget(c: CountryDetail): boolean {
     return (
-      c.comparison.dailyBudget ===
-      Math.min(...this.selected().map((s) => s.comparison.dailyBudget))
+      (c.comparison?.dailyBudget ?? 0) ===
+      Math.min(...this.selected().map((s) => s.comparison?.dailyBudget ?? 0))
     );
   }
 }

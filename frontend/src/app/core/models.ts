@@ -2,14 +2,15 @@ export interface CountrySummary {
   code: string;
   name: string;
   flag: string;
-  tagline: string;
   continent: string;
   lat: number;
   lng: number;
   accent: string;
-  cheapestFlight: number;
-  interests: string[];
-  image: string;
+  capital?: string;
+  cheapestFlight?: number | null;
+  interests?: string[];
+  image?: string | null;
+  tagline?: string | null;
 }
 
 export interface CountryFacts {
@@ -36,20 +37,44 @@ export interface CountryDetail {
   code: string;
   name: string;
   flag: string;
-  tagline: string;
   continent: string;
   lat: number;
   lng: number;
-  iata: string;
   accent: string;
-  cheapestFlight: number;
-  interests: string[];
+  capital: string;
+  currency: string;
+  language: string;
+  tagline?: string | null;
+  image?: string | null;
+  intro?: string | null;
+  didYouKnow?: string | null;
+  highlights?: Highlight[] | null;
+  facts: CountryFacts;
+  comparison?: ComparisonMetrics;
+  cheapestFlight?: number | null;
+}
+
+export interface City {
+  iata: string;
+  name: string;
+  city: string;
+  country: string;
+  lat: number;
+  lng: number;
+  type: 'large_airport' | 'medium_airport';
+}
+
+export interface CityCulture {
+  tagline: string;
   intro: string;
   didYouKnow: string;
-  image: string;
-  facts: CountryFacts;
   highlights: Highlight[];
-  comparison: ComparisonMetrics;
+  bestTime: string;
+}
+
+export interface CityDetail extends City {
+  countryName: string;
+  culture: CityCulture | null;
 }
 
 export interface Flight {
@@ -66,7 +91,8 @@ export interface Flight {
 }
 
 export interface FlightResponse {
-  country: { code: string; name: string; flag: string; iata: string };
+  iata: string;
+  city: string;
   from: string;
   departureDate: string;
   source: 'live' | 'live-cached' | 'mock' | 'mock-fallback';
@@ -89,7 +115,8 @@ export interface Hotel {
 }
 
 export interface HotelResponse {
-  country: { code: string; name: string; flag: string };
+  iata: string;
+  city: string;
   checkIn: string | null;
   checkOut: string | null;
   adults: number;
@@ -112,11 +139,11 @@ export interface Car {
 }
 
 export interface CarResponse {
-  country: { code: string; name: string; flag: string };
+  iata: string;
+  city: string;
   pickupDate: string | null;
   dropoffDate: string | null;
-  drivers: number;
-  source: 'live' | 'mock' | 'mock-fallback';
+  source: 'live' | 'mock';
   cars: Car[];
 }
 
@@ -124,11 +151,10 @@ export interface SavedDestination {
   code: string;
   name: string;
   flag: string;
-  tagline: string;
   accent: string;
-  cheapestFlight: number;
-  facts: CountryFacts;
-  image: string;
+  tagline?: string | null;
+  cheapestFlight?: number | null;
+  image?: string | null;
 }
 
 export interface User {

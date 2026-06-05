@@ -3,3 +3,7 @@ dist/
 .angular/
 *.log
 .DS_Store
+
+# API keys — never commit
+.env
+backend/.env

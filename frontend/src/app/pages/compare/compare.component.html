@@ -74,34 +74,34 @@
               <td class="py-4 font-semibold text-slate-600">Flight duration</td>
               @for (c of selected(); track c.code) {
                 <td class="py-4 text-center">
-                  <span [class]="isFastest(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">{{ c.comparison.flightDuration }}</span>
+                  <span [class]="isFastest(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">{{ c.comparison?.flightDuration ?? '—' }}</span>
                 </td>
               }
             </tr>
             <tr class="border-t border-surface-container-low">
               <td class="py-4 font-semibold text-slate-600">Best season</td>
               @for (c of selected(); track c.code) {
-                <td class="py-4 text-center text-primary">{{ c.comparison.bestSeason }}</td>
+                <td class="py-4 text-center text-primary">{{ c.comparison?.bestSeason ?? '—' }}</td>
               }
             </tr>
             <tr class="border-t border-surface-container-low">
               <td class="py-4 font-semibold text-slate-600">Top cultural draw</td>
               @for (c of selected(); track c.code) {
-                <td class="py-4 text-center italic text-slate-500">{{ c.comparison.culturalDraw }}</td>
+                <td class="py-4 text-center italic text-slate-500">{{ c.comparison?.culturalDraw ?? '—' }}</td>
               }
             </tr>
             <tr class="border-t border-surface-container-low">
               <td class="py-4 font-semibold text-slate-600">Estimated daily budget</td>
               @for (c of selected(); track c.code) {
                 <td class="py-4 text-center">
-                  <span [class]="isCheapestBudget(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.comparison.dailyBudget }}</span>
+                  <span [class]="isCheapestBudget(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.comparison?.dailyBudget ?? '—' }}</span>
                 </td>
               }
             </tr>
             <tr class="border-t border-surface-container-low">
               <td class="py-4 font-semibold text-slate-600">Visa requirement</td>
               @for (c of selected(); track c.code) {
-                <td class="py-4 text-center text-primary">{{ c.comparison.visa }}</td>
+                <td class="py-4 text-center text-primary">{{ c.comparison?.visa ?? '—' }}</td>
               }
             </tr>
             <tr>

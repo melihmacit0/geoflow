@@ -12,25 +12,17 @@ export const routes: Routes = [
   },
   {
     path: 'discover',
-    loadComponent: () =>
-      import('./pages/discover/discover.component').then((m) => m.DiscoverComponent)
+    loadComponent: () => import('./pages/discover/discover.component').then((m) => m.DiscoverComponent)
   },
   {
     path: 'country/:code',
     loadComponent: () =>
-      import('./pages/country-detail/country-detail.component').then(
-        (m) => m.CountryDetailComponent
-      )
+      import('./pages/country-detail/country-detail.component').then((m) => m.CountryDetailComponent)
   },
   {
-    path: 'country/:code/hotels',
+    path: 'country/:code/city/:iata',
     loadComponent: () =>
-      import('./pages/hotels/hotels.component').then((m) => m.HotelsComponent)
-  },
-  {
-    path: 'country/:code/cars',
-    loadComponent: () =>
-      import('./pages/cars/cars.component').then((m) => m.CarsComponent)
+      import('./pages/city-detail/city-detail.component').then((m) => m.CityDetailComponent)
   },
   {
     path: 'saved',

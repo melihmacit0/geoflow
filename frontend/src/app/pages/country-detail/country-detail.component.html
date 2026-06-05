@@ -1,230 +1,132 @@
 <gf-top-nav></gf-top-nav>
 
 <main class="fixed top-16 left-0 right-0 bottom-0 flex overflow-hidden">
-  <!-- Map (left ~58%) -->
-  <section class="hidden lg:block w-[58%] relative bg-surface-container">
-    <div #mapEl class="w-full h-full"></div>
-  </section>
+  <!-- Slim accent bar (left) -->
+  <div class="hidden lg:block w-2 shrink-0" [style.background]="country()?.accent || '#2D4677'"></div>
 
-  <!-- Sliding info panel (right) -->
-  <aside class="w-full lg:w-[42%] h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
+  <!-- Info panel -->
+  <aside class="flex-1 h-full bg-white flex flex-col border-r border-stone-100 overflow-hidden">
     @if (country(); as c) {
       <!-- Header -->
-      <div class="px-8 pt-6 pb-0 flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur-md z-20">
-        <h1 class="font-h2 text-h2 text-primary flex items-center gap-2">{{ c.name }} {{ c.flag }}</h1>
-        <div class="flex items-center gap-2">
-          <button (click)="toggleSave()" class="p-2 hover:bg-surface-container-low rounded-full transition-all" [class.text-secondary]="saved()" [class.text-stone-600]="!saved()">
-            <span class="material-symbols-outlined" [class.fill]="saved()">bookmark</span>
+      <div class="px-8 pt-6 pb-4 border-b border-stone-100 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <button (click)="close()" class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-500">
+            <span class="material-symbols-outlined">arrow_back</span>
           </button>
-          <button (click)="close()" class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-600">
-            <span class="material-symbols-outlined">close</span>
-          </button>
+          <div>
+            <h1 class="font-h2 text-h2 text-primary flex items-center gap-2">{{ c.flag }} {{ c.name }}</h1>
+            <p class="text-xs text-stone-400 mt-0.5">{{ c.continent }} · {{ c.capital }}</p>
+          </div>
+        </div>
+        <div class="text-right hidden sm:block">
+          <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Currency</p>
+          <p class="text-sm font-semibold text-primary">{{ c.currency }}</p>
         </div>
       </div>
 
-      <!-- Hero image -->
-      <div class="px-8 pt-4 pb-6">
-        <div class="h-[180px] rounded-xl overflow-hidden shadow-sm">
-          <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <div class="px-8 flex gap-8 border-b border-stone-100">
-        <button (click)="tab.set('culture')" class="pb-4 font-semibold text-sm transition-colors"
-          [class]="tab() === 'culture' ? 'text-primary border-b-2 border-primary-container' : 'text-stone-400 hover:text-stone-600'">Culture &amp; History</button>
-        <button (click)="tab.set('flights')" class="pb-4 font-medium text-sm transition-colors relative"
-          [class]="tab() === 'flights' ? 'text-primary border-b-2 border-primary-container' : 'text-stone-400 hover:text-stone-600'">
-          Flights &amp; Logistics
-          <span class="absolute top-0 -right-2 w-2 h-2 bg-error rounded-full"></span>
-        </button>
-      </div>
-
-      <!-- Quick-access cards for Hotels & Cars -->
-      @if (tab() === 'flights') {
-        <div class="px-8 pt-5 grid grid-cols-2 gap-3">
-          <a [routerLink]="['/country', c.code, 'hotels']"
-            class="flex items-center gap-3 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md transition-shadow cursor-pointer group">
-            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
-              <span class="material-symbols-outlined text-xl text-outline group-hover:text-primary transition-colors">hotel</span>
-            </div>
-            <div>
-              <p class="text-xs font-semibold text-primary">Hotels</p>
-              <p class="text-[10px] text-stone-400">Find &amp; compare stays</p>
-            </div>
-            <span class="material-symbols-outlined text-sm text-stone-300 ml-auto">chevron_right</span>
-          </a>
-          <a [routerLink]="['/country', c.code, 'cars']"
-            class="flex items-center gap-3 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md transition-shadow cursor-pointer group">
-            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
-              <span class="material-symbols-outlined text-xl text-outline group-hover:text-primary transition-colors">directions_car</span>
-            </div>
-            <div>
-              <p class="text-xs font-semibold text-primary">Rent a Car</p>
-              <p class="text-[10px] text-stone-400">Airport pickup available</p>
-            </div>
-            <span class="material-symbols-outlined text-sm text-stone-300 ml-auto">chevron_right</span>
-          </a>
+      <!-- Optional curated hero image -->
+      @if (c.image) {
+        <div class="px-8 pt-4 shrink-0">
+          <div class="h-[160px] rounded-xl overflow-hidden shadow-sm">
+            <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
+          </div>
+          @if (c.tagline) {
+            <p class="text-xs italic text-stone-400 mt-2 text-center">{{ c.tagline }}</p>
+          }
         </div>
       }
 
-      <!-- Scrollable content -->
-      <div class="flex-1 overflow-y-auto custom-scrollbar">
-        @if (tab() === 'culture') {
-          <div class="px-8 py-6 space-y-8">
-            <p class="text-on-surface-variant leading-relaxed font-body-md">{{ c.intro }}</p>
+      <!-- Country quick facts -->
+      <div class="px-8 py-4 grid grid-cols-3 gap-3 shrink-0">
+        <div class="p-3 bg-surface-container-lowest border border-stone-100 rounded-lg">
+          <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Capital</p>
+          <p class="font-semibold text-primary text-sm truncate">{{ c.capital || '—' }}</p>
+        </div>
+        <div class="p-3 bg-surface-container-lowest border border-stone-100 rounded-lg">
+          <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Language</p>
+          <p class="font-semibold text-primary text-sm truncate">{{ c.language || '—' }}</p>
+        </div>
+        <div class="p-3 bg-surface-container-lowest border border-stone-100 rounded-lg">
+          <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Currency</p>
+          <p class="font-semibold text-primary text-sm truncate">{{ c.currency || '—' }}</p>
+        </div>
+      </div>
 
-            <div class="p-6 bg-[#FDF6E3] rounded-xl border border-gold/20 flex gap-4">
-              <span class="material-symbols-outlined fill text-gold">lightbulb</span>
-              <div>
-                <p class="text-label-caps font-label-caps text-on-secondary-fixed-variant mb-1">DID YOU KNOW?</p>
-                <p class="text-sm text-stone-700 leading-snug">{{ c.didYouKnow }}</p>
-              </div>
-            </div>
+      <!-- Cities section -->
+      <div class="px-8 pb-3 shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-semibold text-primary text-sm">
+            Select a City
+            @if (!citiesLoading() && cities().length) {
+              <span class="ml-2 text-[11px] font-normal text-stone-400">({{ cities().length }} airports)</span>
+            }
+          </h2>
+        </div>
+        <!-- Search box -->
+        <div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-lg border border-stone-100">
+          <span class="material-symbols-outlined text-stone-400 text-lg">search</span>
+          <input
+            type="text"
+            placeholder="Search city or IATA code..."
+            class="flex-1 bg-transparent text-sm text-primary placeholder:text-stone-400 focus:outline-none"
+            [value]="searchQuery()"
+            (input)="searchQuery.set($any($event.target).value)"
+          />
+        </div>
+      </div>
 
-            <section>
-              <h2 class="text-label-caps font-label-caps text-stone-500 mb-4">ESSENTIAL FACTS</h2>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
-                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Capital</p>
-                  <p class="font-semibold text-primary">{{ c.facts.capital }}</p>
-                </div>
-                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
-                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Language</p>
-                  <p class="font-semibold text-primary">{{ c.facts.language }}</p>
-                </div>
-                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
-                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Currency</p>
-                  <p class="font-semibold text-primary">{{ c.facts.currency }}</p>
-                </div>
-                <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
-                  <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Best Time</p>
-                  <p class="font-semibold text-primary">{{ c.facts.bestTime }}</p>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 class="text-label-caps font-label-caps text-stone-500 mb-4">TOP CULTURAL HIGHLIGHTS</h2>
-              <div class="grid grid-cols-2 gap-4">
-                @for (h of c.highlights; track h.title) {
-                  <div class="group cursor-pointer">
-                    <div class="aspect-square rounded-lg overflow-hidden mb-2 bg-stone-100 flex items-center justify-center"
-                      [style.background]="c.accent + '22'">
-                      <span class="material-symbols-outlined text-4xl" [style.color]="c.accent">photo_camera</span>
-                    </div>
-                    <p class="text-sm font-semibold text-primary">{{ h.title }}</p>
-                    <p class="text-xs text-stone-500">{{ h.note }}</p>
-                  </div>
-                }
-              </div>
-            </section>
-            <div class="h-4"></div>
+      <!-- City list -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar px-8 pb-8">
+        @if (citiesLoading()) {
+          <div class="flex items-center justify-center py-12 text-stone-400">
+            <span class="material-symbols-outlined animate-spin">progress_activity</span>
+          </div>
+        } @else if (filteredCities.length === 0) {
+          <div class="text-center py-12 text-stone-400 text-sm">
+            @if (cities().length === 0) {
+              No airports found for this country.
+            } @else {
+              No results for "{{ searchQuery() }}"
+            }
           </div>
         } @else {
-          <div class="px-8 py-6 space-y-6">
-            <!-- Route card -->
-            <div class="p-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-4 flex-1">
-                  <div class="text-center">
-                    <p class="font-label-caps text-[10px] text-outline">FROM</p>
-                    <p class="font-h3 text-lg text-primary">IST</p>
-                  </div>
-                  <span class="material-symbols-outlined text-outline-variant scale-125">swap_horiz</span>
-                  <div class="text-center">
-                    <p class="font-label-caps text-[10px] text-outline">TO</p>
-                    <p class="font-h3 text-lg text-primary">{{ c.iata }}</p>
-                  </div>
+          <div class="space-y-2">
+            @for (city of filteredCities; track city.iata) {
+              <button
+                (click)="openCity(city.iata)"
+                class="w-full flex items-center gap-4 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md hover:border-stone-200 transition-all text-left group">
+                <!-- Airport type icon -->
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors"
+                  [style.background]="(country()?.accent || '#2D4677') + '18'"
+                  [style.color]="country()?.accent || '#2D4677'">
+                  <span class="material-symbols-outlined text-lg">
+                    {{ city.type === 'large_airport' ? 'flight' : 'local_airport' }}
+                  </span>
                 </div>
-                <!-- Live / mock badge -->
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  [class]="isLiveData ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
-                  {{ isLiveData ? 'LIVE' : 'SAMPLE' }}
-                </span>
-              </div>
-              <div class="flex gap-3 flex-wrap items-center">
-                <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
-                  <span class="material-symbols-outlined text-sm">calendar_today</span>
-                  <input type="date" [value]="departureDate()"
-                    (change)="departureDate.set($any($event.target).value)"
-                    class="bg-transparent text-primary text-xs font-medium focus:outline-none cursor-pointer" />
+
+                <!-- City info -->
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-primary text-sm truncate">{{ city.city }}</p>
+                  <p class="text-[11px] text-stone-400 truncate">{{ city.name }}</p>
                 </div>
-                <div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-xs font-medium">
-                  <span class="material-symbols-outlined text-sm">person</span> 1 Adult
-                </div>
-                <button (click)="fetchFlights()"
-                  class="ml-auto flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary-container transition-colors">
-                  @if (flightsLoading()) {
-                    <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
-                  } @else {
-                    <span class="material-symbols-outlined text-sm">search</span>
+
+                <!-- IATA badge + arrow -->
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-stone-500">
+                    {{ city.iata }}
+                  </span>
+                  @if (city.type === 'large_airport') {
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Major</span>
                   }
-                  Search
-                </button>
-              </div>
-            </div>
-
-            <!-- Filter chips -->
-            <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-              @for (f of ['cheapest','fastest','direct']; track f) {
-                <button (click)="flightFilter.set($any(f))"
-                  [class]="flightFilter() === f ? 'bg-primary-container text-white border-primary-container' : 'bg-white text-outline-variant border-outline-variant hover:border-primary hover:text-primary'"
-                  class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-medium border transition-all capitalize">{{ f }}</button>
-              }
-            </div>
-
-            <!-- Flight list -->
-            <div class="space-y-4" [class.opacity-50]="flightsLoading()">
-              @for (f of filteredFlights; track f.id) {
-                <div class="p-5 rounded-xl border border-outline-variant hover:shadow-lg transition-shadow flex items-center gap-5">
-                  <div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-outline">flight_takeoff</span>
-                  </div>
-                  <div class="flex-1 grid grid-cols-3 items-center">
-                    <div>
-                      <p class="font-h3 text-lg text-primary">{{ f.depart }}</p>
-                      <p class="text-[10px] text-outline font-label-caps">{{ f.from }}</p>
-                    </div>
-                    <div class="text-center px-2">
-                      <p class="text-xs text-outline mb-1">{{ f.duration }}</p>
-                      <div class="relative flex items-center justify-center">
-                        <div class="h-px bg-outline-variant w-full"></div>
-                        <div class="absolute w-1.5 h-1.5 rounded-full" [class]="f.stops === 'Direct' ? 'bg-outline-variant' : 'bg-primary-container'"></div>
-                      </div>
-                      <p class="text-[10px] text-primary font-bold mt-1 uppercase tracking-tighter">{{ f.stops }}</p>
-                    </div>
-                    <div class="text-right">
-                      <p class="font-h3 text-lg text-primary">{{ f.arrive }}</p>
-                      <p class="text-[10px] text-outline font-label-caps">{{ f.to }}</p>
-                    </div>
-                  </div>
-                  <div class="text-right shrink-0 border-l border-outline-variant pl-5">
-                    <p class="font-h2 text-xl text-primary-container mb-1">${{ f.price }}</p>
-                    <a [href]="f.deepLink" target="_blank" rel="noopener" class="text-[10px] font-bold text-primary uppercase flex items-center gap-1 hover:underline">
-                      View <span class="material-symbols-outlined text-xs">north_east</span>
-                    </a>
-                  </div>
+                  <span class="material-symbols-outlined text-stone-300 text-lg group-hover:text-stone-500 transition-colors">chevron_right</span>
                 </div>
-              }
-              <p class="text-[11px] text-outline py-2 italic leading-relaxed">
-                Prices fetched from partners. GeoFlow does not process payments — booking redirects to the partner site.
-              </p>
-            </div>
+              </button>
+            }
           </div>
         }
       </div>
-
-      <!-- Sticky save button -->
-      <div class="px-8 py-4 bg-white border-t border-surface-container">
-        <button (click)="toggleSave()"
-          class="w-full text-white py-4 font-bold tracking-widest uppercase text-xs transition-colors rounded-lg shadow-md active:scale-[0.98]"
-          [class]="saved() ? 'bg-primary-container hover:bg-primary' : 'bg-gold hover:bg-[#b88c42]'">
-          {{ saved() ? 'Saved ✓ — remove' : 'Save this destination' }}
-        </button>
-      </div>
     } @else if (loading()) {
-      <div class="flex-1 flex items-center justify-center text-outline">
+      <div class="flex-1 flex items-center justify-center text-stone-400">
         <span class="material-symbols-outlined animate-spin">progress_activity</span>
       </div>
     }
