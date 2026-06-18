@@ -155,6 +155,24 @@ export class CityDetailComponent implements OnDestroy {
     this.bookStep.set(step);
   }
 
+  skipStep(): void {
+    const current = this.bookStep();
+    if (current === 'flight') {
+      this.selectedFlight.set(null);
+      this.hotels.set([]);
+      this.fetchHotels();
+      this.bookStep.set('hotel');
+    } else if (current === 'hotel') {
+      this.selectedHotel.set(null);
+      this.cars.set([]);
+      this.fetchCars();
+      this.bookStep.set('car');
+    } else if (current === 'car') {
+      this.selectedCar.set(null);
+      this.bookStep.set('summary');
+    }
+  }
+
   // ── Data fetching ────────────────────────────────────────────────────────────
 
   fetchFlights(iata?: string): void {

@@ -373,6 +373,14 @@
                     <p class="text-center text-stone-400 text-sm py-8">No flights found. Try a different date.</p>
                   }
                 </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip flight
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
               </div>
             }
 
@@ -461,6 +469,14 @@
                     <p class="text-center text-stone-400 text-sm py-8">No hotels found. Try different dates.</p>
                   }
                 </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip hotel
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
               </div>
             }
 
@@ -515,6 +531,14 @@
                   @if (!carsLoading() && cars().length === 0) {
                     <p class="text-center text-stone-400 text-sm py-8">Loading car options...</p>
                   }
+                </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip car rental
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
                 </div>
               </div>
             }
@@ -591,30 +615,60 @@
                 <!-- Book Now deep links -->
                 <section class="space-y-2">
                   <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Complete Your Bookings</p>
-                  <a [href]="selectedFlight()?.deepLink" target="_blank" rel="noopener"
-                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-primary">flight_takeoff</span>
-                      <span class="text-sm font-semibold text-primary">Book Flight</span>
+                  @if (selectedFlight(); as sf) {
+                    <a [href]="sf.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">flight_takeoff</span>
+                        <span class="text-sm font-semibold text-primary">Book Flight</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">flight_takeoff</span>
+                        <span class="text-sm text-stone-400">Flight skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline">Add</button>
                     </div>
-                    <span class="material-symbols-outlined text-primary">north_east</span>
-                  </a>
-                  <a [href]="selectedHotel()?.deepLink" target="_blank" rel="noopener"
-                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-primary">hotel</span>
-                      <span class="text-sm font-semibold text-primary">Book Hotel</span>
+                  }
+                  @if (selectedHotel(); as sh) {
+                    <a [href]="sh.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">hotel</span>
+                        <span class="text-sm font-semibold text-primary">Book Hotel</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">hotel</span>
+                        <span class="text-sm text-stone-400">Hotel skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary font-medium hover:underline">Add</button>
                     </div>
-                    <span class="material-symbols-outlined text-primary">north_east</span>
-                  </a>
-                  <a [href]="selectedCar()?.deepLink" target="_blank" rel="noopener"
-                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-primary">directions_car</span>
-                      <span class="text-sm font-semibold text-primary">Book Car</span>
+                  }
+                  @if (selectedCar(); as car) {
+                    <a [href]="car.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">directions_car</span>
+                        <span class="text-sm font-semibold text-primary">Book Car</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">directions_car</span>
+                        <span class="text-sm text-stone-400">Car rental skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('car')" class="text-xs text-primary font-medium hover:underline">Add</button>
                     </div>
-                    <span class="material-symbols-outlined text-primary">north_east</span>
-                  </a>
+                  }
                 </section>
 
                 <p class="text-[11px] text-stone-400 italic">
