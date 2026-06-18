@@ -28,10 +28,15 @@ export class CountryDetailComponent implements OnDestroy {
   loading       = signal(true);
   citiesLoading = signal(true);
   searchQuery   = signal('');
+  isSaved       = signal(false);
+  saveLoading   = signal(false);
+
+  private currentCode = '';
 
   constructor() {
     this.route.paramMap.subscribe((params) => {
       const code = params.get('code')!.toUpperCase();
+      this.currentCode = code;
       this.loadAll(code);
     });
 
@@ -46,6 +51,7 @@ export class CountryDetailComponent implements OnDestroy {
   private loadAll(code: string): void {
     this.loading.set(true);
     this.citiesLoading.set(true);
+    this.isSaved.set(false);
     this.cityMarkers.forEach(m => m.remove());
     this.cityMarkers = [];
 
@@ -57,6 +63,23 @@ export class CountryDetailComponent implements OnDestroy {
     this.api.getCities(code).subscribe({
       next: (list) => { this.cities.set(list); this.citiesLoading.set(false); },
       error: () => this.citiesLoading.set(false)
+    });
+
+    this.api.getSaved().subscribe({
+      next: (list) => this.isSaved.set(list.some((s) => s.code === code)),
+      error: () => {}
+    });
+  }
+
+  toggleSave(): void {
+    if (this.saveLoading()) return;
+    this.saveLoading.set(true);
+    const obs = this.isSaved()
+      ? this.api.removeSaved(this.currentCode)
+      : this.api.saveDestination(this.currentCode);
+    obs.subscribe({
+      next: () => { this.isSaved.set(!this.isSaved()); this.saveLoading.set(false); },
+      error: () => this.saveLoading.set(false)
     });
   }
 
