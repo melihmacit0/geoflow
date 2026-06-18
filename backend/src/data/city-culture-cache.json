@@ -110,5 +110,341 @@
         "pronunciation": "ah-fee-yet ol-sun"
       }
     ]
+  },
+  "AYT": {
+    "tagline": "Where ancient history meets Mediterranean sunshine",
+    "intro": "Antalya is the ultimate student escape, blending crystal-clear turquoise waters with a labyrinthine Old Town. It serves as the perfect base to explore majestic Roman ruins and vibrant nightlife without breaking the bank.",
+    "didYouKnow": "The city is home to the world's best-preserved Roman theater, Aspendos, which still hosts live opera performances today.",
+    "highlights": [
+      {
+        "title": "Kaleiçi",
+        "note": "Historic Old Town with Ottoman-era houses and boutique cafes."
+      },
+      {
+        "title": "Hadrian's Gate",
+        "note": "An ornate Roman triumphal arch marking the city entrance."
+      },
+      {
+        "title": "Düden Waterfalls",
+        "note": "Dramatic waterfalls cascading directly into the Mediterranean Sea."
+      },
+      {
+        "title": "Konyaaltı Beach",
+        "note": "A massive pebble beach perfect for swimming and sunbathing."
+      }
+    ],
+    "bestTime": "Apr – Oct",
+    "food": {
+      "intro": "Antalya offers a delicious mix of fresh Mediterranean produce and traditional Turkish flavors. Street food here is affordable, filling, and perfect for students on the move.",
+      "dishes": [
+        {
+          "name": "Piyaz",
+          "note": "Bean salad with tahini, a local Antalya specialty."
+        },
+        {
+          "name": "Gözleme",
+          "note": "Thin dough stuffed with spinach, cheese, or spiced meat."
+        },
+        {
+          "name": "Şiş Köfte",
+          "note": "Succulent grilled meatballs served on skewers with fresh pita."
+        },
+        {
+          "name": "Kabak Tatlısı",
+          "note": "Sweet pumpkin dessert served with tahini and walnuts."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Founded in the 2nd century BC by the King of Pergamon, Attalus II, the city has long been a vital Mediterranean port. Throughout the centuries, it transitioned through Roman, Byzantine, and Seljuk rule, leaving behind a rich archaeological footprint. Today, it stands as a major hub where modern tourism preserves the echoes of ancient civilizations.",
+      "periods": [
+        {
+          "era": "Ancient Origins",
+          "description": "Founded as Attaleia, it served as a key naval base for the kingdom of Pergamon. It later flourished under Roman rule, becoming a primary gateway to the East."
+        },
+        {
+          "era": "Medieval Era",
+          "description": "The city was conquered by the Seljuk Turks in the early 13th century. This era introduced iconic Islamic architecture that defines the city's skyline today."
+        },
+        {
+          "era": "Modern Age",
+          "description": "Following the collapse of the Ottoman Empire, Antalya transformed into Turkey’s tourism capital. Massive urban development has since turned the city into a global Mediterranean hub."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Attalus II",
+          "role": "King of Pergamon and founder of Antalya"
+        },
+        {
+          "name": "Hadrian",
+          "role": "Roman Emperor who visited the city in 130 AD"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Use public transport",
+        "note": "The Antray tram system is cheap and connects major sites."
+      },
+      {
+        "title": "Student discounts",
+        "note": "Always carry your student ID to get reduced museum entry."
+      },
+      {
+        "title": "Stay hydrated",
+        "note": "Tap water is generally safe, but bottled water is ubiquitous."
+      },
+      {
+        "title": "Haggle respectfully",
+        "note": "In local bazaars, gentle bargaining is expected and quite normal."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Merhaba",
+        "meaning": "Hello",
+        "pronunciation": "mer-ha-ba"
+      },
+      {
+        "phrase": "Teşekkür ederim",
+        "meaning": "Thank you",
+        "pronunciation": "teh-shek-kyoor eh-deh-rim"
+      },
+      {
+        "phrase": "Ne kadar?",
+        "meaning": "How much?",
+        "pronunciation": "neh ka-dar"
+      },
+      {
+        "phrase": "İngilizce biliyor musunuz?",
+        "meaning": "Do you speak English?",
+        "pronunciation": "in-gee-liz-jeh bil-yor moo-soo-nooz"
+      }
+    ]
+  },
+  "HER": {
+    "tagline": "Where ancient myths meet vibrant city life",
+    "intro": "Heraklion is the pulsating heart of Crete, offering an unparalleled mix of Bronze Age history and modern Mediterranean energy. It is the perfect base for students looking to balance legendary archaeological exploration with a legendary nightlife scene.",
+    "didYouKnow": "The Palace of Knossos was once considered a mythical labyrinth, but was proven to be the center of the advanced Minoan civilization.",
+    "highlights": [
+      {
+        "title": "Palace of Knossos",
+        "note": "The massive, colorful seat of Minoan power."
+      },
+      {
+        "title": "Heraklion Archaeological Museum",
+        "note": "World's most comprehensive collection of Minoan artifacts."
+      },
+      {
+        "title": "Koules Fortress",
+        "note": "A striking Venetian harbor fortification from the 1500s."
+      },
+      {
+        "title": "Morosini Fountain",
+        "note": "A historic Venetian-era social hub in Lion Square."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Crete offers a distinct culinary identity characterized by fresh mountain herbs, local olive oil, and artisanal cheeses.",
+      "dishes": [
+        {
+          "name": "Dakos",
+          "note": "Rusks topped with chopped tomatoes, feta, and olive oil."
+        },
+        {
+          "name": "Kalitsounia",
+          "note": "Small pastries filled with mizithra cheese or wild greens."
+        },
+        {
+          "name": "Chochlioi Bourbouristoi",
+          "note": "Fried snails cooked with rosemary and red wine vinegar."
+        },
+        {
+          "name": "Gamopilafo",
+          "note": "Traditional wedding rice cooked in rich goat meat broth."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Heraklion has been a vital Mediterranean crossroads for millennia, serving as a maritime hub for various empires. From its origins as the port of Knossos to its intense Venetian and Ottoman periods, the city is a layered testament to conquest and cultural exchange.",
+      "periods": [
+        {
+          "era": "Minoan Glory",
+          "description": "This era defined the island as the home of Europe's oldest advanced civilization. The massive palace complex at Knossos dominated the surrounding landscape during this time."
+        },
+        {
+          "era": "Venetian Rule",
+          "description": "The Venetians turned Heraklion into a formidable fortress known as 'Candia.' They constructed the massive city walls that still define the historic old town today."
+        },
+        {
+          "era": "Modern Crete",
+          "description": "Following unification with Greece in the early 20th century, Heraklion grew into a vibrant capital. It remains the educational and economic powerhouse of the island."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Nikos Kazantzakis",
+          "role": "World-renowned author of Zorba the Greek"
+        },
+        {
+          "name": "King Minos",
+          "role": "Legendary mythical ruler of the Minoans"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Avoid Midday Heat",
+        "note": "Schedule archaeological site visits early in the morning to beat the intense Mediterranean sun."
+      },
+      {
+        "title": "Student Discounts",
+        "note": "Always carry your international student ID card to receive significantly reduced museum entry fees."
+      },
+      {
+        "title": "Bus Travel",
+        "note": "Use the KTEL bus station near the port to travel affordably between Crete's major cities."
+      },
+      {
+        "title": "Hydration",
+        "note": "Carry a refillable water bottle, as the public fountains throughout the city provide high-quality drinking water."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Kalimera",
+        "meaning": "Good morning",
+        "pronunciation": "ka-lee-MEH-rah"
+      },
+      {
+        "phrase": "Efcharisto",
+        "meaning": "Thank you",
+        "pronunciation": "ef-ha-ree-STOH"
+      },
+      {
+        "phrase": "Yamas",
+        "meaning": "Cheers",
+        "pronunciation": "YAH-mass"
+      },
+      {
+        "phrase": "Pou ine?",
+        "meaning": "Where is?",
+        "pronunciation": "POO ee-neh"
+      }
+    ]
+  },
+  "BOJ": {
+    "tagline": "Where the Black Sea meets urban energy.",
+    "intro": "Burgas is a vibrant coastal hub that perfectly balances industrial history with a laid-back, sun-drenched student vibe. It serves as the gateway to the southern Black Sea coast, offering sprawling sea parks, sandy beaches, and a thriving nightlife scene.",
+    "didYouKnow": "The iconic Sea Garden of Burgas features a famous 'Bridge' that stretches 300 meters into the Black Sea, serving as the city’s favorite meeting spot.",
+    "highlights": [
+      {
+        "title": "The Sea Garden",
+        "note": "A massive, lush waterfront park perfect for chilling."
+      },
+      {
+        "title": "Burgas Bridge",
+        "note": "An iconic pier extending into the Black Sea."
+      },
+      {
+        "title": "St. Anastasia Island",
+        "note": "A mysterious island accessible by boat with rich history."
+      },
+      {
+        "title": "Atanasovsko Lake",
+        "note": "Famous for its natural healing pink mud baths."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Burgas offers a delicious mix of fresh Black Sea catches and traditional Balkan comfort food.",
+      "dishes": [
+        {
+          "name": "Tsatsa",
+          "note": "Small fried fish, the quintessential local beach snack."
+        },
+        {
+          "name": "Shopska Salad",
+          "note": "Refreshing chopped vegetables topped with salty Bulgarian feta."
+        },
+        {
+          "name": "Banitsa",
+          "note": "A flaky, golden pastry filled with savory cheese."
+        },
+        {
+          "name": "Tarator",
+          "note": "A chilled cucumber and yogurt soup, perfect for summer."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Burgas evolved from a small fishing village into a major maritime and industrial center. Its strategic location on the coast has made it a historical crossroads for various civilizations throughout the centuries. Today, it stands as a modern cultural heart of the Bulgarian seaside.",
+      "periods": [
+        {
+          "era": "Ancient Roots",
+          "description": "The region was populated by Thracian tribes and later established as a trading post by ancient Greeks. It served as a vital maritime hub connecting inland settlements to the sea."
+        },
+        {
+          "era": "Ottoman Era",
+          "description": "Known as Pyrgos, it functioned as a small but significant port for trade during the Ottoman rule. It slowly grew in importance due to its sheltered bay and shipping capabilities."
+        },
+        {
+          "era": "Modern Industrialization",
+          "description": "The city flourished in the late 19th century following the liberation of Bulgaria. It transformed into an essential industrial port and a center for oil refining and transportation."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Petko Rosen",
+          "role": "Prominent Bulgarian writer and public figure."
+        },
+        {
+          "name": "Hristo Fotev",
+          "role": "Celebrated Bulgarian poet known as the city's laureate."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Rent a bike",
+        "note": "The Sea Garden is huge and best explored on two wheels."
+      },
+      {
+        "title": "Use the bus",
+        "note": "The local public transport is affordable and connects to nearby resorts."
+      },
+      {
+        "title": "Learn some Cyrillic",
+        "note": "Knowing basic alphabet helps with reading signs and bus destinations."
+      },
+      {
+        "title": "Stay hydrated",
+        "note": "Summer temperatures can spike, so keep a water bottle handy."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Zdravei",
+        "meaning": "Hello",
+        "pronunciation": "Zdra-vey"
+      },
+      {
+        "phrase": "Blagodarya",
+        "meaning": "Thank you",
+        "pronunciation": "Bla-go-da-rya"
+      },
+      {
+        "phrase": "Kolko struva?",
+        "meaning": "How much is it?",
+        "pronunciation": "Kol-ko stroo-va"
+      },
+      {
+        "phrase": "Nazdrave",
+        "meaning": "Cheers",
+        "pronunciation": "Naz-dra-vey"
+      }
+    ]
   }
 }
