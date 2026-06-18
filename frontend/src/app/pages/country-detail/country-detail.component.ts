@@ -28,6 +28,7 @@ export class CountryDetailComponent implements OnDestroy {
   loading       = signal(true);
   citiesLoading = signal(true);
   searchQuery   = signal('');
+  showMapMobile = signal(false);
 
   constructor() {
     this.route.paramMap.subscribe((params) => {
@@ -74,6 +75,11 @@ export class CountryDetailComponent implements OnDestroy {
   }
 
   close(): void { this.router.navigate(['/discover']); }
+
+  toggleMapMobile(): void {
+    this.showMapMobile.update(v => !v);
+    setTimeout(() => this.map?.invalidateSize(), 310);
+  }
 
   private initMap(el: HTMLDivElement): void {
     this.map = L.map(el, { center: [20, 0], zoom: 4, zoomControl: false, attributionControl: false });

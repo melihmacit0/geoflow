@@ -73,6 +73,9 @@ export class CityDetailComponent implements OnDestroy {
   carsSource  = signal('');
   carsLoading = signal(false);
 
+  // Mobile map toggle
+  showMapMobile = signal(false);
+
   // Trip save state
   tripSaved       = signal(false);
   tripSaveLoading = signal(false);
@@ -342,6 +345,11 @@ export class CityDetailComponent implements OnDestroy {
         if (err.status === 401) this.router.navigate(['/signin']);
       }
     });
+  }
+
+  toggleMapMobile(): void {
+    this.showMapMobile.update(v => !v);
+    setTimeout(() => this.map?.invalidateSize(), 310);
   }
 
   back(): void { this.router.navigate(['/country', this.countryCode]); }

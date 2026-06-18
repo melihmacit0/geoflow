@@ -1,27 +1,35 @@
 <gf-top-nav></gf-top-nav>
 
-<main class="fixed top-16 left-0 right-0 bottom-0 flex overflow-hidden">
+<main class="fixed top-16 left-0 right-0 bottom-0 flex flex-col lg:flex-row overflow-hidden">
 
-  <!-- Map (left 55%) -->
-  <section class="hidden lg:block w-[55%] relative bg-surface-container">
+  <!-- Map: mobile = collapsible top strip; desktop = fixed left 55% panel -->
+  <section class="relative bg-surface-container shrink-0 overflow-hidden transition-[height] duration-300 lg:flex-none lg:w-[55%] lg:!h-full"
+    [class]="showMapMobile() ? 'h-52' : 'h-0'">
     <div #mapEl class="w-full h-full"></div>
     <button (click)="close()"
-      class="absolute top-4 left-4 z-[500] flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md text-sm font-medium text-primary hover:bg-white transition-all">
+      class="hidden lg:flex absolute top-4 left-4 z-[500] items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md text-sm font-medium text-primary hover:bg-white transition-all">
       <span class="material-symbols-outlined text-base">arrow_back</span>
       Discover
     </button>
   </section>
 
-  <!-- Sidebar (right 45%) -->
-  <aside class="w-full lg:w-[45%] h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
+  <!-- Sidebar: mobile = flex-1 fills remaining space; desktop = right 45% -->
+  <aside class="flex-1 min-h-0 lg:flex-none lg:w-[45%] lg:h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
 
     @if (country(); as c) {
 
       <!-- Header -->
-      <div class="px-7 pt-5 pb-4 shrink-0">
-        <button (click)="close()" class="lg:hidden flex items-center gap-1 text-sm text-stone-500 mb-3 hover:text-primary transition-colors">
-          <span class="material-symbols-outlined text-base">arrow_back</span> Discover
-        </button>
+      <div class="px-4 md:px-7 pt-4 md:pt-5 pb-4 shrink-0">
+        <!-- Mobile top bar: back + map toggle -->
+        <div class="lg:hidden flex items-center justify-between mb-3">
+          <button (click)="close()" class="flex items-center gap-1 text-sm text-stone-500 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-base">arrow_back</span> Discover
+          </button>
+          <button (click)="toggleMapMobile()" class="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-surface-container text-primary hover:bg-slate-200 transition-colors">
+            <span class="material-symbols-outlined text-sm">map</span>
+            {{ showMapMobile() ? 'Hide Map' : 'View Map' }}
+          </button>
+        </div>
         <div class="flex items-start justify-between">
           <div class="flex items-center gap-3">
             <span class="text-3xl leading-none">{{ c.flag }}</span>

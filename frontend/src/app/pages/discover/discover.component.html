@@ -5,17 +5,17 @@
   <div #mapEl class="w-full h-full"></div>
 
   <!-- Map controls -->
-  <div class="absolute right-8 bottom-44 z-[500] flex flex-col gap-2">
+  <div class="absolute right-4 md:right-8 bottom-44 z-[500] flex flex-col gap-2">
     <button (click)="zoom(1)" class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-container hover:bg-slate-50 transition-all"><span class="material-symbols-outlined">add</span></button>
     <button (click)="zoom(-1)" class="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-container hover:bg-slate-50 transition-all"><span class="material-symbols-outlined">remove</span></button>
   </div>
-  <button class="absolute right-8 bottom-28 z-[500] bg-primary text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3 hover:bg-primary-container transition-all active:scale-95">
+  <button class="absolute right-4 md:right-8 bottom-28 z-[500] bg-primary text-white px-4 md:px-6 py-3 rounded-full shadow-xl flex items-center gap-2 md:gap-3 hover:bg-primary-container transition-all active:scale-95">
     <span class="material-symbols-outlined text-[20px]">help_center</span>
-    <span class="font-bold text-sm">Help?</span>
+    <span class="font-bold text-sm hidden md:inline">Help?</span>
   </button>
 
   <!-- Trending carousel -->
-  <div class="absolute bottom-8 left-8 right-32 z-[500]">
+  <div class="absolute bottom-6 md:bottom-8 left-4 md:left-8 right-20 md:right-32 z-[500]">
     <p class="font-label-caps text-label-caps text-primary-container mb-2 uppercase bg-white/70 backdrop-blur-sm inline-block px-2 py-1 rounded">Trending now</p>
     <div class="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
       @for (c of trending; track c.code) {
