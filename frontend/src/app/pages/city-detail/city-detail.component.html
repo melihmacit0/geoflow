@@ -415,6 +415,10 @@
                       <span class="material-symbols-outlined text-sm text-stone-400">group</span>
                       {{ passengerLabel }}
                     </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">bed</span>
+                      {{ rooms() }} room{{ rooms() > 1 ? 's' : '' }}
+                    </div>
                     <button (click)="fetchHotels()"
                       class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary/90 transition-colors ml-auto">
                       @if (hotelsLoading()) {
@@ -436,8 +440,12 @@
                           <p class="text-[11px] text-stone-400">{{ h.chain }} · {{ h.type }}</p>
                         </div>
                         <div class="text-right shrink-0 ml-3">
-                          <p class="font-bold text-primary text-base">${{ h.pricePerNight }}</p>
-                          <p class="text-[10px] text-stone-400">per night</p>
+                          <p class="font-bold text-primary text-base">${{ h.pricePerNight }}<span class="text-[10px] text-stone-400 font-normal">/room</span></p>
+                          @if (rooms() > 1) {
+                            <p class="text-xs text-stone-500">${{ h.pricePerNight * rooms() }} · {{ rooms() }} rooms</p>
+                          } @else {
+                            <p class="text-[10px] text-stone-400">per night</p>
+                          }
                         </div>
                       </div>
                       <div class="flex items-center justify-between mt-3">
@@ -539,7 +547,7 @@
                   <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
                     <div class="flex items-center justify-between mb-2">
                       <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">hotel</span> Hotel · {{ nightsCount() }} nights
+                        <span class="material-symbols-outlined text-sm">hotel</span> Hotel · {{ nightsCount() }} nights · {{ rooms() }} room{{ rooms() > 1 ? 's' : '' }}
                       </p>
                       <button (click)="goBackToStep('hotel')" class="text-xs text-primary hover:underline">Change</button>
                     </div>
@@ -548,7 +556,7 @@
                         <p class="text-sm font-semibold text-primary">{{ sh.name }}</p>
                         <p class="text-xs text-stone-500">{{ checkIn() }} – {{ checkOut() }}</p>
                       </div>
-                      <p class="font-bold text-lg text-primary">${{ sh.pricePerNight * nightsCount() }}</p>
+                      <p class="font-bold text-lg text-primary">${{ sh.pricePerNight * nightsCount() * rooms() }}</p>
                     </div>
                   </div>
                 }

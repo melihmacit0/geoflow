@@ -69,11 +69,13 @@ export class CityDetailComponent implements OnDestroy {
     return Math.max(1, Math.round((co.getTime() - ci.getTime()) / 86_400_000));
   });
 
+  rooms = computed(() => Math.ceil(this.adults() / 2));
+
   totalEstimate = computed(() => {
     const n  = this.nightsCount();
     const sf = this.selectedFlight();
     return (sf ? this.flightTotal(sf.price) : 0)
-      + (this.selectedHotel() ? this.selectedHotel()!.pricePerNight * n : 0)
+      + (this.selectedHotel() ? this.selectedHotel()!.pricePerNight * n * this.rooms() : 0)
       + (this.selectedCar()   ? this.selectedCar()!.pricePerDay * n   : 0);
   });
 
