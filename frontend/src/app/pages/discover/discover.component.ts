@@ -2,7 +2,6 @@ import {
   AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
@@ -12,7 +11,7 @@ import { TopNavComponent } from '../../shared/top-nav.component';
 @Component({
   selector: 'gf-discover',
   standalone: true,
-  imports: [CommonModule, FormsModule, TopNavComponent],
+  imports: [CommonModule, TopNavComponent],
   templateUrl: './discover.component.html'
 })
 export class DiscoverComponent implements AfterViewInit, OnDestroy {
@@ -25,10 +24,6 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
   private markerLayer = L.layerGroup();
 
   countries = signal<CountrySummary[]>([]);
-  travelers = signal(2);
-
-  continents = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania'];
-  activeContinent = signal<string | null>(null);
 
   ngAfterViewInit(): void {
     this.map = L.map(this.mapEl.nativeElement, {
@@ -53,8 +48,8 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
     this.map?.remove();
   }
 
-  private load(continent?: string): void {
-    this.api.getCountries(continent ? { continent } : undefined).subscribe((list) => {
+  private load(): void {
+    this.api.getCountries().subscribe((list) => {
       this.countries.set(list);
       this.renderMarkers(list);
     });
@@ -87,19 +82,6 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
       .filter((c) => c.cheapestFlight && c.image)
       .sort((a, b) => a.cheapestFlight! - b.cheapestFlight!)
       .slice(0, 6);
-  }
-
-  toggleContinent(c: string): void {
-    const next = this.activeContinent() === c ? null : c;
-    this.activeContinent.set(next);
-    this.load(next ?? undefined);
-    if (!next && this.map) {
-      this.map.setView([30, 15], 2.5, { animate: true });
-    }
-  }
-
-  applyFilters(): void {
-    this.load(this.activeContinent() ?? undefined);
   }
 
   zoom(delta: number): void {
