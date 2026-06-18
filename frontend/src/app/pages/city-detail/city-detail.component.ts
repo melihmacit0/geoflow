@@ -220,7 +220,7 @@ export class CityDetailComponent implements OnDestroy {
   }
 
   flightTotal(basePrice: number): number {
-    return Math.round(basePrice * this.adults() + basePrice * 0.75 * this.children());
+    return basePrice * (this.adults() + this.children());
   }
 
   get passengerLabel(): string {
