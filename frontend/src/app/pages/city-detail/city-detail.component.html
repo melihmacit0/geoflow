@@ -63,34 +63,172 @@
 
         <!-- ══ CULTURE TAB ══════════════════════════════════════════════════ -->
         @if (tab() === 'culture') {
-          <div class="px-7 py-6 space-y-6">
+          <div class="px-7 py-6 space-y-5">
             @if (c.culture; as culture) {
-              <p class="text-on-surface-variant leading-relaxed text-sm">{{ culture.intro }}</p>
 
-              <div class="p-5 bg-[#FDF6E3] rounded-xl border border-yellow-200 flex gap-3">
-                <span class="material-symbols-outlined text-yellow-500 shrink-0">lightbulb</span>
-                <div>
-                  <p class="text-[10px] font-bold text-yellow-700 uppercase tracking-widest mb-1">Did You Know?</p>
-                  <p class="text-sm text-stone-700 leading-snug">{{ culture.didYouKnow }}</p>
-                </div>
+              <!-- Culture sub-nav -->
+              <div class="flex gap-1 bg-surface-container p-1 rounded-xl">
+                @for (s of [['overview','explore'],['food','restaurant'],['history','history_edu'],['tips','lightbulb']]; track s[0]) {
+                  <button (click)="cultureSub.set($any(s[0]))"
+                    class="flex-1 flex items-center justify-center gap-1 py-2 text-xs font-medium rounded-lg transition-all"
+                    [class]="cultureSub() === s[0] ? 'bg-white text-primary shadow-sm' : 'text-stone-400 hover:text-stone-700'">
+                    <span class="material-symbols-outlined text-sm">{{ s[1] }}</span>
+                    {{ s[0] | titlecase }}
+                  </button>
+                }
               </div>
 
-              <section>
-                <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Top Highlights</h2>
-                <div class="grid grid-cols-2 gap-3">
-                  @for (h of culture.highlights; track h.title) {
-                    <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
-                      <p class="font-semibold text-primary text-sm">{{ h.title }}</p>
-                      <p class="text-xs text-stone-500 mt-0.5">{{ h.note }}</p>
-                    </div>
-                  }
-                </div>
-              </section>
+              <!-- ── Overview ── -->
+              @if (cultureSub() === 'overview') {
+                <p class="text-on-surface-variant leading-relaxed text-sm">{{ culture.intro }}</p>
 
-              <!-- AI disclaimer -->
+                <div class="p-5 bg-[#FDF6E3] rounded-xl border border-yellow-200 flex gap-3">
+                  <span class="material-symbols-outlined text-yellow-500 shrink-0">lightbulb</span>
+                  <div>
+                    <p class="text-[10px] font-bold text-yellow-700 uppercase tracking-widest mb-1">Did You Know?</p>
+                    <p class="text-sm text-stone-700 leading-snug">{{ culture.didYouKnow }}</p>
+                  </div>
+                </div>
+
+                <section>
+                  <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Top Highlights</h2>
+                  <div class="grid grid-cols-2 gap-3">
+                    @for (h of culture.highlights; track h.title) {
+                      <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <p class="font-semibold text-primary text-sm">{{ h.title }}</p>
+                        <p class="text-xs text-stone-500 mt-0.5">{{ h.note }}</p>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
+
+              <!-- ── Food & Drink ── -->
+              @if (cultureSub() === 'food') {
+                @if (culture.food) {
+                  <p class="text-on-surface-variant leading-relaxed text-sm">{{ culture.food.intro }}</p>
+                  <section>
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Must-Try Dishes</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                      @for (d of culture.food.dishes; track d.name) {
+                        <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg flex flex-col gap-1">
+                          <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-primary text-base">restaurant</span>
+                            <p class="font-semibold text-primary text-sm">{{ d.name }}</p>
+                          </div>
+                          <p class="text-xs text-stone-500">{{ d.note }}</p>
+                        </div>
+                      }
+                    </div>
+                  </section>
+                } @else {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">restaurant</span>
+                    <p class="text-stone-400 text-sm">Food content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
+              <!-- ── History ── -->
+              @if (cultureSub() === 'history') {
+                @if (culture.history) {
+                  <!-- Overview -->
+                  <div class="p-5 bg-[#F0F4FF] border border-blue-100 rounded-xl flex gap-3">
+                    <span class="material-symbols-outlined text-primary shrink-0">history_edu</span>
+                    <p class="text-sm text-on-surface-variant leading-relaxed">{{ culture.history.overview }}</p>
+                  </div>
+
+                  <!-- Timeline -->
+                  @if (culture.history.periods?.length) {
+                    <section>
+                      <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Historical Periods</h2>
+                      <div class="relative pl-5 space-y-4">
+                        <!-- vertical line -->
+                        <div class="absolute left-[7px] top-2 bottom-2 w-px bg-stone-200"></div>
+                        @for (period of culture.history.periods; track period.era; let i = $index) {
+                          <div class="relative flex gap-4">
+                            <div class="shrink-0 w-3.5 h-3.5 rounded-full border-2 border-primary bg-white mt-0.5 z-10 -ml-5"></div>
+                            <div class="pb-1">
+                              <p class="font-semibold text-primary text-sm mb-0.5">{{ period.era }}</p>
+                              <p class="text-xs text-stone-500 leading-relaxed">{{ period.description }}</p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </section>
+                  }
+
+                  <!-- Notable Figures -->
+                  @if (culture.history.figures?.length) {
+                    <section>
+                      <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Notable Figures</h2>
+                      <div class="grid grid-cols-2 gap-3">
+                        @for (fig of culture.history.figures; track fig.name) {
+                          <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg flex gap-3 items-start">
+                            <span class="material-symbols-outlined text-primary text-base shrink-0">person</span>
+                            <div>
+                              <p class="font-semibold text-primary text-sm">{{ fig.name }}</p>
+                              <p class="text-xs text-stone-500 mt-0.5">{{ fig.role }}</p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </section>
+                  }
+                } @else {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">history_edu</span>
+                    <p class="text-stone-400 text-sm">History content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
+              <!-- ── Tips ── -->
+              @if (cultureSub() === 'tips') {
+                @if (culture.tips?.length) {
+                  <section class="space-y-3">
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Travel Tips</h2>
+                    @for (tip of culture.tips; track tip.title) {
+                      <div class="flex gap-3 p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <span class="material-symbols-outlined text-green-500 shrink-0 text-base">check_circle</span>
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ tip.title }}</p>
+                          <p class="text-xs text-stone-500 mt-0.5">{{ tip.note }}</p>
+                        </div>
+                      </div>
+                    }
+                  </section>
+                }
+
+                @if (culture.phrases?.length) {
+                  <section class="space-y-3">
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Useful Phrases</h2>
+                    @for (p of culture.phrases; track p.phrase) {
+                      <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <div class="flex items-center justify-between gap-2">
+                          <p class="font-semibold text-primary text-sm">"{{ p.phrase }}"</p>
+                          @if (p.pronunciation) {
+                            <span class="text-[10px] text-stone-400 italic shrink-0">{{ p.pronunciation }}</span>
+                          }
+                        </div>
+                        <p class="text-xs text-stone-500 mt-1">{{ p.meaning }}</p>
+                      </div>
+                    }
+                  </section>
+                }
+
+                @if (!culture.tips?.length && !culture.phrases?.length) {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">lightbulb</span>
+                    <p class="text-stone-400 text-sm">Tips content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
               <p class="text-[11px] text-stone-400 italic border-t border-stone-100 pt-4">
                 Cultural content generated by Gemini AI. Verify details before travel.
               </p>
+
             } @else {
               <div class="flex flex-col items-center justify-center py-16 text-center">
                 <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">auto_stories</span>

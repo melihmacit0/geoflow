@@ -1,128 +1,8 @@
 {
-  "HND": {
-    "tagline": "Where neon futures meet ancient tradition.",
-    "intro": "Tokyo is a dizzying blend of cutting-edge technology and serene historical shrines. It is a playground for students offering endless street food, pop culture, and seamless urban adventure.",
-    "didYouKnow": "Tokyo has more Michelin-starred restaurants than any other city in the world.",
-    "highlights": [
-      {
-        "title": "Shibuya Crossing",
-        "note": "The world's busiest, most iconic pedestrian intersection."
-      },
-      {
-        "title": "Senso-ji Temple",
-        "note": "Tokyo's oldest temple, located in historic Asakusa."
-      },
-      {
-        "title": "Akihabara",
-        "note": "The global epicenter for anime, gaming, and electronics."
-      },
-      {
-        "title": "Shinjuku Gyoen",
-        "note": "A massive, peaceful park perfect for relaxing."
-      }
-    ],
-    "bestTime": "Mar – May and Oct – Nov"
-  },
-  "TGD": {
-    "tagline": "Where Balkan grit meets Mediterranean soul.",
-    "intro": "Podgorica is a unique blend of socialist-era architecture, modern cafe culture, and stunning natural landscapes. It serves as the perfect low-cost base for students to explore Montenegro’s rugged mountains and sparkling coastline.",
-    "didYouKnow": "The city has been rebuilt multiple times throughout history, leaving it with a rare mix of Ottoman-era relics and brutalist urban design.",
-    "highlights": [
-      {
-        "title": "Millennium Bridge",
-        "note": "An iconic, sleek cable-stayed bridge over the Morača."
-      },
-      {
-        "title": "Stara Varoš",
-        "note": "The historic old town featuring Ottoman-style architecture."
-      },
-      {
-        "title": "Ribnica River Banks",
-        "note": "Popular chill spots for riverside coffee and sunsets."
-      },
-      {
-        "title": "Njegošev Park",
-        "note": "The city's green heart for budget-friendly relaxation."
-      }
-    ],
-    "bestTime": "May – September"
-  },
-  "PED": {
-    "tagline": "Gingerbread charm and thrilling horse races",
-    "intro": "Pardubice is a vibrant student hub famous for its historic square and unique gingerbread tradition. It perfectly blends medieval architecture with a lively, modern social scene.",
-    "didYouKnow": "The city is home to the Velká Pardubická, one of the world's most difficult and oldest steeplechase horse races.",
-    "highlights": [
-      {
-        "title": "Pardubice Castle",
-        "note": "Renaissance fortress with stunning ramparts."
-      },
-      {
-        "title": "Green Gate",
-        "note": "Iconic tower offering panoramic city views."
-      },
-      {
-        "title": "Gingerbread Museum",
-        "note": "Taste and decorate traditional local treats."
-      },
-      {
-        "title": "Pernštýn Square",
-        "note": "The heart of the city’s social life."
-      }
-    ],
-    "bestTime": "May – September"
-  },
-  "ABJ": {
-    "tagline": "The pulsating, stylish heartbeat of West Africa",
-    "intro": "Abidjan is a vibrant urban jungle blending futuristic skyscrapers with tropical lagoon charm. It is the ultimate student hub for world-class nightlife, diverse Ivorian gastronomy, and an infectious creative energy.",
-    "didYouKnow": "Abidjan is often called the 'Paris of West Africa' due to its sophisticated cafe culture and French-influenced architecture.",
-    "highlights": [
-      {
-        "title": "Plateau District",
-        "note": "The city’s high-rise financial heart and skyline."
-      },
-      {
-        "title": "St. Paul's Cathedral",
-        "note": "Striking, modern architecture with panoramic lagoon views."
-      },
-      {
-        "title": "Treichville Market",
-        "note": "A chaotic, authentic hub for local street food."
-      },
-      {
-        "title": "Bingerville",
-        "note": "Historic colonial capital featuring lush botanical gardens."
-      }
-    ],
-    "bestTime": "Dec – Apr"
-  },
-  "SKP": {
-    "tagline": "The vibrant gateway to Skopje's outskirts.",
-    "intro": "Ilinden is a dynamic municipality offering a perfect blend of modern suburban life and convenient access to the capital. It serves as a bustling transit hub where local culture meets the fast pace of urban North Macedonia.",
-    "didYouKnow": "The municipality is named after the historic Ilinden Uprising of 1903, a pivotal moment in the nation's fight for independence.",
-    "highlights": [
-      {
-        "title": "St. George Church",
-        "note": "A peaceful spot for historical reflection."
-      },
-      {
-        "title": "Skopje Airport Vicinity",
-        "note": "Strategic location for easy travel access."
-      },
-      {
-        "title": "Local Sports Facilities",
-        "note": "Great spots to engage with active locals."
-      },
-      {
-        "title": "Traditional Taverns",
-        "note": "Authentic spots for affordable Macedonian cuisine."
-      }
-    ],
-    "bestTime": "May – Sep"
-  },
   "ESB": {
     "tagline": "The beating heart of modern Turkey",
-    "intro": "Ankara is a dynamic student hub where ancient history meets contemporary urban life. It offers a unique window into Turkey's soul beyond the coastal resorts, packed with world-class museums and a buzzing cafe scene.",
-    "didYouKnow": "Ankara was a small provincial town until it was declared the capital of the Republic of Turkey in 1923.",
+    "intro": "Ankara is a sophisticated capital city that perfectly blends ancient history with a vibrant, student-friendly energy. It offers a unique window into Turkish identity, away from the tourist crowds of the coast.",
+    "didYouKnow": "Ankara is famous for its unique cat breed, the Ankara Cat, which is known for its silky white fur and heterochromatic eyes.",
     "highlights": [
       {
         "title": "Anıtkabir",
@@ -130,17 +10,105 @@
       },
       {
         "title": "Ankara Castle",
-        "note": "Historic fortress offering panoramic city views."
+        "note": "Historic citadel offering panoramic city views."
       },
       {
         "title": "Museum of Anatolian Civilizations",
-        "note": "A premier collection of ancient history artifacts."
+        "note": "World-class collection of prehistoric artifacts."
       },
       {
         "title": "Kızılay Square",
-        "note": "The vibrant epicenter of local student life."
+        "note": "The buzzing central hub of city nightlife."
       }
     ],
-    "bestTime": "May – Sep"
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Ankara’s food scene is defined by hearty Central Anatolian classics and budget-friendly street eats perfect for students.",
+      "dishes": [
+        {
+          "name": "Ankara Tava",
+          "note": "A rich, slow-cooked lamb and orzo pasta dish."
+        },
+        {
+          "name": "Döner",
+          "note": "The authentic thin-sliced meat served in flatbread."
+        },
+        {
+          "name": "Bazlama",
+          "note": "A soft, fluffy traditional circular flatbread."
+        },
+        {
+          "name": "Simit",
+          "note": "Crispy, molasses-dipped sesame encrusted bread rings."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Ankara has been a vital crossroads for civilizations including the Hittites, Romans, and Seljuks. Its historical significance surged in 1923 when it was declared the capital of the newly founded Republic of Turkey. Today, it stands as a testament to the nation's journey from an empire to a modern secular state.",
+      "periods": [
+        {
+          "era": "Ancient Foundations",
+          "description": "Settled by the Hittites and later transformed into a prosperous trading hub under the Romans. The ruins of the Temple of Augustus still stand as proof of this era."
+        },
+        {
+          "era": "Imperial Transitions",
+          "description": "The city became an important strategic outpost for Byzantine and Seljuk rulers. Its castle walls were repeatedly reinforced to withstand frequent regional invasions."
+        },
+        {
+          "era": "Republican Era",
+          "description": "Following WWI, Atatürk established Ankara as the capital to symbolize a clean break from the Ottoman past. It was rapidly transformed from a small town into a sprawling metropolis."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Mustafa Kemal Atatürk",
+          "role": "Founder and first president of modern Turkey"
+        },
+        {
+          "name": "Tamerlane",
+          "role": "Central Asian conqueror who defeated Bayezid I"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Student Discounts",
+        "note": "Always carry your student ID to access free or discounted museum entries."
+      },
+      {
+        "title": "Transportation",
+        "note": "Use the AnkaraKart for seamless travel on the metro and buses."
+      },
+      {
+        "title": "Walking Tours",
+        "note": "Explore the historic Ulus district on foot to find hidden artisan workshops."
+      },
+      {
+        "title": "Nightlife",
+        "note": "Head to Tunalı Hilmi Street for trendy cafes and student hangouts."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Merhaba",
+        "meaning": "Hello",
+        "pronunciation": "mer-ha-ba"
+      },
+      {
+        "phrase": "Teşekkür ederim",
+        "meaning": "Thank you",
+        "pronunciation": "teh-sheh-kur eh-deh-rim"
+      },
+      {
+        "phrase": "Ne kadar?",
+        "meaning": "How much?",
+        "pronunciation": "neh ka-dar"
+      },
+      {
+        "phrase": "Afiyet olsun",
+        "meaning": "Bon appétit",
+        "pronunciation": "ah-fee-yet ol-sun"
+      }
+    ]
   }
 }

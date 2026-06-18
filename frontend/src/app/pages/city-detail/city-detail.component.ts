@@ -7,6 +7,7 @@ import { Car, CityDetail, Flight, Hotel } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
 type Tab = 'culture' | 'flights' | 'hotels' | 'cars';
+type CultureSub = 'overview' | 'food' | 'history' | 'tips';
 
 @Component({
   selector: 'gf-city-detail',
@@ -29,6 +30,7 @@ export class CityDetailComponent implements OnDestroy {
   loading = signal(true);
 
   tab = signal<Tab>('culture');
+  cultureSub = signal<CultureSub>('overview');
 
   // Flights
   flights       = signal<Flight[]>([]);

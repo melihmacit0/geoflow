@@ -64,12 +64,43 @@ export interface City {
   type: 'large_airport' | 'medium_airport';
 }
 
+export interface CityDish {
+  name: string;
+  note: string;
+}
+
+export interface CityPhrase {
+  phrase: string;
+  meaning: string;
+  pronunciation?: string;
+}
+
+export interface CityHistoryPeriod {
+  era: string;
+  description: string;
+}
+
+export interface CityHistoryFigure {
+  name: string;
+  role: string;
+}
+
+export interface CityHistory {
+  overview: string;
+  periods: CityHistoryPeriod[];
+  figures?: CityHistoryFigure[] | null;
+}
+
 export interface CityCulture {
   tagline: string;
   intro: string;
   didYouKnow: string;
   highlights: Highlight[];
   bestTime: string;
+  food?: { intro: string; dishes: CityDish[] } | null;
+  history?: CityHistory | null;
+  tips?: Highlight[] | null;
+  phrases?: CityPhrase[] | null;
 }
 
 export interface CityDetail extends City {

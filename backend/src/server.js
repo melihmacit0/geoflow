@@ -91,7 +91,9 @@ async function getCountriesData() {
     const res = await fetch(
       'https://restcountries.com/v3.1/all?fields=name,cca2,flags,latlng,continents,capital,currencies,languages'
     );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
+    if (!Array.isArray(data)) throw new Error('Unexpected response format');
     countriesCache = data
       .map(mapRestCountry)
       .filter((c) => c.lat !== 0 || c.lng !== 0);
