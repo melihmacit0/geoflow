@@ -38,17 +38,19 @@ geoflow/
 **1. Backend** (port 4000)
 
 ```bash
+# Terminal 1
 cd backend
 npm install
-npm start
+npm run dev
 ```
 
 **2. Frontend** (port 4200)
 
 ```bash
+# Terminal 2
 cd frontend
 npm install
-npm start          # → http://localhost:4200
+npm start
 ```
 
 Open **http://localhost:4200**.
