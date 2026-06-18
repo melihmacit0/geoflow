@@ -670,5 +670,677 @@
         "pronunciation": "prohst"
       }
     ]
+  },
+  "BTS": {
+    "tagline": "The charming capital with a pulse",
+    "intro": "Bratislava is a vibrant, compact city where medieval history meets quirky modern aesthetics along the Danube. It is the perfect budget-friendly playground for students looking for nightlife, culture, and stunning views.",
+    "didYouKnow": "Bratislava is the only national capital in the world that borders two other independent countries: Austria and Hungary.",
+    "highlights": [
+      {
+        "title": "Bratislava Castle",
+        "note": "Massive hilltop castle offering panoramic city views."
+      },
+      {
+        "title": "The Blue Church",
+        "note": "A whimsical, Art Nouveau church painted soft baby blue."
+      },
+      {
+        "title": "Old Town Streets",
+        "note": "Winding cobblestone alleys filled with cafes and street art."
+      },
+      {
+        "title": "UFO Observation Deck",
+        "note": "Futuristic bridge tower serving drinks with epic skyline vistas."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Slovak cuisine is hearty and comforting, featuring heavy influences from its neighbors, perfect for fueling up before a night out.",
+      "dishes": [
+        {
+          "name": "Bryndzové halušky",
+          "note": "Potato dumplings with sheep cheese and crispy bacon."
+        },
+        {
+          "name": "Kapustnica",
+          "note": "A thick, traditional soup made with sauerkraut and sausage."
+        },
+        {
+          "name": "Vyprážaný syr",
+          "note": "Deep-fried cheese served with fries and tartar sauce."
+        },
+        {
+          "name": "Trdelník",
+          "note": "A sweet, hollow pastry grilled on a rotating spit."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Bratislava served as the coronation site for Hungarian kings and queens for centuries, reflecting its strategic importance. After surviving the turbulence of the 20th century, it emerged as the proud capital of an independent Slovakia in 1993. The city now seamlessly blends its imperial legacy with its contemporary identity as a modern European hub.",
+      "periods": [
+        {
+          "era": "Royal Coronation Hub",
+          "description": "Between 1536 and 1783, the city was the official capital of the Kingdom of Hungary. Elaborate royal coronations transformed the city into a lavish center of European power."
+        },
+        {
+          "era": "Socialist Era",
+          "description": "Under communist rule, the city underwent rapid industrialization and mass housing projects. This era left behind iconic, if controversial, structures like the Most SNP bridge."
+        },
+        {
+          "era": "Modern Independence",
+          "description": "Since 1993, the city has blossomed into a bustling, democratic capital. It has rapidly modernized while carefully restoring its historic old-world charm."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Maria Theresa",
+          "role": "Empress who modernized the city's fortifications."
+        },
+        {
+          "name": "Ľudovít Štúr",
+          "role": "Key figure in the 19th-century Slovak national revival."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Walk it out",
+        "note": "The city center is small enough to navigate entirely on foot."
+      },
+      {
+        "title": "Save on water",
+        "note": "Public tap water is safe, delicious, and completely free to drink."
+      },
+      {
+        "title": "Student discounts",
+        "note": "Always carry your ISIC card for cheaper entry to museums and transport."
+      },
+      {
+        "title": "Try Kofola",
+        "note": "Skip the big soda brands and drink the local herbal cola."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Ahoj",
+        "meaning": "Hello/Hi",
+        "pronunciation": "ah-hoy"
+      },
+      {
+        "phrase": "Prosím",
+        "meaning": "Please/You're welcome",
+        "pronunciation": "pro-seem"
+      },
+      {
+        "phrase": "Ďakujem",
+        "meaning": "Thank you",
+        "pronunciation": "jah-koo-yem"
+      },
+      {
+        "phrase": "Jedno pivo, prosím",
+        "meaning": "One beer, please",
+        "pronunciation": "yed-no pee-vo pro-seem"
+      }
+    ]
+  },
+  "KSC": {
+    "tagline": "Slovakia's vibrant eastern gem of culture",
+    "intro": "Košice is an energetic student hub where medieval architecture meets a thriving modern cafe culture. It is the perfect affordable base for travelers looking to explore the hidden charm of Eastern Europe.",
+    "didYouKnow": "Košice has the oldest marathon in Europe, and the second oldest in the world, held annually since 1924.",
+    "highlights": [
+      {
+        "title": "St. Elisabeth Cathedral",
+        "note": "Stunning Gothic masterpiece and Slovakia's largest church."
+      },
+      {
+        "title": "Main Street (Hlavná ulica)",
+        "note": "A pedestrian paradise lined with fountains and cafes."
+      },
+      {
+        "title": "Jakab's Palace",
+        "note": "A fairy-tale eccentric building with eclectic architecture."
+      },
+      {
+        "title": "Tabačka Kulturfabrik",
+        "note": "A gritty, creative hub for art, music, and beer."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "The local scene blends hearty Slavic staples with influences from neighboring Hungary, perfect for budget-conscious students.",
+      "dishes": [
+        {
+          "name": "Bryndzové halušky",
+          "note": "Potato dumplings with sheep cheese and crispy bacon bits."
+        },
+        {
+          "name": "Kapustnica",
+          "note": "A rich, flavorful traditional sauerkraut soup with sausage."
+        },
+        {
+          "name": "Lángos",
+          "note": "Deep-fried dough topped with garlic, cheese, and sour cream."
+        },
+        {
+          "name": "Lokša",
+          "note": "Thin potato pancakes often served with sweet or savory fillings."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Košice has served as a pivotal trading crossroads for centuries, shifting between Hungarian and Czechoslovak influence. It holds the distinction of being the first city in Europe to be granted its own coat of arms. Today, it stands as a resilient intellectual center, having been named a European Capital of Culture in 2013.",
+      "periods": [
+        {
+          "era": "Medieval Rise",
+          "description": "Košice became a wealthy trading town due to its strategic position on the merchant routes. The construction of the massive St. Elisabeth Cathedral began during this golden age."
+        },
+        {
+          "era": "Austro-Hungarian Era",
+          "description": "As part of the Austro-Hungarian Empire, the city flourished as a cultural and industrial focal point. It was a major railway hub that connected the empire’s disparate regions."
+        },
+        {
+          "era": "Socialist & Modern",
+          "description": "Following WWII, the city expanded rapidly with new residential districts and industry. Since independence, it has rebranded as a center for tech and student-driven innovation."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Francis II Rákóczi",
+          "role": "Leader of the Hungarian uprising against Habsburgs"
+        },
+        {
+          "name": "Rudolf Schuster",
+          "role": "Former President of Slovakia and city mayor"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Use public transit",
+        "note": "The city is highly walkable, but trams are efficient for reaching outer districts."
+      },
+      {
+        "title": "Student discounts",
+        "note": "Always carry your ISIC card to get reduced museum and cafe prices."
+      },
+      {
+        "title": "Tipping culture",
+        "note": "Rounding up the bill or leaving about 10 percent is standard practice."
+      },
+      {
+        "title": "Safety",
+        "note": "Košice is very safe, but stick to well-lit areas when walking late at night."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Ahoj",
+        "meaning": "Hi or Hello",
+        "pronunciation": "ah-hoy"
+      },
+      {
+        "phrase": "Prosím",
+        "meaning": "Please or You're welcome",
+        "pronunciation": "pro-seem"
+      },
+      {
+        "phrase": "Ďakujem",
+        "meaning": "Thank you",
+        "pronunciation": "jah-koo-yem"
+      },
+      {
+        "phrase": "Jedno pivo, prosím",
+        "meaning": "One beer, please",
+        "pronunciation": "yed-no pee-vo pro-seem"
+      }
+    ]
+  },
+  "EDO": {
+    "tagline": "Where emerald mountains kiss turquoise seas",
+    "intro": "Edremit is a hidden gem where ancient mythology meets the pristine nature of the Kaz Mountains. It offers budget-friendly students the perfect blend of hiking adventures, therapeutic thermal springs, and serene Mediterranean beaches.",
+    "didYouKnow": "The Kaz Mountains, located near Edremit, are mentioned in Homer's Iliad as the place where Zeus watched the Trojan War.",
+    "highlights": [
+      {
+        "title": "Kaz Mountains National Park",
+        "note": "Stunning hiking trails with high oxygen levels."
+      },
+      {
+        "title": "Altınoluk",
+        "note": "A coastal town known for its crystal-clear Aegean waters."
+      },
+      {
+        "title": "Hasanboğuldu Waterfall",
+        "note": "A scenic, refreshing pool surrounded by lush forests."
+      },
+      {
+        "title": "Tahtakuşlar Village",
+        "note": "Home to a unique museum showcasing nomadic shamanic culture."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Edremit's cuisine is defined by its world-class olive oils and fresh Aegean herbs. Expect healthy, vibrant dishes that won't break your student budget.",
+      "dishes": [
+        {
+          "name": "Zeytinyağlı Enginar",
+          "note": "Artichokes cooked in premium local olive oil."
+        },
+        {
+          "name": "Ayvalık Toast",
+          "note": "Famous crispy sandwich packed with local ingredients."
+        },
+        {
+          "name": "Körfez Olives",
+          "note": "Renowned local olives served at every breakfast."
+        },
+        {
+          "name": "Ot Kavurma",
+          "note": "Sautéed wild mountain herbs with garlic and spices."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Edremit has been a crossroads of civilization since antiquity, serving as a vital port and agricultural hub. From the mythological era to the Ottoman period, it has remained a site of strategic and cultural importance. Today, it stands as a testament to the enduring legacy of the Aegean spirit.",
+      "periods": [
+        {
+          "era": "Ancient Antiquity",
+          "description": "Known as Adramytteion, it was a significant city in the Mysia region. It flourished as a center for trade under various Greek states."
+        },
+        {
+          "era": "Ottoman Era",
+          "description": "The city became an important center for olive oil production during the Ottoman expansion. Its architecture reflects the traditional wooden Turkish house style."
+        },
+        {
+          "era": "Modern Era",
+          "description": "Following the Turkish War of Independence, Edremit transformed into a modern hub for tourism and agriculture. It is now a gateway to the Kaz Mountains."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Homer",
+          "role": "Ancient poet who immortalized the nearby mountains"
+        },
+        {
+          "name": "Sabahattin Ali",
+          "role": "Renowned Turkish author who lived and worked here"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Public Transport",
+        "note": "Use the frequent dolmuş minibuses to travel between coastal towns cheaply."
+      },
+      {
+        "title": "Dress Code",
+        "note": "Bring comfortable hiking boots if you plan to explore the mountain trails."
+      },
+      {
+        "title": "Local Markets",
+        "note": "Visit the weekly village markets for the cheapest and freshest snacks."
+      },
+      {
+        "title": "Water Safety",
+        "note": "Stay hydrated with mountain spring water found at village fountains."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Merhaba",
+        "meaning": "Hello",
+        "pronunciation": "mer-ha-ba"
+      },
+      {
+        "phrase": "Ne kadar?",
+        "meaning": "How much?",
+        "pronunciation": "neh ka-dar"
+      },
+      {
+        "phrase": "Teşekkür ederim",
+        "meaning": "Thank you",
+        "pronunciation": "teh-shek-kyur eh-deh-rim"
+      },
+      {
+        "phrase": "Nerede?",
+        "meaning": "Where is it?",
+        "pronunciation": "neh-reh-deh"
+      }
+    ]
+  },
+  "DSM": {
+    "tagline": "The unexpected heart of the Midwest",
+    "intro": "Des Moines offers students a perfect blend of high-energy urban culture and accessible, budget-friendly Midwestern charm. From vibrant art festivals to hidden speakeasies, the city balances a small-town feel with sophisticated nightlife and outdoor adventures.",
+    "didYouKnow": "The iconic gold leaf on the Iowa State Capitol dome is actually 23-karat gold, reapplied periodically by hand.",
+    "highlights": [
+      {
+        "title": "Pappajohn Sculpture Park",
+        "note": "Expansive outdoor museum featuring world-class contemporary art."
+      },
+      {
+        "title": "East Village",
+        "note": "Trendy district filled with independent boutiques and cafes."
+      },
+      {
+        "title": "Principal Riverwalk",
+        "note": "Scenic urban trails perfect for biking and walking."
+      },
+      {
+        "title": "Greater Des Moines Botanical Garden",
+        "note": "Striking geodesic dome housing exotic plants year-round."
+      }
+    ],
+    "bestTime": "May – October",
+    "food": {
+      "intro": "Des Moines boasts a thriving farm-to-table scene and a surprising obsession with inventive, globally-influenced casual fare.",
+      "dishes": [
+        {
+          "name": "Pork Tenderloin Sandwich",
+          "note": "A massive, breaded, deep-fried Iowa staple."
+        },
+        {
+          "name": "Crab Rangoon Pizza",
+          "note": "Local cult-favorite pie topped with creamy crab filling."
+        },
+        {
+          "name": "Sweet Corn",
+          "note": "Fresh, locally grown corn eaten during summer months."
+        },
+        {
+          "name": "Breakfast Pizza",
+          "note": "Midwestern pizza topped with eggs, cheese, and sausage."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Founded as a military fort in 1843, Des Moines transformed from a rugged frontier outpost into the political and economic hub of Iowa. The city evolved through the coal mining and insurance booms of the 19th and 20th centuries. Today, it stands as a progressive capital that respects its agricultural roots while fostering a modern, innovative culture.",
+      "periods": [
+        {
+          "era": "Fort Des Moines",
+          "description": "Established to protect the regional territory during westward expansion. It served as a vital garrison for soldiers and traders."
+        },
+        {
+          "era": "Industrial Growth",
+          "description": "The city became a coal mining and printing powerhouse by the 1900s. Infrastructure development linked the capital to national trade networks."
+        },
+        {
+          "era": "Contemporary Evolution",
+          "description": "Recent years have seen a downtown revitalization focused on arts and technology. It is now recognized as a leading hub for finance and insurance."
+        }
+      ],
+      "figures": [
+        {
+          "name": "George Washington Carver",
+          "role": "Botanist who studied at Iowa State"
+        },
+        {
+          "name": "Henry A. Wallace",
+          "role": "U.S. Vice President and agricultural pioneer"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Skywalk System",
+        "note": "Use the climate-controlled skywalks to navigate downtown regardless of weather."
+      },
+      {
+        "title": "DART Transit",
+        "note": "The local bus system is reliable and student-friendly for city travel."
+      },
+      {
+        "title": "Farmer's Market",
+        "note": "Visit the downtown Saturday market for the city's best local food."
+      },
+      {
+        "title": "Free Art",
+        "note": "Many of the city's best galleries and parks have no entry fee."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Iowa Nice",
+        "meaning": "The genuine politeness of residents",
+        "pronunciation": "EYE-oh-wah nice"
+      },
+      {
+        "phrase": "The Metro",
+        "meaning": "Referring to Greater Des Moines",
+        "pronunciation": "thuh MEH-troh"
+      },
+      {
+        "phrase": "Corn-fed",
+        "meaning": "A compliment for being hardy or strong",
+        "pronunciation": "KORN-fed"
+      },
+      {
+        "phrase": "Ope!",
+        "meaning": "Used when bumping into someone or making a mistake",
+        "pronunciation": "OH-pee"
+      }
+    ]
+  },
+  "VLC": {
+    "tagline": "Sun-drenched beaches and futuristic urban wonders",
+    "intro": "Valencia is the perfect blend of Mediterranean relaxation and cutting-edge architecture. It is an affordable, walkable haven for students looking for vibrant nightlife and world-class history.",
+    "didYouKnow": "Valencia is the official birthplace of paella, the world-famous saffron-infused rice dish.",
+    "highlights": [
+      {
+        "title": "City of Arts and Sciences",
+        "note": "Futuristic complex with museums and an aquarium."
+      },
+      {
+        "title": "Turia Gardens",
+        "note": "A massive park located in a dried-out riverbed."
+      },
+      {
+        "title": "Mercado Central",
+        "note": "A bustling, modernist market full of fresh tapas."
+      },
+      {
+        "title": "Malvarrosa Beach",
+        "note": "Sprawling golden sands perfect for student hangouts."
+      }
+    ],
+    "bestTime": "Mar – Oct",
+    "food": {
+      "intro": "The local culinary scene is defined by fresh seafood, citrus fruits, and the finest rice dishes in Spain.",
+      "dishes": [
+        {
+          "name": "Paella Valenciana",
+          "note": "Traditional rice dish with rabbit, chicken, and beans."
+        },
+        {
+          "name": "Horchata",
+          "note": "Sweet, milky drink made from tiger nuts."
+        },
+        {
+          "name": "Agua de Valencia",
+          "note": "Refreshing cocktail of cava, gin, vodka, and orange juice."
+        },
+        {
+          "name": "Fartons",
+          "note": "Soft, sweet pastries meant for dipping into horchata."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Valencia was founded by the Romans and evolved into a major trade hub under Moorish influence before joining the Crown of Aragon. Its history is marked by a golden age of arts and commerce in the 15th century. Today, it stands as a testament to cultural preservation meeting innovative modern urban design.",
+      "periods": [
+        {
+          "era": "Roman Foundation",
+          "description": "Founded in 138 BC as a colony for Roman soldiers. It quickly became an important agricultural center for the empire."
+        },
+        {
+          "era": "Moorish Influence",
+          "description": "Islamic rule brought advanced irrigation systems and vibrant architecture. This period deeply shaped the city's unique agricultural landscape."
+        },
+        {
+          "era": "Modern Era",
+          "description": "Following the diversion of the Turia river, the city transformed into a green oasis. It is now a global hub for science and technology."
+        }
+      ],
+      "figures": [
+        {
+          "name": "El Cid",
+          "role": "Legendary medieval military leader of Spain"
+        },
+        {
+          "name": "Jaume I",
+          "role": "King who conquered the city in 1238"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Bike Rental",
+        "note": "Rent a bike to navigate the flat, extensive Turia Gardens efficiently."
+      },
+      {
+        "title": "Dining Times",
+        "note": "Spaniards eat late, so expect restaurants to buzz after 9 PM."
+      },
+      {
+        "title": "Museum Sundays",
+        "note": "Many municipal museums offer free entry on Sundays and holidays."
+      },
+      {
+        "title": "Drink Water",
+        "note": "Tap water is safe, but locals often prefer bottled for better taste."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Bon dia",
+        "meaning": "Good morning",
+        "pronunciation": "bon-DEE-ah"
+      },
+      {
+        "phrase": "Gràcies",
+        "meaning": "Thank you",
+        "pronunciation": "GRAH-see-es"
+      },
+      {
+        "phrase": "Un cafè, si us plau",
+        "meaning": "A coffee, please",
+        "pronunciation": "oon ka-FEH see oos PLOW"
+      },
+      {
+        "phrase": "On està la platja?",
+        "meaning": "Where is the beach?",
+        "pronunciation": "on es-TAH la PLA-cha"
+      }
+    ]
+  },
+  "AXA": {
+    "tagline": "The vibrant heart of Caribbean tranquility",
+    "intro": "The Valley is the colorful, unassuming capital of Anguilla, serving as the cultural soul of the island. It offers students a unique blend of quiet colonial heritage and authentic local island life away from the high-end resorts.",
+    "didYouKnow": "The Valley was named for its location in a central depression that runs across the island, serving as the main hub for the local population.",
+    "highlights": [
+      {
+        "title": "Wallblake House",
+        "note": "A historic 1787 plantation house reflecting island heritage."
+      },
+      {
+        "title": "Crocus Bay",
+        "note": "A scenic, tranquil beach perfect for snorkeling and swimming."
+      },
+      {
+        "title": "The Old Court House",
+        "note": "An iconic structure representing the island's legislative history."
+      },
+      {
+        "title": "Anguilla National Trust",
+        "note": "A great hub for learning about island conservation efforts."
+      }
+    ],
+    "bestTime": "Nov – Apr",
+    "food": {
+      "intro": "Anguillan cuisine is defined by fresh Atlantic seafood and bold Caribbean spices. It’s a delicious, high-quality culinary experience that captures the essence of the ocean.",
+      "dishes": [
+        {
+          "name": "Johnny Cakes",
+          "note": "Classic fried flour dough, a staple side for every meal."
+        },
+        {
+          "name": "Grilled Crayfish",
+          "note": "Local rock lobster served fresh with garlic butter."
+        },
+        {
+          "name": "Conch Stew",
+          "note": "Slow-cooked savory shellfish served in a spiced broth."
+        },
+        {
+          "name": "Peas and Rice",
+          "note": "A flavorful blend of pigeon peas and seasoned rice."
+        }
+      ]
+    },
+    "history": {
+      "overview": "The Valley has served as the administrative center since the British colonial period began in the 17th century. Its history is shaped by early plantation economies and the 1967 Anguillian Revolution, which defined the modern national identity. Today, it remains the seat of governance and a living museum of island resilience.",
+      "periods": [
+        {
+          "era": "Colonial Beginnings",
+          "description": "Settled by British colonists in 1650, the area functioned mainly through plantation agriculture. African enslaved laborers built the foundation of the local economy during this era."
+        },
+        {
+          "era": "Revolutionary Period",
+          "description": "The 1960s brought major political unrest as Anguilla sought independence from St. Kitts. The island successfully pursued its path to becoming a British Overseas Territory."
+        },
+        {
+          "era": "Contemporary Era",
+          "description": "The Valley has evolved into a quiet capital that prioritizes heritage tourism and local community pride. It balances modernization with the preservation of colonial-era architecture."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Ronald Webster",
+          "role": "Leader of the 1967 Anguillian Revolution"
+        },
+        {
+          "name": "John Coke",
+          "role": "Early settler and plantation owner"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Transport",
+        "note": "Rent a small car or moped to navigate the island's interior effectively."
+      },
+      {
+        "title": "Budgeting",
+        "note": "Visit local roadside stalls for affordable and authentic Caribbean snacks."
+      },
+      {
+        "title": "Respect",
+        "note": "Always ask permission before taking photos of locals or private residences."
+      },
+      {
+        "title": "Sun Safety",
+        "note": "The Caribbean sun is intense, so keep hydrated and wear high-SPF sunscreen."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Lime",
+        "meaning": "Hanging out or relaxing with friends",
+        "pronunciation": "Lyme"
+      },
+      {
+        "phrase": "Wa gwan?",
+        "meaning": "What is going on or how are you?",
+        "pronunciation": "Wah gwan"
+      },
+      {
+        "phrase": "Irie",
+        "meaning": "Everything is good or pleasant",
+        "pronunciation": "Eye-ree"
+      },
+      {
+        "phrase": "Small up yuhself",
+        "meaning": "Make space for someone else",
+        "pronunciation": "Small up yuh-self"
+      }
+    ]
   }
 }
