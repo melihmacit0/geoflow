@@ -30,6 +30,10 @@ export class ApiService {
 
   // ── Cities ────────────────────────────────────────────────────────────────
 
+  searchAirports(q: string): Observable<{ iata: string; city: string; name: string; country: string }[]> {
+    return this.http.get<{ iata: string; city: string; name: string; country: string }[]>(`${API}/airports/search`, { params: { q } });
+  }
+
   getCityDetail(iata: string): Observable<CityDetail> {
     return this.http.get<CityDetail>(`${API}/cities/${iata}`);
   }

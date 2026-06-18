@@ -164,6 +164,28 @@ app.get('/api/countries/:code', async (req, res) => {
   });
 });
 
+// Airport search — used for departure picker
+app.get('/api/airports/search', (req, res) => {
+  const q = (req.query.q || '').toLowerCase().trim();
+  if (q.length < 2) return res.json([]);
+  const results = airports
+    .filter((a) =>
+      a.iata.toLowerCase().startsWith(q) ||
+      a.city.toLowerCase().includes(q) ||
+      a.name.toLowerCase().includes(q)
+    )
+    .sort((a, b) => {
+      const aExact = a.iata.toLowerCase() === q || a.city.toLowerCase() === q;
+      const bExact = b.iata.toLowerCase() === q || b.city.toLowerCase() === q;
+      if (aExact !== bExact) return aExact ? -1 : 1;
+      if (a.type !== b.type) return a.type === 'large_airport' ? -1 : 1;
+      return a.city.localeCompare(b.city);
+    })
+    .slice(0, 8)
+    .map(({ iata, city, name, country }) => ({ iata, city, name, country }));
+  res.json(results);
+});
+
 // Cities for a country — sorted: large airports first, then alphabetically by city name
 app.get('/api/countries/:code/cities', (req, res) => {
   const code = req.params.code.toUpperCase();

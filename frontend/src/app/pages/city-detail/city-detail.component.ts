@@ -51,6 +51,14 @@ export class CityDetailComponent implements OnDestroy {
   flightFilter   = signal<'cheapest' | 'fastest' | 'direct'>('cheapest');
   departureDate  = signal(new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10));
 
+  // Departure airport picker
+  origin            = signal('IST');
+  originCity        = signal('Istanbul');
+  originSearch      = signal('');
+  originResults     = signal<{ iata: string; city: string; name: string; country: string }[]>([]);
+  showOriginPicker  = signal(false);
+  originSearchTimer: ReturnType<typeof setTimeout> | null = null;
+
   // Hotel data
   hotels        = signal<Hotel[]>([]);
   hotelSource   = signal('');
@@ -192,10 +200,27 @@ export class CityDetailComponent implements OnDestroy {
     const code = iata ?? this.city()?.iata;
     if (!code) return;
     this.flightsLoading.set(true);
-    this.api.getCityFlights(code, { departureDate: this.departureDate(), adults: this.adults() }).subscribe({
+    this.api.getCityFlights(code, { departureDate: this.departureDate(), adults: this.adults(), origin: this.origin() }).subscribe({
       next: (r) => { this.flights.set(r.flights); this.flightSource.set(r.source); this.flightsLoading.set(false); },
       error: () => this.flightsLoading.set(false)
     });
+  }
+
+  onOriginInput(q: string): void {
+    this.originSearch.set(q);
+    if (this.originSearchTimer) clearTimeout(this.originSearchTimer);
+    if (q.length < 2) { this.originResults.set([]); return; }
+    this.originSearchTimer = setTimeout(() => {
+      this.api.searchAirports(q).subscribe((r) => this.originResults.set(r));
+    }, 250);
+  }
+
+  selectOrigin(ap: { iata: string; city: string }): void {
+    this.origin.set(ap.iata);
+    this.originCity.set(ap.city);
+    this.originSearch.set('');
+    this.originResults.set([]);
+    this.showOriginPicker.set(false);
   }
 
   fetchHotels(iata?: string): void {
