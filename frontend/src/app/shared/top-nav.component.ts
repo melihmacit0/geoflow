@@ -43,12 +43,6 @@ import { AuthService } from '../core/auth.service';
             class="text-slate-500 hover:text-primary-container transition-colors pb-1"
             >Saved</a
           >
-          <a
-            routerLink="/compare"
-            routerLinkActive="text-primary-container border-b-2 border-primary-container"
-            class="text-slate-500 hover:text-primary-container transition-colors pb-1"
-            >Compare</a
-          >
         </div>
         <div class="flex items-center gap-3 pl-6 border-l border-slate-100">
           @if (user(); as u) {
