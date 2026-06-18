@@ -153,6 +153,8 @@ app.get('/api/countries/:code', async (req, res) => {
     intro: curated?.intro || null,
     didYouKnow: curated?.didYouKnow || null,
     highlights: curated?.highlights || null,
+    cheapestFlight: curated?.cheapestFlight ?? country.cheapestFlight ?? null,
+    comparison: curated?.comparison || null,
     facts: curated?.facts || {
       capital: country.capital,
       language: country.language,
