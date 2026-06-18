@@ -1,43 +1,54 @@
 <gf-top-nav></gf-top-nav>
 
 <main class="fixed top-16 left-0 right-0 bottom-0 flex overflow-hidden">
-  <!-- Slim accent bar (left) -->
-  <div class="hidden lg:block w-2 shrink-0" [style.background]="country()?.accent || '#2D4677'"></div>
 
-  <!-- Info panel -->
-  <aside class="flex-1 h-full bg-white flex flex-col border-r border-stone-100 overflow-hidden">
+  <!-- Map (left 55%) -->
+  <section class="hidden lg:block w-[55%] relative bg-surface-container">
+    <div #mapEl class="w-full h-full"></div>
+    <button (click)="close()"
+      class="absolute top-4 left-4 z-[500] flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md text-sm font-medium text-primary hover:bg-white transition-all">
+      <span class="material-symbols-outlined text-base">arrow_back</span>
+      Discover
+    </button>
+  </section>
+
+  <!-- Sidebar (right 45%) -->
+  <aside class="w-full lg:w-[45%] h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
+
     @if (country(); as c) {
+
       <!-- Header -->
-      <div class="px-8 pt-6 pb-4 border-b border-stone-100 flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-3">
-          <button (click)="close()" class="p-2 hover:bg-surface-container-low rounded-full transition-all text-stone-500">
-            <span class="material-symbols-outlined">arrow_back</span>
-          </button>
-          <div>
-            <h1 class="font-h2 text-h2 text-primary flex items-center gap-2">{{ c.flag }} {{ c.name }}</h1>
-            <p class="text-xs text-stone-400 mt-0.5">{{ c.continent }} · {{ c.capital }}</p>
+      <div class="px-7 pt-5 pb-4 shrink-0">
+        <button (click)="close()" class="lg:hidden flex items-center gap-1 text-sm text-stone-500 mb-3 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-base">arrow_back</span> Discover
+        </button>
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl leading-none">{{ c.flag }}</span>
+            <div>
+              <h1 class="font-h2 text-h2 text-primary">{{ c.name }}</h1>
+              <p class="text-xs text-stone-400 mt-0.5">
+                {{ c.continent }}@if (c.capital) { · {{ c.capital }}}
+              </p>
+            </div>
           </div>
         </div>
-        <div class="text-right hidden sm:block">
-          <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Currency</p>
-          <p class="text-sm font-semibold text-primary">{{ c.currency }}</p>
-        </div>
+        @if (c.tagline) {
+          <p class="text-sm italic text-stone-400 mt-2">{{ c.tagline }}</p>
+        }
       </div>
 
-      <!-- Optional curated hero image -->
+      <!-- Hero image -->
       @if (c.image) {
-        <div class="px-8 pt-4 shrink-0">
-          <div class="h-[160px] rounded-xl overflow-hidden shadow-sm">
+        <div class="px-7 pb-4 shrink-0">
+          <div class="h-[140px] rounded-xl overflow-hidden shadow-sm">
             <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
           </div>
-          @if (c.tagline) {
-            <p class="text-xs italic text-stone-400 mt-2 text-center">{{ c.tagline }}</p>
-          }
         </div>
       }
 
-      <!-- Country quick facts -->
-      <div class="px-8 py-4 grid grid-cols-3 gap-3 shrink-0">
+      <!-- Quick facts -->
+      <div class="px-7 pb-4 grid grid-cols-3 gap-3 shrink-0">
         <div class="p-3 bg-surface-container-lowest border border-stone-100 rounded-lg">
           <p class="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Capital</p>
           <p class="font-semibold text-primary text-sm truncate">{{ c.capital || '—' }}</p>
@@ -52,37 +63,44 @@
         </div>
       </div>
 
-      <!-- Cities section -->
-      <div class="px-8 pb-3 shrink-0">
+      <!-- Airports header + search -->
+      <div class="px-7 pb-3 border-b border-stone-100 shrink-0">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="font-semibold text-primary text-sm">
-            Select a City
+          <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+            Airports
             @if (!citiesLoading() && cities().length) {
-              <span class="ml-2 text-[11px] font-normal text-stone-400">({{ cities().length }} airports)</span>
+              <span class="text-stone-300 ml-1">({{ cities().length }})</span>
             }
-          </h2>
+          </p>
+          @if (citiesLoading()) {
+            <span class="material-symbols-outlined text-stone-300 text-base animate-spin">progress_activity</span>
+          }
         </div>
-        <!-- Search box -->
         <div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-lg border border-stone-100">
           <span class="material-symbols-outlined text-stone-400 text-lg">search</span>
           <input
             type="text"
-            placeholder="Search city or IATA code..."
+            placeholder="Search city or IATA code…"
             class="flex-1 bg-transparent text-sm text-primary placeholder:text-stone-400 focus:outline-none"
             [value]="searchQuery()"
             (input)="searchQuery.set($any($event.target).value)"
           />
+          @if (searchQuery()) {
+            <button (click)="searchQuery.set('')" class="text-stone-400 hover:text-stone-600 transition-colors">
+              <span class="material-symbols-outlined text-base">close</span>
+            </button>
+          }
         </div>
       </div>
 
-      <!-- City list -->
-      <div class="flex-1 overflow-y-auto custom-scrollbar px-8 pb-8">
+      <!-- Scrollable airport list -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar px-7 py-4">
         @if (citiesLoading()) {
-          <div class="flex items-center justify-center py-12 text-stone-400">
-            <span class="material-symbols-outlined animate-spin">progress_activity</span>
+          <div class="flex items-center justify-center py-16 text-stone-300">
+            <span class="material-symbols-outlined animate-spin text-4xl">progress_activity</span>
           </div>
         } @else if (filteredCities.length === 0) {
-          <div class="text-center py-12 text-stone-400 text-sm">
+          <div class="text-center py-16 text-stone-400 text-sm">
             @if (cities().length === 0) {
               No airports found for this country.
             } @else {
@@ -95,10 +113,11 @@
               <button
                 (click)="openCity(city.iata)"
                 class="w-full flex items-center gap-4 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md hover:border-stone-200 transition-all text-left group">
-                <!-- Airport type icon -->
+
+                <!-- Icon -->
                 <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors"
-                  [style.background]="(country()?.accent || '#2D4677') + '18'"
-                  [style.color]="country()?.accent || '#2D4677'">
+                  [style.background]="(c.accent || '#2D4677') + '18'"
+                  [style.color]="c.accent || '#2D4677'">
                   <span class="material-symbols-outlined text-lg">
                     {{ city.type === 'large_airport' ? 'flight' : 'local_airport' }}
                   </span>
@@ -110,7 +129,7 @@
                   <p class="text-[11px] text-stone-400 truncate">{{ city.name }}</p>
                 </div>
 
-                <!-- IATA badge + arrow -->
+                <!-- Badges + arrow -->
                 <div class="flex items-center gap-2 shrink-0">
                   <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-stone-500">
                     {{ city.iata }}
@@ -118,13 +137,14 @@
                   @if (city.type === 'large_airport') {
                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Major</span>
                   }
-                  <span class="material-symbols-outlined text-stone-300 text-lg group-hover:text-stone-500 transition-colors">chevron_right</span>
+                  <span class="material-symbols-outlined text-stone-300 text-lg group-hover:text-primary transition-colors">chevron_right</span>
                 </div>
               </button>
             }
           </div>
         }
       </div>
+
     } @else if (loading()) {
       <div class="flex-1 flex items-center justify-center text-stone-400">
         <span class="material-symbols-outlined animate-spin">progress_activity</span>
