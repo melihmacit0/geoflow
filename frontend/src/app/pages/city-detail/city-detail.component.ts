@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
+import { AuthService } from '../../core/auth.service';
 import { Car, CityDetail, Flight, Hotel, SavedTrip } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
@@ -22,6 +23,7 @@ export class CityDetailComponent implements OnDestroy {
   }
 
   private api    = inject(ApiService);
+  private auth   = inject(AuthService);
   private route  = inject(ActivatedRoute);
   private router = inject(Router);
   private map?: L.Map;
@@ -63,9 +65,10 @@ export class CityDetailComponent implements OnDestroy {
   carsLoading = signal(false);
 
   // Trip save state
-  tripSaved      = signal(false);
+  tripSaved       = signal(false);
   tripSaveLoading = signal(false);
-  savedTripId    = signal<string | null>(null);
+  savedTripId     = signal<string | null>(null);
+  tripSaveError   = signal<string | null>(null);
 
   // Derived booking values
   nightsCount = computed(() => {
@@ -116,6 +119,7 @@ export class CityDetailComponent implements OnDestroy {
     this.tripSaved.set(false);
     this.tripSaveLoading.set(false);
     this.savedTripId.set(null);
+    this.tripSaveError.set(null);
     this.api.getCityDetail(iata).subscribe({
       next: (c) => { this.city.set(c); this.loading.set(false); },
       error: () => { this.loading.set(false); this.router.navigate(['/country', this.countryCode]); }
@@ -261,6 +265,13 @@ export class CityDetailComponent implements OnDestroy {
 
   toggleSaveTrip(): void {
     if (this.tripSaveLoading()) return;
+    this.tripSaveError.set(null);
+
+    if (!this.auth.isLoggedIn) {
+      this.router.navigate(['/signin']);
+      return;
+    }
+
     this.tripSaveLoading.set(true);
 
     if (this.tripSaved()) {
@@ -268,7 +279,7 @@ export class CityDetailComponent implements OnDestroy {
       if (!id) { this.tripSaveLoading.set(false); return; }
       this.api.removeTrip(id).subscribe({
         next: () => { this.tripSaved.set(false); this.savedTripId.set(null); this.tripSaveLoading.set(false); },
-        error: () => this.tripSaveLoading.set(false)
+        error: () => { this.tripSaveError.set('Failed to remove trip.'); this.tripSaveLoading.set(false); }
       });
       return;
     }
@@ -294,7 +305,7 @@ export class CityDetailComponent implements OnDestroy {
 
     this.api.saveTrip(payload).subscribe({
       next: (trip) => { this.tripSaved.set(true); this.savedTripId.set(trip.id); this.tripSaveLoading.set(false); },
-      error: () => this.tripSaveLoading.set(false)
+      error: () => { this.tripSaveError.set('Failed to save trip. Please try again.'); this.tripSaveLoading.set(false); }
     });
   }
 

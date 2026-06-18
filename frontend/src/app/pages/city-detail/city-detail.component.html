@@ -688,6 +688,9 @@
                     Save This Trip
                   }
                 </button>
+                @if (tripSaveError()) {
+                  <p class="text-xs text-red-500 text-center -mt-1">{{ tripSaveError() }}</p>
+                }
 
                 <p class="text-[11px] text-stone-400 italic">
                   Prices are indicative. GeoFlow does not process bookings — you will be redirected to partner sites.
