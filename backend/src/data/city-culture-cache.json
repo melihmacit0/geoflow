@@ -446,5 +446,229 @@
         "pronunciation": "Naz-dra-vey"
       }
     ]
+  },
+  "PDV": {
+    "tagline": "Europe's oldest living city awaits you",
+    "intro": "Plovdiv is a vibrant student-friendly hub where ancient Roman ruins blend seamlessly with a bohemian artistic atmosphere. Its colorful Revival-era architecture and bustling cafe culture make it the perfect destination for history buffs and backpackers alike.",
+    "didYouKnow": "Plovdiv is officially the oldest continuously inhabited city in Europe, with roots dating back over 8,000 years.",
+    "highlights": [
+      {
+        "title": "Ancient Theater of Philippopolis",
+        "note": "Perfectly preserved Roman theater still used for live performances."
+      },
+      {
+        "title": "Kapana Creative District",
+        "note": "A trendy maze of artisan shops, cafes, and galleries."
+      },
+      {
+        "title": "Old Town",
+        "note": "Cobbled streets lined with colorful 19th-century Bulgarian Revival houses."
+      },
+      {
+        "title": "Nebet Tepe",
+        "note": "The highest hill offering panoramic sunset views over the city."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "The local food scene is a delicious mix of Balkan tradition and fresh, Mediterranean-inspired produce. You can find affordable, hearty meals at every corner of the city.",
+      "dishes": [
+        {
+          "name": "Banitsa",
+          "note": "Flaky pastry filled with whisked eggs and salty cheese."
+        },
+        {
+          "name": "Shopska Salad",
+          "note": "Fresh chopped vegetables topped with grated white brined cheese."
+        },
+        {
+          "name": "Kebapche",
+          "note": "Grilled minced meat links seasoned with local spices."
+        },
+        {
+          "name": "Tarator",
+          "note": "A refreshing chilled yogurt and cucumber soup."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Plovdiv's history spans millennia, serving as a pivotal crossroads for Thracian, Roman, Byzantine, and Ottoman civilizations. This layering of cultures has left behind an unparalleled architectural legacy. Today, it stands as a testament to European persistence and cultural evolution.",
+      "periods": [
+        {
+          "era": "Thracian Origins",
+          "description": "The city began as a fortified settlement known as Eumolpias. Thracian tribes built the first structures on the city's seven iconic hills."
+        },
+        {
+          "era": "Roman Zenith",
+          "description": "Under Roman rule, the city became a major cultural center called Trimontium. They constructed grand stadiums, theaters, and aqueducts that still stand today."
+        },
+        {
+          "era": "National Revival",
+          "description": "During the 19th century, the city saw an economic boom and architectural revolution. Wealthy merchants built the ornate, colorful mansions found in the Old Town."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Philip II of Macedon",
+          "role": "Macedonian king who conquered and renamed the city."
+        },
+        {
+          "name": "Konstantin Velichkov",
+          "role": "Prominent Bulgarian writer and public figure."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Wear comfy shoes",
+        "note": "The historic center is paved with uneven cobblestones that are difficult for heels."
+      },
+      {
+        "title": "Free Walking Tours",
+        "note": "Join the daily free walking tours to understand the city's complex layers."
+      },
+      {
+        "title": "Carry some cash",
+        "note": "While many places accept cards, smaller cafes and markets prefer Bulgarian Lev."
+      },
+      {
+        "title": "Respect the hills",
+        "note": "Plovdiv is built on seven hills, so expect plenty of uphill walking."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Zdravei",
+        "meaning": "Hello",
+        "pronunciation": "Zdra-vey"
+      },
+      {
+        "phrase": "Blagodarya",
+        "meaning": "Thank you",
+        "pronunciation": "Bla-go-dar-ya"
+      },
+      {
+        "phrase": "Kolko struva?",
+        "meaning": "How much does it cost?",
+        "pronunciation": "Kol-ko stroo-va"
+      },
+      {
+        "phrase": "Edna bira, molya",
+        "meaning": "One beer, please",
+        "pronunciation": "Ed-na bee-ra, mol-ya"
+      }
+    ]
+  },
+  "AMS": {
+    "tagline": "Canals, culture, and endless student energy.",
+    "intro": "Amsterdam is a vibrant maze of historic canals and world-class museums that pulses with youthful energy. It perfectly blends a rich artistic legacy with a forward-thinking, laid-back modern lifestyle.",
+    "didYouKnow": "Amsterdam is built on millions of wooden poles driven into the soft marshy ground to support its buildings.",
+    "highlights": [
+      {
+        "title": "Anne Frank House",
+        "note": "Reflective historic site honoring a wartime legacy."
+      },
+      {
+        "title": "Rijksmuseum",
+        "note": "Massive gallery featuring iconic Dutch Golden Age art."
+      },
+      {
+        "title": "Vondelpark",
+        "note": "The city's green heart, perfect for student hangouts."
+      },
+      {
+        "title": "Canal Cruise",
+        "note": "See the city's unique architecture from the water."
+      }
+    ],
+    "bestTime": "Apr – Sep",
+    "food": {
+      "intro": "The food scene is a mix of traditional Dutch comfort food and multicultural delights. You will find everything from cheap street bites to cozy student-friendly cafes.",
+      "dishes": [
+        {
+          "name": "Stroopwafel",
+          "note": "Thin waffle cookies filled with warm, gooey caramel syrup."
+        },
+        {
+          "name": "Bitterballen",
+          "note": "Crispy deep-fried meatballs, a classic Dutch bar snack."
+        },
+        {
+          "name": "Patatje Oorlog",
+          "note": "Fries topped with peanut sauce, mayo, and onions."
+        },
+        {
+          "name": "Haring",
+          "note": "Raw cured herring served with diced onions and pickles."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Amsterdam began as a humble 13th-century fishing village on the Amstel River. It blossomed into a global trading powerhouse during the Golden Age and remains a beacon of tolerance. Today, it stands as a major European hub for education, art, and international commerce.",
+      "periods": [
+        {
+          "era": "Founding Days",
+          "description": "Founded as a small dam on the Amstel in the 1200s. It quickly grew into a bustling port for regional trade."
+        },
+        {
+          "era": "Golden Age",
+          "description": "During the 17th century, Amsterdam became the world's richest trade center. Massive wealth funded the iconic canal rings we see today."
+        },
+        {
+          "era": "Modern Era",
+          "description": "The city transformed into a global center for arts and tourism. It remains an open, liberal society known for innovation."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Rembrandt van Rijn",
+          "role": "Master painter of the Dutch Golden Age"
+        },
+        {
+          "name": "Anne Frank",
+          "role": "World-renowned wartime diarist and symbol of hope"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Rent a bike",
+        "note": "Cycling is the fastest and most authentic way to travel."
+      },
+      {
+        "title": "Avoid tourist traps",
+        "note": "Eat in neighborhoods like De Pijp for better prices."
+      },
+      {
+        "title": "Get an OV-chipkaart",
+        "note": "Use this card for seamless access to public transport."
+      },
+      {
+        "title": "Book museums early",
+        "note": "Popular museums sell out weeks in advance online."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Hoi",
+        "meaning": "Hi",
+        "pronunciation": "hoy"
+      },
+      {
+        "phrase": "Dank je wel",
+        "meaning": "Thank you",
+        "pronunciation": "dunk-yuh-vel"
+      },
+      {
+        "phrase": "Spreek je Engels?",
+        "meaning": "Do you speak English?",
+        "pronunciation": "sprayk-yuh-eng-uls"
+      },
+      {
+        "phrase": "Proost!",
+        "meaning": "Cheers!",
+        "pronunciation": "prohst"
+      }
+    ]
   }
 }
