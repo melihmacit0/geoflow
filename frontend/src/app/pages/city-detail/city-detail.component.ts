@@ -55,6 +55,7 @@ export class CityDetailComponent implements OnDestroy {
   checkIn  = signal(new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10));
   checkOut = signal(new Date(Date.now() + 33 * 86_400_000).toISOString().slice(0, 10));
   adults   = signal(1);
+  children = signal(0);
 
   // Car data
   cars        = signal<Car[]>([]);
@@ -69,10 +70,11 @@ export class CityDetailComponent implements OnDestroy {
   });
 
   totalEstimate = computed(() => {
-    const n = this.nightsCount();
-    return (this.selectedFlight()?.price ?? 0)
+    const n  = this.nightsCount();
+    const sf = this.selectedFlight();
+    return (sf ? this.flightTotal(sf.price) : 0)
       + (this.selectedHotel() ? this.selectedHotel()!.pricePerNight * n : 0)
-      + (this.selectedCar()   ? this.selectedCar()!.pricePerDay   * n : 0);
+      + (this.selectedCar()   ? this.selectedCar()!.pricePerDay * n   : 0);
   });
 
   private countryCode = '';
@@ -215,6 +217,18 @@ export class CityDetailComponent implements OnDestroy {
     });
     this.marker = L.marker([c.lat, c.lng], { icon }).addTo(this.map);
     this.marker.bindPopup(`<b>${c.city}</b><br>${c.iata}`).openPopup();
+  }
+
+  flightTotal(basePrice: number): number {
+    return Math.round(basePrice * this.adults() + basePrice * 0.75 * this.children());
+  }
+
+  get passengerLabel(): string {
+    const a = this.adults();
+    const c = this.children();
+    return c === 0
+      ? `${a} Adult${a > 1 ? 's' : ''}`
+      : `${a} Adult${a > 1 ? 's' : ''} · ${c} Child${c > 1 ? 'ren' : ''}`;
   }
 
   back(): void { this.router.navigate(['/country', this.countryCode]); }
