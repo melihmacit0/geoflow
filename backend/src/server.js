@@ -31,6 +31,7 @@ try {
 // ── In-memory user store (stand-in for a real DB) ─────────────────────────────
 const users = new Map();
 const savedByUser = new Map();
+const tripsByUser = new Map();
 
 const demoId = 'u-demo';
 users.set('explorer@geoflow.com', {
@@ -38,6 +39,7 @@ users.set('explorer@geoflow.com', {
   password: 'explorer', homeAirport: 'Istanbul — IST', currency: 'USD ($)', language: 'English'
 });
 savedByUser.set(demoId, new Set(['JP', 'FR', 'GR']));
+tripsByUser.set(demoId, []);
 
 function publicUser(u) { const { password, ...rest } = u; return rest; }
 
@@ -424,6 +426,27 @@ app.delete('/api/saved/:code', auth, (req, res) => {
   const set = savedByUser.get(req.userId);
   if (set) set.delete(req.params.code.toUpperCase());
   res.json({ saved: set ? [...set] : [] });
+});
+
+// ════════════════════════════════════════════════════════════════════════════
+//  SAVED TRIPS
+// ════════════════════════════════════════════════════════════════════════════
+
+app.get('/api/trips', auth, (req, res) => {
+  res.json(tripsByUser.get(req.userId) || []);
+});
+
+app.post('/api/trips', auth, (req, res) => {
+  const trip = { id: `t-${Date.now()}`, savedAt: new Date().toISOString(), ...req.body };
+  if (!tripsByUser.has(req.userId)) tripsByUser.set(req.userId, []);
+  tripsByUser.get(req.userId).unshift(trip);
+  res.status(201).json(trip);
+});
+
+app.delete('/api/trips/:id', auth, (req, res) => {
+  const list = tripsByUser.get(req.userId) || [];
+  tripsByUser.set(req.userId, list.filter((t) => t.id !== req.params.id));
+  res.json({ ok: true });
 });
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));

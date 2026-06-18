@@ -1,58 +1,133 @@
 <gf-top-nav></gf-top-nav>
 
 <main class="pt-16">
-  <!-- Header strip -->
+  <!-- Header -->
   <section class="min-h-[120px] bg-[#F8F8F5] flex items-center py-6">
     <div class="max-w-[1280px] mx-auto w-full px-8 flex flex-wrap gap-4 justify-between items-center">
       <div>
-        <h1 class="text-[28px] font-bold text-primary-container leading-tight">Your Saved Destinations</h1>
-        <p class="text-on-surface-variant font-body-md">{{ saved().length }} places waiting for your next adventure</p>
+        <h1 class="text-[28px] font-bold text-primary-container leading-tight">Saved Trips</h1>
+        <p class="text-on-surface-variant font-body-md">{{ trips().length }} trip{{ trips().length !== 1 ? 's' : '' }} saved</p>
       </div>
-      <div class="flex items-center gap-3 text-primary-container font-medium">
-        <span class="material-symbols-outlined">grid_view</span>
-        <span class="text-sm">Recently added</span>
-      </div>
+      <a routerLink="/discover" class="flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+        <span class="material-symbols-outlined text-base">explore</span>
+        Plan a new trip
+      </a>
     </div>
   </section>
 
-  <!-- Grid -->
-  <section class="max-w-[1280px] mx-auto px-8 py-16">
+  <!-- Trip list -->
+  <section class="max-w-[1280px] mx-auto px-8 py-12">
     @if (loading()) {
-      <div class="text-center text-outline py-20"><span class="material-symbols-outlined animate-spin text-3xl">progress_activity</span></div>
-    } @else if (saved().length === 0) {
       <div class="text-center py-20">
-        <span class="material-symbols-outlined text-5xl text-outline-variant">bookmark_border</span>
-        <p class="mt-4 text-on-surface-variant">No saved destinations yet.</p>
-        <a routerLink="/discover" class="inline-block mt-6 bg-primary-container text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary transition-all">Explore the map</a>
+        <span class="material-symbols-outlined animate-spin text-3xl text-stone-300">progress_activity</span>
+      </div>
+    } @else if (trips().length === 0) {
+      <div class="text-center py-20">
+        <span class="material-symbols-outlined text-5xl text-stone-200">luggage</span>
+        <p class="mt-4 text-stone-400 text-sm">No saved trips yet.</p>
+        <a routerLink="/discover" class="inline-block mt-6 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all text-sm">
+          Explore the map
+        </a>
       </div>
     } @else {
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter justify-items-center">
-        @for (d of saved(); track d.code) {
-          <article (click)="open(d.code)" class="w-full max-w-[340px] bg-surface-container-lowest border border-[#E5E5E0] overflow-hidden transition-all hover:shadow-[0_4px_20px_rgba(15,44,92,0.08)] cursor-pointer">
-            <div class="relative h-[180px] w-full bg-surface-variant">
-              <img class="w-full h-full object-cover" [src]="d.image" [alt]="d.name" />
-              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xl">{{ d.flag }}</div>
-              <div class="absolute top-3 right-3 text-secondary">
-                <span class="material-symbols-outlined fill">bookmark</span>
-              </div>
-            </div>
-            <div class="p-stack-lg space-y-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        @for (trip of trips(); track trip.id) {
+          <article class="bg-white border border-stone-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+
+            <!-- Card header -->
+            <div class="px-5 pt-5 pb-4 border-b border-stone-100 flex items-start justify-between">
               <div>
-                <h3 class="font-h3 text-h3 text-primary-container">{{ d.name }}</h3>
-                <p class="text-label-caps text-on-surface-variant">{{ d.tagline }}</p>
+                <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">{{ trip.countryName }}</p>
+                <h3 class="font-semibold text-primary text-lg leading-tight">{{ trip.cityName }}</h3>
+                <p class="text-xs text-stone-400 mt-0.5">{{ trip.departureDate }} · {{ trip.adults }} adult{{ trip.adults > 1 ? 's' : '' }}{{ trip.children ? ' · ' + trip.children + ' child' + (trip.children > 1 ? 'ren' : '') : '' }}</p>
               </div>
-              <div class="flex items-center gap-3">
-                <div class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 text-label-caps rounded-full">Cheapest flight: ${{ d.cheapestFlight }}</div>
-              </div>
-              <div class="flex gap-2 pt-2">
-                <button (click)="open(d.code); $event.stopPropagation()" class="flex-1 border border-primary-container text-primary-container py-2 text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary-container hover:text-white transition-colors rounded">
-                  <span class="material-symbols-outlined text-sm">map</span> View on map
-                </button>
-                <button (click)="remove(d.code, $event)" class="px-3 border border-outline-variant text-outline hover:text-error hover:border-error transition-colors rounded">
-                  <span class="material-symbols-outlined text-lg">delete</span>
-                </button>
-              </div>
+              <button (click)="remove(trip.id, $event)"
+                class="shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-stone-300 hover:text-red-400 hover:bg-red-50 transition-all">
+                <span class="material-symbols-outlined text-lg">delete</span>
+              </button>
             </div>
+
+            <!-- Items -->
+            <div class="px-5 py-4 space-y-3 flex-1">
+
+              <!-- Flight -->
+              @if (trip.flight; as f) {
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-primary truncate">{{ f.depart }} → {{ f.arrive }}</p>
+                    <p class="text-xs text-stone-400">{{ f.duration }} · {{ f.stops }}</p>
+                  </div>
+                  <p class="text-sm font-bold text-primary shrink-0">${{ f.price }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
+                </div>
+              } @else {
+                <div class="flex items-center gap-3 opacity-40">
+                  <div class="w-8 h-8 rounded-lg bg-stone-100 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-stone-400 text-base">flight_takeoff</span>
+                  </div>
+                  <p class="text-sm text-stone-400 italic">Flight skipped</p>
+                </div>
+              }
+
+              <!-- Hotel -->
+              @if (trip.hotel; as h) {
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-primary text-base">hotel</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-primary truncate">{{ h.name }}</p>
+                    <p class="text-xs text-stone-400">{{ nightsCount(trip) }} nights</p>
+                  </div>
+                  <p class="text-sm font-bold text-primary shrink-0">${{ h.pricePerNight }}<span class="text-[10px] text-stone-400 font-normal">/night</span></p>
+                </div>
+              } @else {
+                <div class="flex items-center gap-3 opacity-40">
+                  <div class="w-8 h-8 rounded-lg bg-stone-100 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-stone-400 text-base">hotel</span>
+                  </div>
+                  <p class="text-sm text-stone-400 italic">Hotel skipped</p>
+                </div>
+              }
+
+              <!-- Car -->
+              @if (trip.car; as car) {
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-primary text-base">directions_car</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-primary truncate">{{ car.model }}</p>
+                    <p class="text-xs text-stone-400">{{ car.agency }}</p>
+                  </div>
+                  <p class="text-sm font-bold text-primary shrink-0">${{ car.pricePerDay }}<span class="text-[10px] text-stone-400 font-normal">/day</span></p>
+                </div>
+              } @else {
+                <div class="flex items-center gap-3 opacity-40">
+                  <div class="w-8 h-8 rounded-lg bg-stone-100 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-stone-400 text-base">directions_car</span>
+                  </div>
+                  <p class="text-sm text-stone-400 italic">Car rental skipped</p>
+                </div>
+              }
+
+            </div>
+
+            <!-- Footer -->
+            <div class="px-5 py-4 border-t border-stone-100 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Total Estimate</p>
+                <p class="text-xl font-bold text-primary">${{ trip.totalEstimate }}</p>
+              </div>
+              <button (click)="openCity(trip)"
+                class="flex items-center gap-1.5 bg-primary text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">
+                <span class="material-symbols-outlined text-sm">map</span>
+                View City
+              </button>
+            </div>
+
           </article>
         }
       </div>

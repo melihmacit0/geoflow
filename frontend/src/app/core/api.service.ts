@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CarResponse, City, CityDetail, CountryDetail, CountrySummary,
-  FlightResponse, HotelResponse, SavedDestination
+  FlightResponse, HotelResponse, SavedDestination, SavedTrip
 } from './models';
 
 const API = 'http://localhost:4000/api';
@@ -78,5 +78,19 @@ export class ApiService {
 
   removeSaved(code: string): Observable<{ saved: string[] }> {
     return this.http.delete<{ saved: string[] }>(`${API}/saved/${code}`);
+  }
+
+  // ── Trips ──────────────────────────────────────────────────────────────────
+
+  getTrips(): Observable<SavedTrip[]> {
+    return this.http.get<SavedTrip[]>(`${API}/trips`);
+  }
+
+  saveTrip(trip: Omit<SavedTrip, 'id' | 'savedAt'>): Observable<SavedTrip> {
+    return this.http.post<SavedTrip>(`${API}/trips`, trip);
+  }
+
+  removeTrip(id: string): Observable<{ ok: boolean }> {
+    return this.http.delete<{ ok: boolean }>(`${API}/trips/${id}`);
   }
 }

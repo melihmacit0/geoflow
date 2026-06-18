@@ -32,19 +32,6 @@
               </p>
             </div>
           </div>
-          <button (click)="toggleSave()"
-            [disabled]="saveLoading()"
-            class="shrink-0 w-9 h-9 flex items-center justify-center rounded-full border transition-all"
-            [class]="isSaved()
-              ? 'bg-red-50 border-red-200 text-red-500 hover:bg-red-100'
-              : 'bg-white border-stone-200 text-stone-400 hover:border-primary hover:text-primary'"
-            [title]="isSaved() ? 'Remove from saved' : 'Save destination'">
-            @if (saveLoading()) {
-              <span class="material-symbols-outlined text-base animate-spin">progress_activity</span>
-            } @else {
-              <span class="material-symbols-outlined text-base" [style.font-variation-settings]="isSaved() ? '\'FILL\' 1' : '\'FILL\' 0'">favorite</span>
-            }
-          </button>
         </div>
         @if (c.tagline) {
           <p class="text-sm italic text-stone-400 mt-2">{{ c.tagline }}</p>

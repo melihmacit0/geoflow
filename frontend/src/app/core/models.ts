@@ -178,6 +178,24 @@ export interface CarResponse {
   cars: Car[];
 }
 
+export interface SavedTrip {
+  id: string;
+  cityIata: string;
+  cityName: string;
+  countryCode: string;
+  countryName: string;
+  flight: Flight | null;
+  hotel: Hotel | null;
+  car: Car | null;
+  departureDate: string;
+  checkIn: string;
+  checkOut: string;
+  adults: number;
+  children: number;
+  totalEstimate: number;
+  savedAt: string;
+}
+
 export interface SavedDestination {
   code: string;
   name: string;

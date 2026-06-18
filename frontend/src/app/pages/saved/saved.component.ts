@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
-import { SavedDestination } from '../../core/models';
+import { SavedTrip } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 import { FooterComponent } from '../../shared/footer.component';
 
@@ -13,27 +13,33 @@ import { FooterComponent } from '../../shared/footer.component';
   templateUrl: './saved.component.html'
 })
 export class SavedComponent {
-  private api = inject(ApiService);
+  private api    = inject(ApiService);
   private router = inject(Router);
 
-  saved = signal<SavedDestination[]>([]);
+  trips   = signal<SavedTrip[]>([]);
   loading = signal(true);
 
   constructor() {
-    this.api.getSaved().subscribe((list) => {
-      this.saved.set(list);
-      this.loading.set(false);
+    this.api.getTrips().subscribe({
+      next: (list) => { this.trips.set(list); this.loading.set(false); },
+      error: () => this.loading.set(false)
     });
   }
 
-  open(code: string): void {
-    this.router.navigate(['/country', code]);
+  openCity(trip: SavedTrip): void {
+    this.router.navigate(['/country', trip.countryCode, 'city', trip.cityIata]);
   }
 
-  remove(code: string, event: Event): void {
+  remove(id: string, event: Event): void {
     event.stopPropagation();
-    this.api.removeSaved(code).subscribe(() => {
-      this.saved.set(this.saved().filter((s) => s.code !== code));
+    this.api.removeTrip(id).subscribe(() => {
+      this.trips.set(this.trips().filter((t) => t.id !== id));
     });
+  }
+
+  nightsCount(trip: SavedTrip): number {
+    const ci = new Date(trip.checkIn);
+    const co = new Date(trip.checkOut);
+    return Math.max(1, Math.round((co.getTime() - ci.getTime()) / 86_400_000));
   }
 }

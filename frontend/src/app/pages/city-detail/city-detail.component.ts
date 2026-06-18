@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
-import { Car, CityDetail, Flight, Hotel } from '../../core/models';
+import { Car, CityDetail, Flight, Hotel, SavedTrip } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
 type Tab = 'culture' | 'book';
@@ -62,6 +62,11 @@ export class CityDetailComponent implements OnDestroy {
   carsSource  = signal('');
   carsLoading = signal(false);
 
+  // Trip save state
+  tripSaved      = signal(false);
+  tripSaveLoading = signal(false);
+  savedTripId    = signal<string | null>(null);
+
   // Derived booking values
   nightsCount = computed(() => {
     const ci = new Date(this.checkIn());
@@ -108,6 +113,9 @@ export class CityDetailComponent implements OnDestroy {
     this.flights.set([]);
     this.hotels.set([]);
     this.cars.set([]);
+    this.tripSaved.set(false);
+    this.tripSaveLoading.set(false);
+    this.savedTripId.set(null);
     this.api.getCityDetail(iata).subscribe({
       next: (c) => { this.city.set(c); this.loading.set(false); },
       error: () => { this.loading.set(false); this.router.navigate(['/country', this.countryCode]); }
@@ -249,6 +257,45 @@ export class CityDetailComponent implements OnDestroy {
     return c === 0
       ? `${a} Adult${a > 1 ? 's' : ''}`
       : `${a} Adult${a > 1 ? 's' : ''} · ${c} Child${c > 1 ? 'ren' : ''}`;
+  }
+
+  toggleSaveTrip(): void {
+    if (this.tripSaveLoading()) return;
+    this.tripSaveLoading.set(true);
+
+    if (this.tripSaved()) {
+      const id = this.savedTripId();
+      if (!id) { this.tripSaveLoading.set(false); return; }
+      this.api.removeTrip(id).subscribe({
+        next: () => { this.tripSaved.set(false); this.savedTripId.set(null); this.tripSaveLoading.set(false); },
+        error: () => this.tripSaveLoading.set(false)
+      });
+      return;
+    }
+
+    const c = this.city();
+    if (!c) { this.tripSaveLoading.set(false); return; }
+
+    const payload: Omit<SavedTrip, 'id' | 'savedAt'> = {
+      cityIata: c.iata,
+      cityName: c.city,
+      countryCode: this.countryCode,
+      countryName: c.countryName,
+      flight: this.selectedFlight(),
+      hotel: this.selectedHotel(),
+      car: this.selectedCar(),
+      departureDate: this.departureDate(),
+      checkIn: this.checkIn(),
+      checkOut: this.checkOut(),
+      adults: this.adults(),
+      children: this.children(),
+      totalEstimate: this.totalEstimate()
+    };
+
+    this.api.saveTrip(payload).subscribe({
+      next: (trip) => { this.tripSaved.set(true); this.savedTripId.set(trip.id); this.tripSaveLoading.set(false); },
+      error: () => this.tripSaveLoading.set(false)
+    });
   }
 
   back(): void { this.router.navigate(['/country', this.countryCode]); }
