@@ -9,31 +9,35 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
+import { AuthService } from '../../core/auth.service';
 import { CountryDetail, CountrySummary } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
 @Component({
   selector: 'gf-compare',
   standalone: true,
-  imports: [CommonModule, TopNavComponent],
+  imports: [CommonModule, RouterLink, TopNavComponent],
   templateUrl: './compare.component.html'
 })
 export class CompareComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mapEl') mapEl!: ElementRef<HTMLDivElement>;
 
-  private api = inject(ApiService);
+  private api    = inject(ApiService);
+  private auth   = inject(AuthService);
   private router = inject(Router);
   private map?: L.Map;
   private markerLayer = L.layerGroup();
 
-  selected = signal<CountryDetail[]>([]);
+  selected     = signal<CountryDetail[]>([]);
   allCountries = signal<CountrySummary[]>([]);
-  showPicker = signal(false);
+  showPicker   = signal(false);
+  loading      = signal(true);
+  noTrips      = signal(false);
 
-  private defaultCodes = ['JP', 'IT', 'MA'];
+  get isLoggedIn(): boolean { return this.auth.isLoggedIn; }
 
   ngAfterViewInit(): void {
     this.map = L.map(this.mapEl.nativeElement, {
@@ -51,16 +55,33 @@ export class CompareComponent implements AfterViewInit, OnDestroy {
     this.markerLayer.addTo(this.map);
 
     this.api.getCountries().subscribe((list) => this.allCountries.set(list));
-    this.loadCodes(this.defaultCodes);
+
+    if (!this.auth.isLoggedIn) {
+      this.loading.set(false);
+      return;
+    }
+
+    // Load countries from saved trips (unique country codes)
+    this.api.getTrips().subscribe({
+      next: (trips) => {
+        const uniqueCodes = [...new Set(trips.map((t) => t.countryCode))];
+        if (uniqueCodes.length === 0) {
+          this.noTrips.set(true);
+          this.loading.set(false);
+          return;
+        }
+        this.loadCodes(uniqueCodes);
+      },
+      error: () => { this.loading.set(false); }
+    });
   }
 
-  ngOnDestroy(): void {
-    this.map?.remove();
-  }
+  ngOnDestroy(): void { this.map?.remove(); }
 
   private loadCodes(codes: string[]): void {
     forkJoin(codes.map((c) => this.api.getCountry(c))).subscribe((details) => {
       this.selected.set(details);
+      this.loading.set(false);
       this.renderMarkers();
     });
   }
@@ -107,31 +128,31 @@ export class CompareComponent implements AfterViewInit, OnDestroy {
 
   clearAll(): void {
     this.selected.set([]);
-    this.renderMarkers();
+    this.markerLayer.clearLayers();
   }
 
   open(code: string): void {
     this.router.navigate(['/country', code]);
   }
 
-  // ---- "Best value" helpers for green highlighting ----
+  // ── Best-value helpers ────────────────────────────────────────────────────
   private minutes(d: string): number {
     const m = d.match(/(\d+)h\s*(\d+)?/);
     return m ? parseInt(m[1]) * 60 + (parseInt(m[2]) || 0) : Number.MAX_SAFE_INTEGER;
   }
+
   isCheapestFlight(c: CountryDetail): boolean {
-    return (c.cheapestFlight ?? 0) === Math.min(...this.selected().map((s) => s.cheapestFlight ?? 0));
+    const vals = this.selected().map((s) => s.cheapestFlight ?? Infinity);
+    return (c.cheapestFlight ?? Infinity) === Math.min(...vals);
   }
+
   isFastest(c: CountryDetail): boolean {
-    return (
-      this.minutes(c.comparison?.flightDuration ?? '') ===
-      Math.min(...this.selected().map((s) => this.minutes(s.comparison?.flightDuration ?? '')))
-    );
+    const vals = this.selected().map((s) => this.minutes(s.comparison?.flightDuration ?? ''));
+    return this.minutes(c.comparison?.flightDuration ?? '') === Math.min(...vals);
   }
+
   isCheapestBudget(c: CountryDetail): boolean {
-    return (
-      (c.comparison?.dailyBudget ?? 0) ===
-      Math.min(...this.selected().map((s) => s.comparison?.dailyBudget ?? 0))
-    );
+    const vals = this.selected().map((s) => s.comparison?.dailyBudget ?? Infinity);
+    return (c.comparison?.dailyBudget ?? Infinity) === Math.min(...vals);
   }
 }
