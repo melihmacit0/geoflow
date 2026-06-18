@@ -4,7 +4,6 @@
   <!-- Map (left 55%) -->
   <section class="hidden lg:block w-[55%] relative bg-surface-container">
     <div #mapEl class="w-full h-full"></div>
-    <!-- Back to country -->
     <button (click)="back()"
       class="absolute top-4 left-4 z-[500] flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md text-sm font-medium text-primary hover:bg-white transition-all">
       <span class="material-symbols-outlined text-base">arrow_back</span>
@@ -18,7 +17,6 @@
     @if (city(); as c) {
       <!-- Header -->
       <div class="px-7 pt-5 pb-0 shrink-0">
-        <!-- Mobile back -->
         <button (click)="back()" class="lg:hidden flex items-center gap-1 text-sm text-stone-500 mb-3 hover:text-primary transition-colors">
           <span class="material-symbols-outlined text-base">arrow_back</span> {{ c.countryName }}
         </button>
@@ -40,20 +38,19 @@
             </div>
           }
         </div>
-
         @if (c.culture?.tagline) {
           <p class="text-sm italic text-stone-400 mt-1">{{ c.culture!.tagline }}</p>
         }
       </div>
 
       <!-- Tabs -->
-      <div class="px-7 mt-4 flex gap-6 border-b border-stone-100 shrink-0 overflow-x-auto no-scrollbar">
-        @for (t of [['culture','auto_stories'], ['flights','flight'], ['hotels','hotel'], ['cars','directions_car']]; track t[0]) {
+      <div class="px-7 mt-4 flex gap-6 border-b border-stone-100 shrink-0">
+        @for (t of [['culture','auto_stories'],['book','book_online']]; track t[0]) {
           <button (click)="switchTab($any(t[0]))"
             class="pb-3 flex items-center gap-1.5 text-sm font-medium whitespace-nowrap transition-colors shrink-0"
             [class]="tab() === t[0] ? 'text-primary border-b-2 border-primary' : 'text-stone-400 hover:text-stone-600'">
             <span class="material-symbols-outlined text-base">{{ t[1] }}</span>
-            {{ t[0] | titlecase }}
+            {{ t[0] === 'book' ? 'Book Trip' : 'Culture' }}
           </button>
         }
       </div>
@@ -132,20 +129,17 @@
               <!-- ── History ── -->
               @if (cultureSub() === 'history') {
                 @if (culture.history) {
-                  <!-- Overview -->
                   <div class="p-5 bg-[#F0F4FF] border border-blue-100 rounded-xl flex gap-3">
                     <span class="material-symbols-outlined text-primary shrink-0">history_edu</span>
                     <p class="text-sm text-on-surface-variant leading-relaxed">{{ culture.history.overview }}</p>
                   </div>
 
-                  <!-- Timeline -->
                   @if (culture.history.periods?.length) {
                     <section>
                       <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Historical Periods</h2>
                       <div class="relative pl-5 space-y-4">
-                        <!-- vertical line -->
                         <div class="absolute left-[7px] top-2 bottom-2 w-px bg-stone-200"></div>
-                        @for (period of culture.history.periods; track period.era; let i = $index) {
+                        @for (period of culture.history.periods; track period.era) {
                           <div class="relative flex gap-4">
                             <div class="shrink-0 w-3.5 h-3.5 rounded-full border-2 border-primary bg-white mt-0.5 z-10 -ml-5"></div>
                             <div class="pb-1">
@@ -158,7 +152,6 @@
                     </section>
                   }
 
-                  <!-- Notable Figures -->
                   @if (culture.history.figures?.length) {
                     <section>
                       <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Notable Figures</h2>
@@ -239,198 +232,346 @@
           </div>
         }
 
-        <!-- ══ FLIGHTS TAB ══════════════════════════════════════════════════ -->
-        @if (tab() === 'flights') {
-          <div class="px-7 py-5 space-y-5">
-            <!-- Search controls -->
-            <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
-              <div class="flex items-center justify-between">
-                <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Search Flights</p>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  [class]="flightSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
-                  {{ flightSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
-                </span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
-                  <span class="material-symbols-outlined text-sm text-stone-400">flight_takeoff</span>
-                  IST → {{ c.iata }}
-                </div>
-                <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
-                  <span class="material-symbols-outlined text-sm text-stone-400">calendar_today</span>
-                  <input type="date" [value]="departureDate()"
-                    (change)="departureDate.set($any($event.target).value)"
-                    class="bg-transparent focus:outline-none cursor-pointer text-xs" />
-                </div>
-                <button (click)="fetchFlights()"
-                  class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary-container transition-colors ml-auto">
-                  @if (flightsLoading()) {
-                    <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
-                  } @else {
-                    <span class="material-symbols-outlined text-sm">search</span>
-                  }
-                  Search
-                </button>
-              </div>
-            </div>
+        <!-- ══ BOOK TRIP TAB ════════════════════════════════════════════════ -->
+        @if (tab() === 'book') {
 
-            <!-- Filter chips -->
-            <div class="flex gap-2">
-              @for (f of ['cheapest','fastest','direct']; track f) {
-                <button (click)="flightFilter.set($any(f))"
-                  [class]="flightFilter() === f ? 'bg-primary text-white border-primary' : 'bg-white text-stone-500 border-stone-200 hover:border-primary hover:text-primary'"
-                  class="px-4 py-1.5 rounded-full text-xs font-medium border transition-all capitalize">{{ f }}</button>
+          <!-- Step progress indicator -->
+          <div class="flex items-center px-6 pt-5 pb-4 border-b border-stone-100 shrink-0">
+            @for (s of [{k:'flight',l:'Flight'},{k:'hotel',l:'Hotel'},{k:'car',l:'Car'},{k:'summary',l:'Summary'}]; track s.k; let i = $index, last = $last) {
+              <button (click)="goBackToStep($any(s.k))"
+                class="flex items-center gap-1.5 shrink-0 transition-colors"
+                [class]="i < bookStepIndex() ? 'cursor-pointer' : 'cursor-default pointer-events-none'">
+                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all shrink-0"
+                  [class]="bookStepIndex() === i ? 'border-primary bg-primary text-white' : bookStepIndex() > i ? 'border-primary bg-blue-50 text-primary' : 'border-stone-200 text-stone-300'">
+                  @if (bookStepIndex() > i) {
+                    <span class="material-symbols-outlined leading-none" style="font-size:14px">check</span>
+                  } @else { {{ i + 1 }} }
+                </div>
+                <span class="text-xs font-medium"
+                  [class]="bookStepIndex() >= i ? 'text-primary' : 'text-stone-300'">{{ s.l }}</span>
+              </button>
+              @if (!last) {
+                <div class="flex-1 h-px mx-2 min-w-2 transition-colors"
+                  [class]="bookStepIndex() > i ? 'bg-primary' : 'bg-stone-200'"></div>
               }
-            </div>
+            }
+          </div>
 
-            <!-- Flight cards -->
-            <div class="space-y-3" [class.opacity-50]="flightsLoading()">
-              @for (f of filteredFlights; track f.id) {
-                <div class="p-4 rounded-xl border border-stone-100 hover:shadow-md transition-shadow flex items-center gap-4">
-                  <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-stone-400 text-lg">flight_takeoff</span>
+          <div class="overflow-y-auto custom-scrollbar flex-1">
+
+            <!-- ── Step 1: Flight ── -->
+            @if (bookStep() === 'flight') {
+              <div class="px-6 py-5 space-y-4">
+                <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Flight</p>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      [class]="flightSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
+                      {{ flightSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
+                    </span>
                   </div>
-                  <div class="flex-1 grid grid-cols-3 items-center text-sm">
-                    <div>
-                      <p class="font-bold text-primary text-base">{{ f.depart }}</p>
-                      <p class="text-[10px] text-stone-400">{{ f.from }}</p>
+                  <div class="flex flex-wrap gap-2">
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">flight_takeoff</span>
+                      IST → {{ c.iata }}
                     </div>
-                    <div class="text-center">
-                      <p class="text-[11px] text-stone-400">{{ f.duration }}</p>
-                      <div class="flex items-center justify-center my-0.5">
-                        <div class="h-px bg-stone-200 w-full"></div>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">calendar_today</span>
+                      <input type="date" [value]="departureDate()"
+                        (change)="departureDate.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
+                    </div>
+                    <button (click)="fetchFlights()"
+                      class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary/90 transition-colors ml-auto">
+                      @if (flightsLoading()) {
+                        <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+                      } @else {
+                        <span class="material-symbols-outlined text-sm">search</span>
+                      }
+                      Search
+                    </button>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  @for (f of ['cheapest','fastest','direct']; track f) {
+                    <button (click)="flightFilter.set($any(f))"
+                      [class]="flightFilter() === f ? 'bg-primary text-white border-primary' : 'bg-white text-stone-500 border-stone-200 hover:border-primary hover:text-primary'"
+                      class="px-4 py-1.5 rounded-full text-xs font-medium border transition-all capitalize">{{ f }}</button>
+                  }
+                </div>
+
+                <div class="space-y-3" [class.opacity-50]="flightsLoading()">
+                  @for (f of filteredFlights; track f.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all flex items-center gap-4">
+                      <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-stone-400 text-lg">flight_takeoff</span>
                       </div>
-                      <p class="text-[10px] font-bold text-primary uppercase">{{ f.stops }}</p>
+                      <div class="flex-1 grid grid-cols-3 items-center text-sm">
+                        <div>
+                          <p class="font-bold text-primary text-base">{{ f.depart }}</p>
+                          <p class="text-[10px] text-stone-400">{{ f.from }}</p>
+                        </div>
+                        <div class="text-center">
+                          <p class="text-[11px] text-stone-400">{{ f.duration }}</p>
+                          <div class="h-px bg-stone-200 my-0.5"></div>
+                          <p class="text-[10px] font-bold text-primary uppercase">{{ f.stops }}</p>
+                        </div>
+                        <div class="text-right">
+                          <p class="font-bold text-primary text-base">{{ f.arrive }}</p>
+                          <p class="text-[10px] text-stone-400">{{ f.to }}</p>
+                        </div>
+                      </div>
+                      <div class="shrink-0 border-l border-stone-100 pl-4 flex flex-col items-end gap-2">
+                        <p class="font-bold text-lg text-primary">${{ f.price }}</p>
+                        <button (click)="selectFlight(f)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors">
+                          Select →
+                        </button>
+                      </div>
                     </div>
-                    <div class="text-right">
-                      <p class="font-bold text-primary text-base">{{ f.arrive }}</p>
-                      <p class="text-[10px] text-stone-400">{{ f.to }}</p>
-                    </div>
-                  </div>
-                  <div class="text-right shrink-0 border-l border-stone-100 pl-4">
-                    <p class="font-bold text-lg text-primary">${{ f.price }}</p>
-                    <a [href]="f.deepLink" target="_blank" rel="noopener"
-                      class="text-[10px] font-bold text-blue-600 uppercase flex items-center gap-0.5 justify-end hover:underline">
-                      Book <span class="material-symbols-outlined text-xs">north_east</span>
-                    </a>
-                  </div>
-                </div>
-              }
-              @if (!flightsLoading() && filteredFlights.length === 0) {
-                <p class="text-center text-stone-400 text-sm py-8">No flights found. Try a different date.</p>
-              }
-            </div>
-            <p class="text-[11px] text-stone-400 italic">Prices shown are indicative. GeoFlow does not process bookings — you will be redirected to the partner site.</p>
-          </div>
-        }
-
-        <!-- ══ HOTELS TAB ═══════════════════════════════════════════════════ -->
-        @if (tab() === 'hotels') {
-          <div class="px-7 py-5 space-y-5">
-            <!-- Search controls -->
-            <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
-              <div class="flex items-center justify-between">
-                <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Hotel Search</p>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  [class]="hotelSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
-                  {{ hotelSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
-                </span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
-                  <span class="material-symbols-outlined text-sm text-stone-400">login</span>
-                  <input type="date" [value]="checkIn()" (change)="checkIn.set($any($event.target).value)"
-                    class="bg-transparent focus:outline-none cursor-pointer text-xs" />
-                </div>
-                <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
-                  <span class="material-symbols-outlined text-sm text-stone-400">logout</span>
-                  <input type="date" [value]="checkOut()" (change)="checkOut.set($any($event.target).value)"
-                    class="bg-transparent focus:outline-none cursor-pointer text-xs" />
-                </div>
-                <button (click)="fetchHotels()"
-                  class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary-container transition-colors ml-auto">
-                  @if (hotelsLoading()) {
-                    <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
-                  } @else {
-                    <span class="material-symbols-outlined text-sm">search</span>
                   }
-                  Search
-                </button>
+                  @if (!flightsLoading() && filteredFlights.length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">No flights found. Try a different date.</p>
+                  }
+                </div>
               </div>
-            </div>
+            }
 
-            <!-- Hotel cards -->
-            <div class="space-y-3" [class.opacity-50]="hotelsLoading()">
-              @for (h of hotels(); track h.id) {
-                <div class="p-4 rounded-xl border border-stone-100 hover:shadow-md transition-shadow">
-                  <div class="flex items-start justify-between mb-2">
-                    <div>
-                      <p class="font-semibold text-primary text-sm">{{ h.name }}</p>
-                      <p class="text-[11px] text-stone-400">{{ h.chain }} · {{ h.type }}</p>
+            <!-- ── Step 2: Hotel ── -->
+            @if (bookStep() === 'hotel') {
+              <div class="px-6 py-5 space-y-4">
+                @if (selectedFlight(); as sf) {
+                  <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
+                      <div>
+                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · {{ sf.duration }}</p>
+                        <p class="text-xs text-stone-500">{{ sf.stops }} · ${{ sf.price }}</p>
+                      </div>
                     </div>
-                    <div class="text-right shrink-0 ml-3">
-                      <p class="font-bold text-primary text-base">${{ h.pricePerNight }}</p>
-                      <p class="text-[10px] text-stone-400">per night</p>
-                    </div>
+                    <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
                   </div>
-                  <div class="flex items-center justify-between mt-2">
-                    <div class="flex items-center gap-3 text-xs text-stone-500">
-                      <span>⭐ {{ h.rating }} ({{ h.reviews }})</span>
-                      <span>{{ h.address }}</span>
+                }
+
+                <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Hotel</p>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      [class]="hotelSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
+                      {{ hotelSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">login</span>
+                      <input type="date" [value]="checkIn()" (change)="checkIn.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
                     </div>
-                    <a [href]="h.deepLink" target="_blank" rel="noopener"
-                      class="text-[10px] font-bold text-blue-600 uppercase flex items-center gap-0.5 hover:underline">
-                      Book <span class="material-symbols-outlined text-xs">north_east</span>
-                    </a>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">logout</span>
+                      <input type="date" [value]="checkOut()" (change)="checkOut.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
+                    </div>
+                    <button (click)="fetchHotels()"
+                      class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary/90 transition-colors ml-auto">
+                      @if (hotelsLoading()) {
+                        <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+                      } @else {
+                        <span class="material-symbols-outlined text-sm">search</span>
+                      }
+                      Search
+                    </button>
                   </div>
                 </div>
-              }
-              @if (!hotelsLoading() && hotels().length === 0) {
-                <p class="text-center text-stone-400 text-sm py-8">No hotels found. Try different dates.</p>
-              }
-            </div>
-          </div>
-        }
 
-        <!-- ══ CARS TAB ════════════════════════════════════════════════════ -->
-        @if (tab() === 'cars') {
-          <div class="px-7 py-5 space-y-4">
-            <div class="flex items-center justify-between">
-              <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Car Rentals</p>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-500">SAMPLE</span>
-            </div>
-
-            <div class="space-y-3" [class.opacity-50]="carsLoading()">
-              @for (car of cars(); track car.id) {
-                <div class="p-4 rounded-xl border border-stone-100 hover:shadow-md transition-shadow">
-                  <div class="flex items-start justify-between mb-2">
-                    <div>
-                      <p class="font-semibold text-primary text-sm">{{ car.model }}</p>
-                      <p class="text-[11px] text-stone-400">{{ car.agency }} · {{ car.category }}</p>
+                <div class="space-y-3" [class.opacity-50]="hotelsLoading()">
+                  @for (h of hotels(); track h.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ h.name }}</p>
+                          <p class="text-[11px] text-stone-400">{{ h.chain }} · {{ h.type }}</p>
+                        </div>
+                        <div class="text-right shrink-0 ml-3">
+                          <p class="font-bold text-primary text-base">${{ h.pricePerNight }}</p>
+                          <p class="text-[10px] text-stone-400">per night</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-stone-500">⭐ {{ h.rating }} ({{ h.reviews }}) · {{ h.address }}</span>
+                        <button (click)="selectHotel(h)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors shrink-0 ml-2">
+                          Select →
+                        </button>
+                      </div>
                     </div>
-                    <div class="text-right shrink-0 ml-3">
-                      <p class="font-bold text-primary text-base">${{ car.pricePerDay }}</p>
-                      <p class="text-[10px] text-stone-400">per day</p>
-                    </div>
-                  </div>
-                  <div class="flex items-center justify-between mt-2">
-                    <div class="flex items-center gap-3 text-xs text-stone-500">
-                      <span>{{ car.transmission }}</span>
-                      <span>{{ car.seats }} seats</span>
-                      <span>{{ car.pickupLocation }}</span>
-                    </div>
-                    <a [href]="car.deepLink" target="_blank" rel="noopener"
-                      class="text-[10px] font-bold text-blue-600 uppercase flex items-center gap-0.5 hover:underline">
-                      Book <span class="material-symbols-outlined text-xs">north_east</span>
-                    </a>
-                  </div>
+                  }
+                  @if (!hotelsLoading() && hotels().length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">No hotels found. Try different dates.</p>
+                  }
                 </div>
-              }
-              @if (!carsLoading() && cars().length === 0) {
-                <p class="text-center text-stone-400 text-sm py-8">Loading car options...</p>
-              }
-            </div>
-            <p class="text-[11px] text-stone-400 italic">Representative prices. Final price confirmed on partner site.</p>
+              </div>
+            }
+
+            <!-- ── Step 3: Car ── -->
+            @if (bookStep() === 'car') {
+              <div class="px-6 py-5 space-y-4">
+                <div class="space-y-2">
+                  @if (selectedFlight(); as sf) {
+                    <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
+                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · ${{ sf.price }}</p>
+                      </div>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
+                    </div>
+                  }
+                  @if (selectedHotel(); as sh) {
+                    <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-base">hotel</span>
+                        <p class="text-xs font-semibold text-primary">{{ sh.name }} · ${{ sh.pricePerNight }}/night</p>
+                      </div>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
+                    </div>
+                  }
+                </div>
+
+                <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Car</p>
+
+                <div class="space-y-3" [class.opacity-50]="carsLoading()">
+                  @for (car of cars(); track car.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ car.model }}</p>
+                          <p class="text-[11px] text-stone-400">{{ car.agency }} · {{ car.category }}</p>
+                        </div>
+                        <div class="text-right shrink-0 ml-3">
+                          <p class="font-bold text-primary text-base">${{ car.pricePerDay }}</p>
+                          <p class="text-[10px] text-stone-400">per day</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-stone-500">{{ car.transmission }} · {{ car.seats }} seats · {{ car.pickupLocation }}</span>
+                        <button (click)="selectCar(car)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors shrink-0 ml-2">
+                          Select →
+                        </button>
+                      </div>
+                    </div>
+                  }
+                  @if (!carsLoading() && cars().length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">Loading car options...</p>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- ── Step 4: Summary ── -->
+            @if (bookStep() === 'summary') {
+              <div class="px-6 py-5 space-y-4">
+                <h2 class="text-sm font-bold text-primary">Your Trip to {{ c.city }}</h2>
+
+                @if (selectedFlight(); as sf) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">flight_takeoff</span> Flight
+                      </p>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }}</p>
+                        <p class="text-xs text-stone-500">{{ sf.duration }} · {{ sf.stops }}</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ sf.price }}</p>
+                    </div>
+                  </div>
+                }
+
+                @if (selectedHotel(); as sh) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">hotel</span> Hotel · {{ nightsCount() }} nights
+                      </p>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ sh.name }}</p>
+                        <p class="text-xs text-stone-500">{{ checkIn() }} – {{ checkOut() }}</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ sh.pricePerNight * nightsCount() }}</p>
+                    </div>
+                  </div>
+                }
+
+                @if (selectedCar(); as car) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">directions_car</span> Car · {{ nightsCount() }} days
+                      </p>
+                      <button (click)="goBackToStep('car')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ car.model }}</p>
+                        <p class="text-xs text-stone-500">{{ car.agency }} · {{ car.transmission }}</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ car.pricePerDay * nightsCount() }}</p>
+                    </div>
+                  </div>
+                }
+
+                <!-- Total estimate -->
+                <div class="p-4 rounded-xl bg-primary text-white flex items-center justify-between">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest opacity-80">Estimated Total</p>
+                    <p class="text-[10px] opacity-60">Prices confirmed on partner sites</p>
+                  </div>
+                  <p class="text-2xl font-bold">${{ totalEstimate() }}</p>
+                </div>
+
+                <!-- Book Now deep links -->
+                <section class="space-y-2">
+                  <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Complete Your Bookings</p>
+                  <a [href]="selectedFlight()?.deepLink" target="_blank" rel="noopener"
+                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary">flight_takeoff</span>
+                      <span class="text-sm font-semibold text-primary">Book Flight</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">north_east</span>
+                  </a>
+                  <a [href]="selectedHotel()?.deepLink" target="_blank" rel="noopener"
+                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary">hotel</span>
+                      <span class="text-sm font-semibold text-primary">Book Hotel</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">north_east</span>
+                  </a>
+                  <a [href]="selectedCar()?.deepLink" target="_blank" rel="noopener"
+                    class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary">directions_car</span>
+                      <span class="text-sm font-semibold text-primary">Book Car</span>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">north_east</span>
+                  </a>
+                </section>
+
+                <p class="text-[11px] text-stone-400 italic">
+                  Prices are indicative. GeoFlow does not process bookings — you will be redirected to partner sites.
+                </p>
+              </div>
+            }
+
           </div>
         }
 

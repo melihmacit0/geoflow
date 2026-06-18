@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, ViewChild, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
@@ -6,8 +6,9 @@ import { ApiService } from '../../core/api.service';
 import { Car, CityDetail, Flight, Hotel } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
-type Tab = 'culture' | 'flights' | 'hotels' | 'cars';
+type Tab = 'culture' | 'book';
 type CultureSub = 'overview' | 'food' | 'history' | 'tips';
+type BookStep = 'flight' | 'hotel' | 'car' | 'summary';
 
 @Component({
   selector: 'gf-city-detail',
@@ -20,8 +21,8 @@ export class CityDetailComponent implements OnDestroy {
     if (el && !this.map) this.initMap(el.nativeElement);
   }
 
-  private api   = inject(ApiService);
-  private route = inject(ActivatedRoute);
+  private api    = inject(ApiService);
+  private route  = inject(ActivatedRoute);
   private router = inject(Router);
   private map?: L.Map;
   private marker?: L.Marker;
@@ -29,17 +30,25 @@ export class CityDetailComponent implements OnDestroy {
   city    = signal<CityDetail | null>(null);
   loading = signal(true);
 
-  tab = signal<Tab>('culture');
+  tab        = signal<Tab>('culture');
   cultureSub = signal<CultureSub>('overview');
 
-  // Flights
-  flights       = signal<Flight[]>([]);
-  flightSource  = signal('');
-  flightsLoading = signal(false);
-  flightFilter  = signal<'cheapest' | 'fastest' | 'direct'>('cheapest');
-  departureDate = signal(new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10));
+  // Booking wizard
+  readonly bookStepOrder: BookStep[] = ['flight', 'hotel', 'car', 'summary'];
+  bookStep       = signal<BookStep>('flight');
+  selectedFlight = signal<Flight | null>(null);
+  selectedHotel  = signal<Hotel | null>(null);
+  selectedCar    = signal<Car | null>(null);
+  bookStepIndex  = computed(() => this.bookStepOrder.indexOf(this.bookStep()));
 
-  // Hotels
+  // Flight data
+  flights        = signal<Flight[]>([]);
+  flightSource   = signal('');
+  flightsLoading = signal(false);
+  flightFilter   = signal<'cheapest' | 'fastest' | 'direct'>('cheapest');
+  departureDate  = signal(new Date(Date.now() + 30 * 86_400_000).toISOString().slice(0, 10));
+
+  // Hotel data
   hotels        = signal<Hotel[]>([]);
   hotelSource   = signal('');
   hotelsLoading = signal(false);
@@ -47,10 +56,24 @@ export class CityDetailComponent implements OnDestroy {
   checkOut = signal(new Date(Date.now() + 33 * 86_400_000).toISOString().slice(0, 10));
   adults   = signal(1);
 
-  // Cars
-  cars       = signal<Car[]>([]);
-  carsSource = signal('');
+  // Car data
+  cars        = signal<Car[]>([]);
+  carsSource  = signal('');
   carsLoading = signal(false);
+
+  // Derived booking values
+  nightsCount = computed(() => {
+    const ci = new Date(this.checkIn());
+    const co = new Date(this.checkOut());
+    return Math.max(1, Math.round((co.getTime() - ci.getTime()) / 86_400_000));
+  });
+
+  totalEstimate = computed(() => {
+    const n = this.nightsCount();
+    return (this.selectedFlight()?.price ?? 0)
+      + (this.selectedHotel() ? this.selectedHotel()!.pricePerNight * n : 0)
+      + (this.selectedCar()   ? this.selectedCar()!.pricePerDay   * n : 0);
+  });
 
   private countryCode = '';
 
@@ -74,6 +97,13 @@ export class CityDetailComponent implements OnDestroy {
 
   private loadCity(iata: string): void {
     this.loading.set(true);
+    this.bookStep.set('flight');
+    this.selectedFlight.set(null);
+    this.selectedHotel.set(null);
+    this.selectedCar.set(null);
+    this.flights.set([]);
+    this.hotels.set([]);
+    this.cars.set([]);
     this.api.getCityDetail(iata).subscribe({
       next: (c) => { this.city.set(c); this.loading.set(false); },
       error: () => { this.loading.set(false); this.router.navigate(['/country', this.countryCode]); }
@@ -84,10 +114,44 @@ export class CityDetailComponent implements OnDestroy {
     this.tab.set(t);
     const iata = this.city()?.iata;
     if (!iata) return;
-    if (t === 'flights' && !this.flights().length) this.fetchFlights(iata);
-    if (t === 'hotels' && !this.hotels().length) this.fetchHotels(iata);
-    if (t === 'cars' && !this.cars().length) this.fetchCars(iata);
+    if (t === 'book' && !this.flights().length) this.fetchFlights(iata);
   }
+
+  // ── Booking wizard ──────────────────────────────────────────────────────────
+
+  selectFlight(f: Flight): void {
+    this.selectedFlight.set(f);
+    const dep = this.departureDate();
+    const co  = new Date(new Date(dep).getTime() + 3 * 86_400_000).toISOString().slice(0, 10);
+    this.checkIn.set(dep);
+    this.checkOut.set(co);
+    this.hotels.set([]);
+    this.fetchHotels();
+    this.bookStep.set('hotel');
+  }
+
+  selectHotel(h: Hotel): void {
+    this.selectedHotel.set(h);
+    this.cars.set([]);
+    this.fetchCars();
+    this.bookStep.set('car');
+  }
+
+  selectCar(car: Car): void {
+    this.selectedCar.set(car);
+    this.bookStep.set('summary');
+  }
+
+  goBackToStep(step: BookStep): void {
+    const target = this.bookStepOrder.indexOf(step);
+    if (target >= this.bookStepIndex()) return;
+    if (target <= 0) { this.selectedFlight.set(null); this.hotels.set([]); this.cars.set([]); }
+    if (target <= 1) { this.selectedHotel.set(null); this.cars.set([]); }
+    if (target <= 2) { this.selectedCar.set(null); }
+    this.bookStep.set(step);
+  }
+
+  // ── Data fetching ────────────────────────────────────────────────────────────
 
   fetchFlights(iata?: string): void {
     const code = iata ?? this.city()?.iata;
@@ -118,8 +182,6 @@ export class CityDetailComponent implements OnDestroy {
       error: () => this.carsLoading.set(false)
     });
   }
-
-  get isLive(): boolean { return this.flightSource().startsWith('live') || this.hotelSource().startsWith('live'); }
 
   get filteredFlights(): Flight[] {
     const list = [...this.flights()];
