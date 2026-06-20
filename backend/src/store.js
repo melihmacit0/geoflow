@@ -19,6 +19,11 @@ const PREFIX = 'geoflow/';
 
 const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
 
+/** 'blob' when a Vercel Blob token is present, otherwise 'local' (dev files). */
+export function storeMode() {
+  return useBlob ? 'blob' : 'local';
+}
+
 let blobMod;
 async function blob() {
   return (blobMod ??= await import('@vercel/blob'));
@@ -63,19 +68,26 @@ export async function readDoc(key, fallback) {
 }
 
 export async function writeDoc(key, data) {
-  if (useBlob) {
-    const { put } = await blob();
-    const result = await put(`${PREFIX}${key}.json`, JSON.stringify(data), {
-      access: 'public',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      contentType: 'application/json',
-      cacheControlMaxAge: 0
-    });
-    urlCache.set(key, result.url);
-    return;
-  }
+  try {
+    if (useBlob) {
+      const { put } = await blob();
+      const result = await put(`${PREFIX}${key}.json`, JSON.stringify(data), {
+        access: 'public',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        contentType: 'application/json',
+        cacheControlMaxAge: 0
+      });
+      urlCache.set(key, result.url);
+      return true;
+    }
 
-  fs.mkdirSync(LOCAL_DIR, { recursive: true });
-  fs.writeFileSync(path.join(LOCAL_DIR, `${key}.json`), JSON.stringify(data, null, 2));
+    fs.mkdirSync(LOCAL_DIR, { recursive: true });
+    fs.writeFileSync(path.join(LOCAL_DIR, `${key}.json`), JSON.stringify(data, null, 2));
+    return true;
+  } catch (err) {
+    // Never let a storage failure hang the request — log and report failure.
+    console.error(`store.writeDoc(${key}) error:`, err.message);
+    return false;
+  }
 }

@@ -59,24 +59,26 @@ let seedPromise;
 function ensureSeed() {
   if (!seedPromise) {
     seedPromise = (async () => {
-      const users = await store.readDoc('users', {});
-      if (!users[DEMO_EMAIL]) {
-        const { salt, hash } = hashPassword('explorer');
-        users[DEMO_EMAIL] = {
-          id: 'u-demo', name: 'Sıla Kırılmaz', email: DEMO_EMAIL,
-          salt, hash, homeAirport: 'Istanbul — IST', currency: 'USD ($)', language: 'English'
-        };
-        await store.writeDoc('users', users);
-        const saved = await store.readDoc('saved', {});
-        if (!saved['u-demo']) {
-          saved['u-demo'] = ['JP', 'FR', 'GR'];
-          await store.writeDoc('saved', saved);
+      try {
+        const users = await store.readDoc('users', {});
+        if (!users[DEMO_EMAIL]) {
+          const { salt, hash } = hashPassword('explorer');
+          users[DEMO_EMAIL] = {
+            id: 'u-demo', name: 'Sıla Kırılmaz', email: DEMO_EMAIL,
+            salt, hash, homeAirport: 'Istanbul — IST', currency: 'USD ($)', language: 'English'
+          };
+          await store.writeDoc('users', users);
+          const saved = await store.readDoc('saved', {});
+          if (!saved['u-demo']) {
+            saved['u-demo'] = ['JP', 'FR', 'GR'];
+            await store.writeDoc('saved', saved);
+          }
         }
+      } catch (err) {
+        console.error('ensureSeed failed:', err.message);
+        seedPromise = null; // allow a retry on a later request
       }
-    })().catch((err) => {
-      seedPromise = null; // allow a retry on the next request if seeding failed
-      throw err;
-    });
+    })();
   }
   return seedPromise;
 }
@@ -437,7 +439,8 @@ app.post('/api/auth/register', async (req, res) => {
   const { salt, hash } = hashPassword(password);
   const user = { id: `u-${Date.now()}`, name, email, salt, hash, homeAirport: 'Istanbul — IST', currency: 'USD ($)', language: 'English' };
   users[email] = user;
-  await store.writeDoc('users', users);
+  const ok = await store.writeDoc('users', users);
+  if (!ok) return res.status(503).json({ error: 'Storage unavailable — check BLOB_READ_WRITE_TOKEN on Vercel.' });
   const token = jwt.sign({ sub: user.id }, JWT_SECRET, { expiresIn: '7d' });
   res.json({ token, user: publicUser(user) });
 });
@@ -533,6 +536,6 @@ app.delete('/api/trips/:id', auth, async (req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/health', (req, res) => res.json({ ok: true }));
+app.get('/api/health', (req, res) => res.json({ ok: true, store: store.storeMode() }));
 
 export default app;
