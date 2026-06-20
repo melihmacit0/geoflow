@@ -7,15 +7,21 @@ import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { Car, CityDetail, Flight, Hotel, SavedTrip } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
+import { PricePipe } from '../../core/price.pipe';
 
 type Tab = 'culture' | 'book';
 type CultureSub = 'overview' | 'food' | 'history' | 'tips';
 type BookStep = 'flight' | 'hotel' | 'car' | 'summary';
 
+// A trip the user tried to save while logged out, replayed after they sign in.
+const PENDING_TRIP_KEY = 'geoflow_pending_trip';
+// A saved trip opened from the Saved page, whose selections we restore on load.
+const RESTORE_TRIP_KEY = 'geoflow_restore_trip';
+
 @Component({
   selector: 'gf-city-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, TopNavComponent],
+  imports: [CommonModule, RouterLink, TopNavComponent, PricePipe],
   templateUrl: './city-detail.component.html'
 })
 export class CityDetailComponent implements OnDestroy {
@@ -102,6 +108,14 @@ export class CityDetailComponent implements OnDestroy {
   private countryCode = '';
 
   constructor() {
+    // Default the departure airport to the user's saved home-airport preference
+    // (format "City — IATA", e.g. "Istanbul — IST").
+    const home = this.auth.user()?.homeAirport;
+    if (home) {
+      const [homeCity, homeCode] = home.split('—').map((s) => s.trim());
+      if (homeCode) { this.origin.set(homeCode); this.originCity.set(homeCity || homeCode); }
+    }
+
     this.route.paramMap.subscribe((params) => {
       this.countryCode = params.get('code')!.toUpperCase();
       const iata = params.get('iata')!.toUpperCase();
@@ -133,7 +147,7 @@ export class CityDetailComponent implements OnDestroy {
     this.savedTripId.set(null);
     this.tripSaveError.set(null);
     this.api.getCityDetail(iata).subscribe({
-      next: (c) => { this.city.set(c); this.loading.set(false); },
+      next: (c) => { this.city.set(c); this.loading.set(false); this.resumePendingTrip(); this.restoreSavedTrip(); },
       error: () => { this.loading.set(false); this.router.navigate(['/country', this.countryCode]); }
     });
   }
@@ -292,12 +306,36 @@ export class CityDetailComponent implements OnDestroy {
       : `${a} Adult${a > 1 ? 's' : ''} · ${c} Child${c > 1 ? 'ren' : ''}`;
   }
 
+  private buildTripPayload(): Omit<SavedTrip, 'id' | 'savedAt'> | null {
+    const c = this.city();
+    if (!c) return null;
+    return {
+      cityIata: c.iata,
+      cityName: c.city,
+      countryCode: this.countryCode,
+      countryName: c.countryName,
+      flight: this.selectedFlight(),
+      hotel: this.selectedHotel(),
+      car: this.selectedCar(),
+      departureDate: this.departureDate(),
+      checkIn: this.checkIn(),
+      checkOut: this.checkOut(),
+      adults: this.adults(),
+      children: this.children(),
+      totalEstimate: this.totalEstimate()
+    };
+  }
+
   toggleSaveTrip(): void {
     if (this.tripSaveLoading()) return;
     this.tripSaveError.set(null);
 
+    // Not signed in: stash this trip and resume the save right after login,
+    // returning the user to this exact page instead of starting over.
     if (!this.auth.isLoggedIn) {
-      this.router.navigate(['/signin']);
+      const payload = this.buildTripPayload();
+      if (payload) sessionStorage.setItem(PENDING_TRIP_KEY, JSON.stringify(payload));
+      this.router.navigate(['/signin'], { queryParams: { returnUrl: this.router.url } });
       return;
     }
 
@@ -313,24 +351,8 @@ export class CityDetailComponent implements OnDestroy {
       return;
     }
 
-    const c = this.city();
-    if (!c) { this.tripSaveLoading.set(false); return; }
-
-    const payload: Omit<SavedTrip, 'id' | 'savedAt'> = {
-      cityIata: c.iata,
-      cityName: c.city,
-      countryCode: this.countryCode,
-      countryName: c.countryName,
-      flight: this.selectedFlight(),
-      hotel: this.selectedHotel(),
-      car: this.selectedCar(),
-      departureDate: this.departureDate(),
-      checkIn: this.checkIn(),
-      checkOut: this.checkOut(),
-      adults: this.adults(),
-      children: this.children(),
-      totalEstimate: this.totalEstimate()
-    };
+    const payload = this.buildTripPayload();
+    if (!payload) { this.tripSaveLoading.set(false); return; }
 
     this.api.saveTrip(payload).subscribe({
       next: (trip) => { this.tripSaved.set(true); this.savedTripId.set(trip.id); this.tripSaveLoading.set(false); },
@@ -345,6 +367,51 @@ export class CityDetailComponent implements OnDestroy {
         if (err.status === 401) this.router.navigate(['/signin']);
       }
     });
+  }
+
+  /** Restore a trip's flight/hotel/car selections into the booking summary. */
+  private applyTripSelections(trip: Omit<SavedTrip, 'id' | 'savedAt'>): void {
+    this.selectedFlight.set(trip.flight ?? null);
+    this.selectedHotel.set(trip.hotel ?? null);
+    this.selectedCar.set(trip.car ?? null);
+    if (trip.departureDate) this.departureDate.set(trip.departureDate);
+    if (trip.checkIn) this.checkIn.set(trip.checkIn);
+    if (trip.checkOut) this.checkOut.set(trip.checkOut);
+    if (trip.adults) this.adults.set(trip.adults);
+    if (typeof trip.children === 'number') this.children.set(trip.children);
+    this.tab.set('book');
+    this.bookStep.set('summary');
+  }
+
+  /** After signing in, restore the in-progress trip and finish saving it. */
+  private resumePendingTrip(): void {
+    if (!this.auth.isLoggedIn) return;
+    const raw = sessionStorage.getItem(PENDING_TRIP_KEY);
+    if (!raw) return;
+
+    let pending: Omit<SavedTrip, 'id' | 'savedAt'>;
+    try { pending = JSON.parse(raw); } catch { sessionStorage.removeItem(PENDING_TRIP_KEY); return; }
+    if (!pending || pending.cityIata !== this.city()?.iata) return;
+    sessionStorage.removeItem(PENDING_TRIP_KEY);
+
+    this.applyTripSelections(pending);
+    this.toggleSaveTrip();
+  }
+
+  /** Open an already-saved trip (from the Saved page) with its selections shown. */
+  private restoreSavedTrip(): void {
+    const raw = sessionStorage.getItem(RESTORE_TRIP_KEY);
+    if (!raw) return;
+
+    let trip: SavedTrip;
+    try { trip = JSON.parse(raw); } catch { sessionStorage.removeItem(RESTORE_TRIP_KEY); return; }
+    if (!trip || trip.cityIata !== this.city()?.iata) return;
+    sessionStorage.removeItem(RESTORE_TRIP_KEY);
+
+    this.applyTripSelections(trip);
+    // It's already saved — reflect that so the summary shows the saved state.
+    this.tripSaved.set(true);
+    this.savedTripId.set(trip.id);
   }
 
   toggleMapMobile(): void {

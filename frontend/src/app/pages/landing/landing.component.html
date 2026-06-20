@@ -35,7 +35,7 @@
       </p>
       <div class="flex flex-wrap gap-3 md:gap-4 justify-center pt-6 md:pt-8">
         <a routerLink="/discover" class="bg-primary-container text-white px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold shadow-lg shadow-primary-container/20 hover:-translate-y-0.5 transition-all text-sm md:text-base">Start Exploring</a>
-        <a routerLink="/compare" class="bg-white border border-outline-variant text-primary px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold hover:bg-surface-container transition-all text-sm md:text-base">Compare Destinations</a>
+        <a routerLink="/saved" [queryParams]="{ compare: 1 }" class="bg-white border border-outline-variant text-primary px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold hover:bg-surface-container transition-all text-sm md:text-base">Compare Destinations</a>
       </div>
     </div>
 

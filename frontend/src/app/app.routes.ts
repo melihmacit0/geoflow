@@ -29,10 +29,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./pages/saved/saved.component').then((m) => m.SavedComponent)
   },
-  {
-    path: 'compare',
-    loadComponent: () => import('./pages/compare/compare.component').then((m) => m.CompareComponent)
-  },
+  // Compare lives inside the Saved page (select 2–3 saved trips). Keep the old
+  // /compare path working by redirecting there.
+  { path: 'compare', redirectTo: 'saved', pathMatch: 'full' },
   {
     path: 'profile',
     canActivate: [authGuard],

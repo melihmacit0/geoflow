@@ -1,20 +1,22 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { SavedTrip } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 import { FooterComponent } from '../../shared/footer.component';
+import { PricePipe } from '../../core/price.pipe';
 
 @Component({
   selector: 'gf-saved',
   standalone: true,
-  imports: [CommonModule, RouterLink, TopNavComponent, FooterComponent],
+  imports: [CommonModule, RouterLink, TopNavComponent, FooterComponent, PricePipe],
   templateUrl: './saved.component.html'
 })
 export class SavedComponent {
   private api    = inject(ApiService);
   private router = inject(Router);
+  private route  = inject(ActivatedRoute);
 
   trips        = signal<SavedTrip[]>([]);
   loading      = signal(true);
@@ -29,13 +31,23 @@ export class SavedComponent {
   canCompare = computed(() => this.compareTrips().length >= 2);
 
   constructor() {
+    // Landing's "Compare Destinations" links here with ?compare=1 to jump
+    // straight into compare mode (needs at least 2 saved trips).
+    const wantCompare = this.route.snapshot.queryParamMap.get('compare') === '1';
     this.api.getTrips().subscribe({
-      next: (list) => { this.trips.set(list); this.loading.set(false); },
+      next: (list) => {
+        this.trips.set(list);
+        this.loading.set(false);
+        if (wantCompare && list.length >= 2) this.compareMode.set(true);
+      },
       error: () => this.loading.set(false)
     });
   }
 
   openCity(trip: SavedTrip): void {
+    // Stash the trip so the city page reopens it on the booking summary with
+    // the same flight/hotel/car selected.
+    sessionStorage.setItem('geoflow_restore_trip', JSON.stringify(trip));
     this.router.navigate(['/country', trip.countryCode, 'city', trip.cityIata]);
   }
 

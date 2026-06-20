@@ -1342,5 +1342,901 @@
         "pronunciation": "Small up yuh-self"
       }
     ]
+  },
+  "LIS": {
+    "tagline": "Sun-drenched hills and ancient tiled streets",
+    "intro": "Lisbon is a vibrant student-friendly hub where historic charm meets a buzzing nightlife scene. Its colorful neighborhoods and steep cobblestone alleys offer an endless playground for budget-conscious explorers.",
+    "didYouKnow": "Lisbon is one of the oldest cities in the world, predating Rome by several centuries.",
+    "highlights": [
+      {
+        "title": "Belém Tower",
+        "note": "Iconic fortress guarding the harbor entrance."
+      },
+      {
+        "title": "Tram 28",
+        "note": "Classic yellow tram winding through historic districts."
+      },
+      {
+        "title": "Alfama District",
+        "note": "Oldest neighborhood featuring narrow, maze-like streets."
+      },
+      {
+        "title": "Bairro Alto",
+        "note": "The city’s epicenter for nightlife and bars."
+      }
+    ],
+    "bestTime": "Mar – May and Sep – Oct",
+    "food": {
+      "intro": "Lisbon's culinary scene is a dream for students, blending affordable fresh seafood with legendary sweet treats.",
+      "dishes": [
+        {
+          "name": "Pastel de Nata",
+          "note": "Creamy, cinnamon-dusted Portuguese egg tart."
+        },
+        {
+          "name": "Bacalhau à Brás",
+          "note": "Shredded salted cod with onions, eggs, and potatoes."
+        },
+        {
+          "name": "Sardinhas Assadas",
+          "note": "Traditional charcoal-grilled sardines, best enjoyed in summer."
+        },
+        {
+          "name": "Bifana",
+          "note": "A simple, savory pork sandwich on crusty bread."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Lisbon has evolved from an ancient Phoenician outpost into a global maritime powerhouse during the Age of Discovery. The city survived a catastrophic 1755 earthquake that completely reshaped its urban landscape into the neoclassical grid seen today. It remains a resilient capital that honors its seafaring roots while embracing contemporary European culture.",
+      "periods": [
+        {
+          "era": "Moorish Influence",
+          "description": "Lisbon was under Islamic rule for centuries, shaping its architecture and street layouts. You can still see remnants of this influence in the Alfama district."
+        },
+        {
+          "era": "Age of Discovery",
+          "description": "The city became the heart of global trade, funding voyages that connected Europe to the Americas and Asia. This era brought immense wealth and grandeur to the Portuguese capital."
+        },
+        {
+          "era": "The Pombaline Era",
+          "description": "Following the 1755 earthquake, the city was rebuilt with revolutionary seismic-resistant architecture. This period defined the symmetrical aesthetic of the Baixa district."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Vasco da Gama",
+          "role": "Famed explorer who discovered the sea route to India."
+        },
+        {
+          "name": "Fernando Pessoa",
+          "role": "Iconic modernist poet and literary legend."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Walk everywhere",
+        "note": "Wear comfortable sneakers as the city is incredibly hilly and cobbled."
+      },
+      {
+        "title": "Use public transport",
+        "note": "Buy a Viva Viagem card to save significantly on metro and tram fares."
+      },
+      {
+        "title": "Late dinner culture",
+        "note": "Expect restaurants to be lively well past nine in the evening."
+      },
+      {
+        "title": "Free views",
+        "note": "Seek out the 'miradouros' (viewpoints) for the best sunset spots without paying a cent."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Olá",
+        "meaning": "Hello",
+        "pronunciation": "oh-lah"
+      },
+      {
+        "phrase": "Obrigado",
+        "meaning": "Thank you",
+        "pronunciation": "oh-bree-gah-doo"
+      },
+      {
+        "phrase": "Quanto custa?",
+        "meaning": "How much does it cost?",
+        "pronunciation": "kwan-too koos-tah"
+      },
+      {
+        "phrase": "Uma cerveja, por favor",
+        "meaning": "A beer, please",
+        "pronunciation": "oo-mah ser-vay-zhah, poor fah-vor"
+      }
+    ]
+  },
+  "LAQ": {
+    "tagline": "The green mountainside oasis of Libya",
+    "intro": "Al Bayda, known as Al Albraq, sits elegantly in the lush Jebel Akhdar highlands. It is a refreshing escape from desert heat, offering a unique blend of mountainous landscapes and ancient heritage.",
+    "didYouKnow": "Al Bayda translates to 'The White' and is named after a white-washed mosque that once served as a landmark for travelers.",
+    "highlights": [
+      {
+        "title": "Cyrene Ruins",
+        "note": "Ancient Greek archaeological site nearby."
+      },
+      {
+        "title": "Jebel Akhdar",
+        "note": "Stunning green mountain ranges for hiking."
+      },
+      {
+        "title": "Appolonia",
+        "note": "Historic coastal ruins of the Cyrenaican port."
+      },
+      {
+        "title": "Local Souq",
+        "note": "Traditional market filled with regional crafts."
+      }
+    ],
+    "bestTime": "Mar – May and Sep – Nov",
+    "food": {
+      "intro": "Libyan cuisine in the highlands features hearty, traditional Berber-influenced dishes. Expect bold spices, fresh olive oil, and communal dining experiences.",
+      "dishes": [
+        {
+          "name": "Bazeen",
+          "note": "Barley dough served with a rich, spicy tomato stew."
+        },
+        {
+          "name": "Usban",
+          "note": "Traditional stuffed sausage filled with herbs and meat."
+        },
+        {
+          "name": "Sharba Arabiya",
+          "note": "A thick, comforting Libyan soup with lamb and mint."
+        },
+        {
+          "name": "Asida",
+          "note": "Soft wheat flour dough served with honey and oil."
+        }
+      ]
+    },
+    "history": {
+      "overview": "The region surrounding Al Bayda has been a crossroads of civilizations for millennia, from Greeks to Romans and Arabs. Its strategic location in the Green Mountains made it a crucial site for trade, religion, and regional resistance throughout history. Today, it stands as a significant educational and cultural center in eastern Libya.",
+      "periods": [
+        {
+          "era": "Ancient Greek Era",
+          "description": "Founded as part of the Cyrenaican kingdom, the area thrived under Greek influence. It became an essential intellectual hub near the famous city of Cyrene."
+        },
+        {
+          "era": "Islamic Expansion",
+          "description": "Following the arrival of Arab tribes, the region adopted Islamic traditions and architecture. This era solidified its status as a center for Sufi learning."
+        },
+        {
+          "era": "Modern Era",
+          "description": "The city gained prominence during the 20th century as a key administrative hub. It played a significant role in Libya's post-independence development."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Omar Mukhtar",
+          "role": "Iconic Libyan resistance leader against Italian colonialism."
+        },
+        {
+          "name": "Battus I",
+          "role": "Founder of the ancient Greek colony of Cyrene."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress Respectfully",
+        "note": "Wear modest clothing that covers shoulders and knees."
+      },
+      {
+        "title": "Stay Hydrated",
+        "note": "Always carry bottled water, especially when hiking the mountains."
+      },
+      {
+        "title": "Local Connectivity",
+        "note": "Purchase a local SIM card for better navigation access."
+      },
+      {
+        "title": "Respect Photography",
+        "note": "Always ask permission before taking photos of local people."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Salam Alaykum",
+        "meaning": "Peace be upon you",
+        "pronunciation": "Sa-lam a-lay-kum"
+      },
+      {
+        "phrase": "Shukran",
+        "meaning": "Thank you",
+        "pronunciation": "Shook-ran"
+      },
+      {
+        "phrase": "Afwan",
+        "meaning": "You're welcome",
+        "pronunciation": "Af-wan"
+      },
+      {
+        "phrase": "Kayfa haluk?",
+        "meaning": "How are you?",
+        "pronunciation": "Kay-fa ha-look"
+      }
+    ]
+  },
+  "BGF": {
+    "tagline": "The vibrant pulse of Central Africa",
+    "intro": "Bangui is a city of remarkable resilience situated on the banks of the winding Oubangui River. It offers intrepid travelers a raw, authentic look at African culture, characterized by lush landscapes and spirited local markets.",
+    "didYouKnow": "Bangui is known as the 'Bangui la Coquette' due to its scenic riverfront location and abundant flowering trees.",
+    "highlights": [
+      {
+        "title": "Oubangui River",
+        "note": "Crucial waterway offering scenic boat trips at sunset."
+      },
+      {
+        "title": "Boganda Museum",
+        "note": "Exhibits on regional ethnography and indigenous traditions."
+      },
+      {
+        "title": "Notre-Dame de Bangui",
+        "note": "An iconic cathedral showcasing unique colonial architecture."
+      },
+      {
+        "title": "PK5 Market",
+        "note": "A bustling hub for authentic crafts and textiles."
+      }
+    ],
+    "bestTime": "Nov – Mar",
+    "food": {
+      "intro": "The local culinary scene revolves around fresh river fish and hearty staples like cassava and peanut-based sauces.",
+      "dishes": [
+        {
+          "name": "Kanda",
+          "note": "Fried balls made from pumpkin seeds and fish."
+        },
+        {
+          "name": "Foutou",
+          "note": "Pounded yam or plantain served with savory soup."
+        },
+        {
+          "name": "Maboké",
+          "note": "Fish slow-cooked in banana leaves with spices."
+        },
+        {
+          "name": "Chikwangue",
+          "note": "Fermented cassava dough wrapped in leaves."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Bangui was established as a French military outpost in 1889, growing into the capital of a nation deeply influenced by its colonial past. Throughout the 20th century, the city transitioned from a colonial administrative center to the heart of the newly independent Central African Republic. Today, it remains a focal point for the country's ongoing political and cultural evolution.",
+      "periods": [
+        {
+          "era": "Colonial Beginnings",
+          "description": "Founded by French explorers as a fort on the river. It quickly became an important strategic hub for river trade."
+        },
+        {
+          "era": "Independence Era",
+          "description": "Gained sovereignty in 1960 under the leadership of Barthélémy Boganda. This period marked the emergence of a distinct national identity."
+        },
+        {
+          "era": "Modern Transition",
+          "description": "The city has navigated significant political volatility and unrest. It continues to strive toward stabilization and urban development."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Barthélémy Boganda",
+          "role": "First Prime Minister and father of independence"
+        },
+        {
+          "name": "Jean-Bédel Bokassa",
+          "role": "Controversial leader who proclaimed himself Emperor"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Local Transport",
+        "note": "Always agree on taxi fares before starting your journey."
+      },
+      {
+        "title": "Photography",
+        "note": "Do not take photos of government buildings or military personnel."
+      },
+      {
+        "title": "Hydration",
+        "note": "Stick exclusively to bottled or treated water throughout your stay."
+      },
+      {
+        "title": "Dress Code",
+        "note": "Dress modestly to show respect for local customs and traditions."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Mbote",
+        "meaning": "Hello",
+        "pronunciation": "mm-BO-te"
+      },
+      {
+        "phrase": "Merci mingi",
+        "meaning": "Thank you very much",
+        "pronunciation": "MER-si MING-ee"
+      },
+      {
+        "phrase": "Sango",
+        "meaning": "Local language name",
+        "pronunciation": "SANG-go"
+      },
+      {
+        "phrase": "Boni",
+        "meaning": "How are you?",
+        "pronunciation": "BO-nee"
+      }
+    ]
+  },
+  "BLJ": {
+    "tagline": "The gateway to Algeria's ancient past",
+    "intro": "Batna is a vibrant city nestled in the Aurès Mountains, serving as the cultural heart of the Berber people. It is the perfect base for students looking to explore world-class Roman ruins and breathtaking mountainous landscapes.",
+    "didYouKnow": "Batna is located near the ancient Roman city of Timgad, which is famously known as the 'Pompeii of Africa' due to its exceptionally preserved grid layout.",
+    "highlights": [
+      {
+        "title": "Timgad",
+        "note": "UNESCO-listed Roman city featuring remarkably preserved ruins."
+      },
+      {
+        "title": "Lambaesis",
+        "note": "Ancient military outpost once home to the Third Augustan Legion."
+      },
+      {
+        "title": "Ghoufi Canyons",
+        "note": "Stunning cliffside dwellings offering spectacular hiking and photography."
+      },
+      {
+        "title": "Belezma National Park",
+        "note": "A protected mountain forest perfect for trekking and nature."
+      }
+    ],
+    "bestTime": "Apr – Jun and Sep – Oct",
+    "food": {
+      "intro": "The local cuisine in Batna is hearty and soulful, heavily influenced by traditional Berber cooking methods and local mountain ingredients.",
+      "dishes": [
+        {
+          "name": "Chakhchoukha",
+          "note": "Flatbread torn into pieces with spicy red meat stew."
+        },
+        {
+          "name": "Kesra",
+          "note": "Traditional crispy, round semolina flatbread served with olive oil."
+        },
+        {
+          "name": "Bourak",
+          "note": "Crispy fried pastry rolls stuffed with meat or cheese."
+        },
+        {
+          "name": "Berkoukes",
+          "note": "Hand-rolled semolina pasta served in a rich tomato broth."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Batna evolved from a French military outpost founded in 1844 into a bustling modern city. Its deeper historical significance lies in its role as a strategic center for both the Roman Empire and the subsequent Berber kingdoms. Today, it stands as a symbolic hub for the Algerian War of Independence.",
+      "periods": [
+        {
+          "era": "Roman Era",
+          "description": "The region was a critical agricultural and military hub for the Roman Empire. Iconic cities like Timgad and Lambaesis were established to secure the frontier."
+        },
+        {
+          "era": "Berber Influence",
+          "description": "The Aurès mountains served as a stronghold for Berber resistance against various invaders. This era solidified the unique cultural identity of the region."
+        },
+        {
+          "era": "Modern Era",
+          "description": "Founded by the French as a garrison town, Batna later became the starting point for the 1954 Algerian War of Independence."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Mustapha Ben Boulaid",
+          "role": "Leader of the Algerian revolution"
+        },
+        {
+          "name": "Kahena",
+          "role": "Warrior queen who resisted Arab conquests"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress modestly",
+        "note": "Respect local customs by dressing conservatively, especially when visiting rural areas."
+      },
+      {
+        "title": "Hire a guide",
+        "note": "Getting a local guide for Timgad will greatly enrich your historical understanding."
+      },
+      {
+        "title": "Pack for weather",
+        "note": "Mountain temperatures drop significantly at night, so bring layers even in spring."
+      },
+      {
+        "title": "Carry cash",
+        "note": "Always keep small denominations of local currency for markets and cafes."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Azul",
+        "meaning": "Hello",
+        "pronunciation": "Ah-zool"
+      },
+      {
+        "phrase": "Tanmirt",
+        "meaning": "Thank you",
+        "pronunciation": "Tan-meert"
+      },
+      {
+        "phrase": "Mamek tellid?",
+        "meaning": "How are you?",
+        "pronunciation": "Ma-mek tel-leed"
+      },
+      {
+        "phrase": "Saha",
+        "meaning": "Good/Thanks",
+        "pronunciation": "Sa-ha"
+      }
+    ]
+  },
+  "ASM": {
+    "tagline": "Africa's secret jewel of modernist architecture",
+    "intro": "Asmara is a breathtaking high-altitude city known for its impeccably preserved 1930s Italian modernist architecture. It offers students a unique blend of African hospitality and European-influenced urban design.",
+    "didYouKnow": "Asmara is nicknamed 'Piccola Roma' (Little Rome) and is a UNESCO World Heritage site for its extensive collection of futurist and art deco buildings.",
+    "highlights": [
+      {
+        "title": "Fiat Tagliero Building",
+        "note": "A stunning 1938 futuristic gas station shaped like an airplane."
+      },
+      {
+        "title": "Enda Mariam Cathedral",
+        "note": "An iconic landmark blending Romanesque and local Eritrean styles."
+      },
+      {
+        "title": "Medebar Market",
+        "note": "A vibrant industrial market where recycled scraps are transformed."
+      },
+      {
+        "title": "Cinema Impero",
+        "note": "One of the world's finest examples of Art Deco cinema design."
+      }
+    ],
+    "bestTime": "Oct – Apr",
+    "food": {
+      "intro": "Eritrean cuisine is a communal experience centered around sourdough flatbread and spicy, aromatic stews.",
+      "dishes": [
+        {
+          "name": "Injera",
+          "note": "Sourdough flatbread served as the base for all meals."
+        },
+        {
+          "name": "Zigni",
+          "note": "Spicy, savory beef or lamb stew cooked with berbere."
+        },
+        {
+          "name": "Tsebhi Derho",
+          "note": "Traditional spicy chicken stew served with hard-boiled eggs."
+        },
+        {
+          "name": "Buna",
+          "note": "Ceremonial coffee experience served with popcorn and incense."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Asmara evolved from a collection of villages into a significant colonial hub during the Italian occupation. Following decades of conflict, it became the capital of an independent Eritrea in 1993. Today, it stands as a preserved time capsule of 20th-century urban planning.",
+      "periods": [
+        {
+          "era": "Colonial Beginnings",
+          "description": "The city was established as a strategic Italian colonial center in the late 19th century. Italian architects subsequently designed the city with distinct modernist features."
+        },
+        {
+          "era": "Independence Struggle",
+          "description": "The city witnessed intense periods of turmoil during the long war for independence. It eventually emerged as the heart of the newly formed Eritrean state."
+        },
+        {
+          "era": "Modern Era",
+          "description": "Asmara is now celebrated for its well-preserved historical urban landscape. It serves as a living museum of colonial history and architectural innovation."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Isaias Afwerki",
+          "role": "First president of independent Eritrea"
+        },
+        {
+          "name": "Hamid Idris Awate",
+          "role": "Leader of the Eritrean liberation movement"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Photography",
+        "note": "Always ask permission before taking photos of government buildings or people."
+      },
+      {
+        "title": "Dress Code",
+        "note": "Dress modestly to respect local customs and traditional values."
+      },
+      {
+        "title": "Connectivity",
+        "note": "Internet access can be limited, so download offline maps before arriving."
+      },
+      {
+        "title": "Currency",
+        "note": "Carry physical cash as credit cards are rarely accepted."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Selam",
+        "meaning": "Hello / Peace",
+        "pronunciation": "seh-lahm"
+      },
+      {
+        "phrase": "Ameseginalehu",
+        "meaning": "Thank you",
+        "pronunciation": "ah-meh-seh-gee-nah-leh-hoo"
+      },
+      {
+        "phrase": "K'net",
+        "meaning": "How are you?",
+        "pronunciation": "k'net"
+      },
+      {
+        "phrase": "Ciao",
+        "meaning": "Goodbye",
+        "pronunciation": "chow"
+      }
+    ]
+  },
+  "GRZ": {
+    "tagline": "The charming gateway to Styrian life",
+    "intro": "Feldkirchen bei Graz perfectly blends peaceful village vibes with convenient access to the bustling cultural hub of Graz. It serves as an ideal base for students looking to experience authentic Austrian hospitality away from the city crowds.",
+    "didYouKnow": "The municipality is home to the Schwarzlsee, a massive recreational lake created from a former gravel pit that now hosts major international music festivals.",
+    "highlights": [
+      {
+        "title": "Schwarzlsee Recreation Center",
+        "note": "Huge lake with swimming, wakeboarding, and summer festivals."
+      },
+      {
+        "title": "Austrian Sculpture Park",
+        "note": "Expansive outdoor garden filled with modern art installations."
+      },
+      {
+        "title": "Graz Airport Spotting",
+        "note": "Watch planes take off from the unique terrace."
+      },
+      {
+        "title": "St. Marein Church",
+        "note": "Historic local church showcasing traditional regional architecture."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "The dining scene focuses on hearty, farm-to-table Styrian classics served in cozy, traditional family-run inns.",
+      "dishes": [
+        {
+          "name": "Steirisches Backhendl",
+          "note": "Traditional breaded and fried crispy chicken."
+        },
+        {
+          "name": "Kürbiskernöl Salat",
+          "note": "Fresh greens drizzled with nutty pumpkin seed oil."
+        },
+        {
+          "name": "Brettljause",
+          "note": "Rustic wooden platter of local cold cuts and cheeses."
+        },
+        {
+          "name": "Apfelstrudel",
+          "note": "Classic pastry filled with sweetened spiced apples."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Feldkirchen evolved from a small agricultural settlement into a vital logistics and transport hub for the Graz region. Its historical identity is rooted in the fertile lands of the Mur river valley, maintaining its heritage while adapting to modern infrastructure needs. It remains a bridge between historical rural traditions and contemporary urban development.",
+      "periods": [
+        {
+          "era": "Agricultural Roots",
+          "description": "For centuries, the area relied on farming and grain production due to the fertile Mur river soil. It existed as a quiet satellite to the growing influence of nearby Graz."
+        },
+        {
+          "era": "Industrial Shift",
+          "description": "The construction of the airport and infrastructure projects transformed the landscape in the 20th century. This era moved the village toward a more modern, service-oriented economy."
+        },
+        {
+          "era": "Modern Growth",
+          "description": "Today it serves as a dynamic residential community with a strong focus on recreation and regional tourism. It balances its historical village charm with the needs of a mobile population."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Franz Schwarzl",
+          "role": "Entrepreneur who developed the iconic recreation lake."
+        },
+        {
+          "name": "Archduke Johann",
+          "role": "Patron of Styrian culture and local regional development."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Rent a Bike",
+        "note": "Cycling is the most efficient way to travel between the village and Graz city center."
+      },
+      {
+        "title": "Check the Calendar",
+        "note": "Look up festival dates at Schwarzlsee to avoid crowds or book early for events."
+      },
+      {
+        "title": "Use Local Buses",
+        "note": "Public transit links to Graz are frequent and affordable for students with valid IDs."
+      },
+      {
+        "title": "Sunday Closures",
+        "note": "Remember that most grocery stores in town close on Sundays, so plan your shopping ahead."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Grüß Gott",
+        "meaning": "Hello / Formal greeting",
+        "pronunciation": "grooss got"
+      },
+      {
+        "phrase": "Prost!",
+        "meaning": "Cheers!",
+        "pronunciation": "prohst"
+      },
+      {
+        "phrase": "Danke schön",
+        "meaning": "Thank you very much",
+        "pronunciation": "dahn-keh shurn"
+      },
+      {
+        "phrase": "Wo ist der See?",
+        "meaning": "Where is the lake?",
+        "pronunciation": "voh ist dare zay"
+      }
+    ]
+  },
+  "OSS": {
+    "tagline": "The ancient crossroads of the Silk Road",
+    "intro": "Osh is a vibrant, multi-ethnic gateway where ancient history meets the rugged beauty of the Pamir Mountains. It offers student travelers an authentic, budget-friendly glimpse into Central Asian culture, bustling bazaars, and legendary hospitality.",
+    "didYouKnow": "Osh is one of the oldest cities in Central Asia, with historical roots tracing back over 3,000 years to the bronze age.",
+    "highlights": [
+      {
+        "title": "Sulaiman-Too Mountain",
+        "note": "A sacred UNESCO World Heritage site overlooking the city."
+      },
+      {
+        "title": "Osh Bazaar",
+        "note": "A massive, chaotic, and sensory-rich traditional market."
+      },
+      {
+        "title": "The Silk Way Museum",
+        "note": "Located inside a cave within the sacred mountain."
+      },
+      {
+        "title": "Lenin Statue",
+        "note": "One of the few remaining massive Soviet-era monuments."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "The food scene in Osh is dominated by hearty nomadic traditions and rich, spice-laden Central Asian influences.",
+      "dishes": [
+        {
+          "name": "Osh Plov",
+          "note": "Signature rice dish with carrots, meat, and garlic."
+        },
+        {
+          "name": "Samsa",
+          "note": "Flaky pastries filled with spiced meat or pumpkin."
+        },
+        {
+          "name": "Laghman",
+          "note": "Hand-pulled noodles served in a savory vegetable broth."
+        },
+        {
+          "name": "Kurut",
+          "note": "Small, salty, dried yogurt balls, perfect for trekking."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Osh has served as a pivotal hub on the Silk Road for millennia, facilitating trade between East and West. It has shifted through the hands of various empires, from nomadic khanates to the Soviet Union. Today, it stands as a cultural capital, reflecting the complex historical tapestry of Southern Kyrgyzstan.",
+      "periods": [
+        {
+          "era": "Ancient Origins",
+          "description": "The city emerged as a major center for caravan trade in the Fergana Valley. It was historically regarded as a holy place by travelers seeking blessings before mountain crossings."
+        },
+        {
+          "era": "Medieval Era",
+          "description": "Osh flourished as a significant Islamic intellectual and commercial node during the Middle Ages. It became a renowned destination for pilgrims visiting the sacred Sulaiman-Too."
+        },
+        {
+          "era": "Modern Age",
+          "description": "The city became part of the Soviet Union in the 20th century, undergoing massive urbanization and industrialization. Following independence in 1991, it reasserted itself as a center for Kyrgyz culture."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Babur",
+          "role": "Founder of the Mughal Empire and poet."
+        },
+        {
+          "name": "Sulaiman",
+          "role": "Biblical prophet honored at the sacred mountain."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress modestly",
+        "note": "Keep shoulders and knees covered, especially when visiting local mosques."
+      },
+      {
+        "title": "Carry cash",
+        "note": "Most bazaars and transport options operate strictly with local som."
+      },
+      {
+        "title": "Negotiate prices",
+        "note": "Bargaining is expected and welcomed when shopping at the bazaar."
+      },
+      {
+        "title": "Download maps",
+        "note": "Offline maps are essential for navigating the maze-like city streets."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Salam",
+        "meaning": "Hello",
+        "pronunciation": "sah-lahm"
+      },
+      {
+        "phrase": "Rahmat",
+        "meaning": "Thank you",
+        "pronunciation": "rah-maht"
+      },
+      {
+        "phrase": "Jaksysyzby?",
+        "meaning": "How are you?",
+        "pronunciation": "jak-su-suz-bu"
+      },
+      {
+        "phrase": "Kancha turat?",
+        "meaning": "How much is it?",
+        "pronunciation": "kan-cha too-raht"
+      }
+    ]
+  },
+  "WSI": {
+    "tagline": "Sun-soaked harbors and vibrant urban energy",
+    "intro": "Sydney is a breathtaking blend of iconic architecture and pristine golden beaches, offering a laid-back lifestyle for students. It balances high-energy city life with a world-class outdoor culture that is perfect for exploration.",
+    "didYouKnow": "The Sydney Opera House roof tiles are not white; they are actually a subtle combination of glossy white and matte cream.",
+    "highlights": [
+      {
+        "title": "Sydney Opera House",
+        "note": "An architectural masterpiece on the harbor front."
+      },
+      {
+        "title": "Bondi Beach",
+        "note": "Australia's most famous stretch of golden sand."
+      },
+      {
+        "title": "Sydney Harbour Bridge",
+        "note": "Climb the steel arch for panoramic city views."
+      },
+      {
+        "title": "The Rocks",
+        "note": "Historic cobbled lanes with markets and pubs."
+      }
+    ],
+    "bestTime": "Sep – Nov and Mar – May",
+    "food": {
+      "intro": "Sydney’s culinary scene is a diverse melting pot influenced by fresh local seafood and strong Asian and Mediterranean roots.",
+      "dishes": [
+        {
+          "name": "Meat Pie",
+          "note": "A classic Aussie handheld pastry filled with gravy."
+        },
+        {
+          "name": "Avocado Toast",
+          "note": "The quintessential Australian cafe breakfast staple."
+        },
+        {
+          "name": "Lamington",
+          "note": "Sponge cake dipped in chocolate and coconut flakes."
+        },
+        {
+          "name": "Barramundi",
+          "note": "A popular, buttery white fish native to Australia."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Sydney began as the ancestral land of the Gadigal people before becoming the site of the first British penal colony in 1788. Over two centuries, it transformed from a harsh convict outpost into a thriving multicultural metropolis. Today, it stands as a global hub of innovation and cultural heritage.",
+      "periods": [
+        {
+          "era": "Indigenous Origins",
+          "description": "The Gadigal people inhabited the Sydney basin for at least 30,000 years. They lived in harmony with the harbor and surrounding bushland."
+        },
+        {
+          "era": "Convict Settlement",
+          "description": "In 1788, the First Fleet arrived, establishing the colony as a place of exile for British convicts. Life was brutal as settlers struggled to adapt to the harsh terrain."
+        },
+        {
+          "era": "Modern Global Hub",
+          "description": "Post-WWII migration transformed the city into a multicultural society. Today, it is recognized globally for its iconic landmarks and booming economy."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Arthur Phillip",
+          "role": "First Governor of New South Wales"
+        },
+        {
+          "name": "Jørn Utzon",
+          "role": "Architect of the Sydney Opera House"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Public Transport",
+        "note": "Get an Opal card or use contactless payment for easy access to trains, buses, and ferries."
+      },
+      {
+        "title": "Sun Safety",
+        "note": "The sun is incredibly strong, so always wear sunscreen and a hat."
+      },
+      {
+        "title": "Walking Tours",
+        "note": "Join free walking tours to discover hidden alleyways and local history."
+      },
+      {
+        "title": "Water Access",
+        "note": "Carry a reusable bottle as Sydney has excellent free water refill stations everywhere."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Arvo",
+        "meaning": "Afternoon",
+        "pronunciation": "ar-voh"
+      },
+      {
+        "phrase": "Brekkie",
+        "meaning": "Breakfast",
+        "pronunciation": "brek-ee"
+      },
+      {
+        "phrase": "No worries",
+        "meaning": "You're welcome or it is fine",
+        "pronunciation": "no-wuh-reez"
+      },
+      {
+        "phrase": "Servo",
+        "meaning": "Gas station",
+        "pronunciation": "ser-voh"
+      }
+    ]
   }
 }

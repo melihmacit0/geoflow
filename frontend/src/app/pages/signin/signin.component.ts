@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { AuthService } from '../../core/auth.service';
 export class SigninComponent {
   private auth = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   mode = signal<'signin' | 'signup'>('signin');
   showPassword = signal(false);
@@ -47,7 +48,8 @@ export class SigninComponent {
     request$.subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigate(['/discover']);
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        this.router.navigateByUrl(returnUrl || '/discover');
       },
       error: (err) => {
         this.loading.set(false);

@@ -15,11 +15,12 @@ import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
 import { CountryDetail, CountrySummary } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
+import { PricePipe } from '../../core/price.pipe';
 
 @Component({
   selector: 'gf-compare',
   standalone: true,
-  imports: [CommonModule, RouterLink, TopNavComponent],
+  imports: [CommonModule, RouterLink, TopNavComponent, PricePipe],
   templateUrl: './compare.component.html'
 })
 export class CompareComponent implements AfterViewInit, OnDestroy {

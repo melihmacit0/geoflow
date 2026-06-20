@@ -3,11 +3,23 @@
   "version": "1.0.0",
   "description": "GeoFlow — unified map-based travel discovery platform (frontend + backend)",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "install:all": "npm --prefix backend install && npm --prefix frontend install",
     "backend": "npm --prefix backend start",
     "frontend": "npm --prefix frontend start",
     "dev": "concurrently -n backend,frontend -c blue,green \"npm --prefix backend start\" \"npm --prefix frontend start\""
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@vercel/blob": "^0.27.0",
+    "amadeus": "^11.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

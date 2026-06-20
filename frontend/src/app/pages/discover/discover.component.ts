@@ -7,11 +7,13 @@ import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
 import { CountrySummary } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
+import { CurrencyService } from '../../core/currency.service';
+import { PricePipe } from '../../core/price.pipe';
 
 @Component({
   selector: 'gf-discover',
   standalone: true,
-  imports: [CommonModule, TopNavComponent],
+  imports: [CommonModule, TopNavComponent, PricePipe],
   templateUrl: './discover.component.html'
 })
 export class DiscoverComponent implements AfterViewInit, OnDestroy {
@@ -19,6 +21,7 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
 
   private api = inject(ApiService);
   private router = inject(Router);
+  private currency = inject(CurrencyService);
 
   private map?: L.Map;
   private markerLayer = L.layerGroup();
@@ -67,7 +70,7 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
         iconSize: [0, 0]
       });
       const marker = L.marker([c.lat, c.lng], { icon }).addTo(this.markerLayer);
-      const priceLabel = c.cheapestFlight ? `<div style="font-size:11px;color:#747780;">From $${c.cheapestFlight}</div>` : '';
+      const priceLabel = c.cheapestFlight ? `<div style="font-size:11px;color:#747780;">From ${this.currency.format(c.cheapestFlight)}</div>` : '';
       marker.bindTooltip(
         `<div style="font-weight:600;color:#00173d;">${c.flag} ${c.name}</div>${priceLabel}`,
         { direction: 'top', offset: [0, -8] }

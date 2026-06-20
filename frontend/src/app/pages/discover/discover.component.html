@@ -29,7 +29,7 @@
               <span class="text-xs">{{ c.flag }}</span>
               <span class="font-bold text-primary-container text-sm">{{ c.name }}</span>
             </div>
-            <span class="text-[10px] text-slate-400 block uppercase tracking-widest font-bold">From ${{ c.cheapestFlight }}</span>
+            <span class="text-[10px] text-slate-400 block uppercase tracking-widest font-bold">From {{ c.cheapestFlight | gfPrice }}</span>
           </div>
         </button>
       }

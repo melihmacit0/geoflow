@@ -404,9 +404,9 @@
                       </div>
                       <div class="shrink-0 border-l border-stone-100 pl-4 flex flex-col items-end gap-2">
                         <div class="text-right">
-                          <p class="font-bold text-lg text-primary">${{ f.price }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
+                          <p class="font-bold text-lg text-primary">{{ f.price | gfPrice }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
                           @if (adults() + children() > 1) {
-                            <p class="text-xs text-stone-500">${{ flightTotal(f.price) }} total</p>
+                            <p class="text-xs text-stone-500">{{ flightTotal(f.price) | gfPrice }} total</p>
                           }
                         </div>
                         <button (click)="selectFlight(f)"
@@ -440,7 +440,7 @@
                       <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
                       <div>
                         <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · {{ sf.duration }}</p>
-                        <p class="text-xs text-stone-500">{{ sf.stops }} · ${{ sf.price }}</p>
+                        <p class="text-xs text-stone-500">{{ sf.stops }} · {{ sf.price | gfPrice }}</p>
                       </div>
                     </div>
                     <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
@@ -495,9 +495,9 @@
                           <p class="text-[11px] text-stone-400">{{ h.chain }} · {{ h.type }}</p>
                         </div>
                         <div class="text-right shrink-0 ml-3">
-                          <p class="font-bold text-primary text-base">${{ h.pricePerNight }}<span class="text-[10px] text-stone-400 font-normal">/room</span></p>
+                          <p class="font-bold text-primary text-base">{{ h.pricePerNight | gfPrice }}<span class="text-[10px] text-stone-400 font-normal">/room</span></p>
                           @if (rooms() > 1) {
-                            <p class="text-xs text-stone-500">${{ h.pricePerNight * rooms() }} · {{ rooms() }} rooms</p>
+                            <p class="text-xs text-stone-500">{{ h.pricePerNight * rooms() | gfPrice }} · {{ rooms() }} rooms</p>
                           } @else {
                             <p class="text-[10px] text-stone-400">per night</p>
                           }
@@ -535,7 +535,7 @@
                     <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
                       <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
-                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · ${{ sf.price }}</p>
+                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · {{ sf.price | gfPrice }}</p>
                       </div>
                       <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
                     </div>
@@ -544,7 +544,7 @@
                     <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
                       <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary text-base">hotel</span>
-                        <p class="text-xs font-semibold text-primary">{{ sh.name }} · ${{ sh.pricePerNight }}/night</p>
+                        <p class="text-xs font-semibold text-primary">{{ sh.name }} · {{ sh.pricePerNight | gfPrice }}/night</p>
                       </div>
                       <button (click)="goBackToStep('hotel')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
                     </div>
@@ -562,7 +562,7 @@
                           <p class="text-[11px] text-stone-400">{{ car.agency }} · {{ car.category }}</p>
                         </div>
                         <div class="text-right shrink-0 ml-3">
-                          <p class="font-bold text-primary text-base">${{ car.pricePerDay }}</p>
+                          <p class="font-bold text-primary text-base">{{ car.pricePerDay | gfPrice }}</p>
                           <p class="text-[10px] text-stone-400">per day</p>
                         </div>
                       </div>
@@ -607,9 +607,9 @@
                       <div class="flex-1">
                         <p class="text-sm font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }}</p>
                         <p class="text-xs text-stone-500">{{ sf.duration }} · {{ sf.stops }}</p>
-                        <p class="text-[11px] text-stone-400 mt-0.5">{{ passengerLabel }} · ${{ sf.price }}/pp</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">{{ passengerLabel }} · {{ sf.price | gfPrice }}/pp</p>
                       </div>
-                      <p class="font-bold text-lg text-primary">${{ flightTotal(sf.price) }}</p>
+                      <p class="font-bold text-lg text-primary">{{ flightTotal(sf.price) | gfPrice }}</p>
                     </div>
                   </div>
                 }
@@ -627,7 +627,7 @@
                         <p class="text-sm font-semibold text-primary">{{ sh.name }}</p>
                         <p class="text-xs text-stone-500">{{ checkIn() }} – {{ checkOut() }}</p>
                       </div>
-                      <p class="font-bold text-lg text-primary">${{ sh.pricePerNight * nightsCount() * rooms() }}</p>
+                      <p class="font-bold text-lg text-primary">{{ sh.pricePerNight * nightsCount() * rooms() | gfPrice }}</p>
                     </div>
                   </div>
                 }
@@ -645,7 +645,7 @@
                         <p class="text-sm font-semibold text-primary">{{ car.model }}</p>
                         <p class="text-xs text-stone-500">{{ car.agency }} · {{ car.transmission }}</p>
                       </div>
-                      <p class="font-bold text-lg text-primary">${{ car.pricePerDay * nightsCount() }}</p>
+                      <p class="font-bold text-lg text-primary">{{ car.pricePerDay * nightsCount() | gfPrice }}</p>
                     </div>
                   </div>
                 }
@@ -656,7 +656,7 @@
                     <p class="text-xs font-bold uppercase tracking-widest opacity-80">Estimated Total</p>
                     <p class="text-[10px] opacity-60">Prices confirmed on partner sites</p>
                   </div>
-                  <p class="text-2xl font-bold">${{ totalEstimate() }}</p>
+                  <p class="text-2xl font-bold">{{ totalEstimate() | gfPrice }}</p>
                 </div>
 
                 <!-- Book Now deep links -->

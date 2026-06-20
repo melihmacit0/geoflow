@@ -68,13 +68,14 @@ You can also register a new account from the **Sign Up** tab.
 
 | Route             | Description                                                            |
 | ----------------- | ---------------------------------------------------------------------- |
-| `/`               | Landing page — hero, feature cards, editorial section, CTA             |
-| `/signin`         | Sign in / Sign up (split brand layout)                                 |
-| `/discover`       | **Core** interactive Leaflet map + filter sidebar + trending carousel  |
-| `/country/:code`  | Destination detail — Culture & History + Flights & Logistics tabs      |
-| `/saved`          | Saved destinations grid (requires sign-in)                             |
-| `/compare`        | Multi-country comparison — map + metrics table with best-value flags   |
-| `/profile`        | Account settings, travel preferences, saved footprint (requires sign-in) |
+| `/`                      | Landing page — hero, feature cards, editorial section, CTA            |
+| `/signin`                | Sign in / Sign up (split brand layout)                               |
+| `/discover`              | **Core** interactive Leaflet map + trending carousel                 |
+| `/country/:code`         | Country detail + city picker (map of airports)                       |
+| `/country/:code/city/:iata` | City detail — AI Culture tab + Book wizard (flight → hotel → car → summary) |
+| `/saved`                 | Saved trips + compare mode (select 2–3 trips); `?compare=1` auto-opens it (requires sign-in) |
+| `/compare`               | Redirects to `/saved` (compare lives there)                          |
+| `/profile`               | Account settings + travel preferences (requires sign-in)             |
 
 ## API endpoints (backend)
 
@@ -89,8 +90,43 @@ POST   /api/saved/:code               save (auth)
 DELETE /api/saved/:code               remove (auth)
 ```
 
+## Deploy to Vercel
+
+The whole app (Angular static site **+** the Express API as a serverless function)
+ships as **one** Vercel project. Persistence uses **Vercel Blob**, so accounts,
+saved destinations and trips survive across requests (the in-memory store only
+works locally).
+
+**1. Push this repo to GitHub.**
+
+**2. Import it on Vercel** → *Add New… → Project* → pick the repo.
+Framework preset: **Other**. Build/install/output are already wired in
+[`vercel.json`](vercel.json) — leave them as detected.
+
+**3. Create the Blob store** → project → *Storage → Create Database → Blob* →
+connect it to the project. This auto-injects the `BLOB_READ_WRITE_TOKEN`
+environment variable the backend reads.
+
+**4. (Recommended) add a `JWT_SECRET`** env var (any long random string).
+All travel-API keys are **optional** — without them the app serves built-in mock
+flights/hotels/cars. Add any you have: `DUFFEL_TOKEN`, `TP_TOKEN`,
+`AMADEUS_CLIENT_ID` / `AMADEUS_CLIENT_SECRET`, `RAPIDAPI_KEY`, `GEMINI_API_KEY`.
+
+**5. Deploy.** After adding the Blob store / env vars, trigger a redeploy so the
+function picks them up. Open the `*.vercel.app` URL — the demo account
+(`explorer@geoflow.com` / `explorer`) is seeded automatically on first request.
+
+> CLI alternative: `npm i -g vercel`, then `vercel` (preview) and `vercel --prod`.
+
+A custom domain can be attached later under *Project → Settings → Domains*.
+
 ## Notes for production
 
-- Swap the in-memory user/saved stores for **Firebase Auth + Firestore** (proposal Stage 4).
-- Replace mock flight data in `backend/src/data/destinations.js` with the **Amadeus / Skyscanner** API.
+- Storage uses **Vercel Blob** as a simple whole-document JSON store (one demo
+  user). For real multi-user load, move to **Vercel KV / Postgres** or
+  **Firebase Auth + Firestore** (proposal Stage 4) for atomic, concurrent writes.
+- Passwords are hashed with Node's built-in `scrypt`; the Blob documents are
+  technically public-URL objects, so don't store real secrets there.
+- Replace mock flight data in `backend/src/data/destinations.js` with the
+  **Amadeus / Skyscanner** API.
 - Cultural data can be enriched live from the **RestCountries / Wikipedia** APIs.

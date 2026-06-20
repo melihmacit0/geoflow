@@ -15,8 +15,15 @@ try {
 } catch { /* file doesn't exist yet — start with empty cache */ }
 
 function saveCache() {
-  fs.mkdirSync(path.dirname(CACHE_PATH), { recursive: true });
-  fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2));
+  // On Vercel the bundle filesystem is read-only; only /tmp is writable. Writing
+  // is a best-effort optimisation, so never let a failed write break generation.
+  try {
+    const target = process.env.VERCEL ? path.join('/tmp', 'city-culture-cache.json') : CACHE_PATH;
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, JSON.stringify(cache, null, 2));
+  } catch (err) {
+    console.warn('gemmaClient: could not persist culture cache:', err.message);
+  }
 }
 
 function isComplete(entry) {

@@ -2,9 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../../core/api.service';
 import { AuthService } from '../../core/auth.service';
-import { SavedDestination, User } from '../../core/models';
+import { User } from '../../core/models';
 import { TopNavComponent } from '../../shared/top-nav.component';
 
 @Component({
@@ -15,11 +14,9 @@ import { TopNavComponent } from '../../shared/top-nav.component';
 })
 export class ProfileComponent {
   private auth = inject(AuthService);
-  private api = inject(ApiService);
   private router = inject(Router);
 
   user = this.auth.user;
-  saved = signal<SavedDestination[]>([]);
   savedMsg = signal('');
 
   // Editable form model seeded from the current user.
@@ -32,10 +29,6 @@ export class ProfileComponent {
   reduceMotion = signal(false);
   highContrast = signal(true);
 
-  constructor() {
-    this.api.getSaved().subscribe((list) => this.saved.set(list));
-  }
-
   save(): void {
     this.auth.updateProfile(this.form).subscribe(() => {
       this.savedMsg.set('Saved ✓');
@@ -45,6 +38,14 @@ export class ProfileComponent {
 
   initials(name: string): string {
     return name.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
+  }
+
+  /** Smooth-scroll to an in-page section (offset for the fixed 64px top nav). */
+  scrollTo(id: string): void {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
   }
 
   logout(): void {

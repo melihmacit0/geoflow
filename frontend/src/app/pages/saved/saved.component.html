@@ -18,6 +18,11 @@
             <span class="material-symbols-outlined text-base">compare_arrows</span>
             {{ compareMode() ? 'Cancel Compare' : 'Compare Trips' }}
           </button>
+        } @else {
+          <span class="flex items-center gap-1.5 text-xs text-stone-400">
+            <span class="material-symbols-outlined text-sm">info</span>
+            Save at least 2 trips to compare them
+          </span>
         }
         <a routerLink="/discover" class="flex items-center gap-2 text-sm font-medium text-primary hover:underline">
           <span class="material-symbols-outlined text-base">explore</span>
@@ -46,7 +51,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         @for (trip of trips(); track trip.id) {
           <article
-            (click)="compareMode() ? toggleSelect(trip.id) : null"
+            (click)="compareMode() ? toggleSelect(trip.id) : openCity(trip)"
             class="bg-white border-2 rounded-2xl overflow-hidden shadow-sm transition-all flex flex-col"
             [class]="compareMode()
               ? isSelected(trip.id)
@@ -54,7 +59,7 @@
                 : selectedIds().length >= 3 && !isSelected(trip.id)
                   ? 'border-stone-100 opacity-40 cursor-not-allowed'
                   : 'border-stone-100 hover:border-primary/40 cursor-pointer hover:shadow-md'
-              : 'border-stone-100 hover:shadow-md'">
+              : 'border-stone-100 hover:shadow-md hover:border-primary/40 cursor-pointer'">
 
             <!-- Card header -->
             <div class="px-5 pt-5 pb-4 border-b border-stone-100 flex items-start justify-between">
@@ -92,7 +97,7 @@
                     <p class="text-sm font-semibold text-primary truncate">{{ f.depart }} → {{ f.arrive }}</p>
                     <p class="text-xs text-stone-400">{{ f.duration }} · {{ f.stops }}</p>
                   </div>
-                  <p class="text-sm font-bold text-primary shrink-0">${{ f.price }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
+                  <p class="text-sm font-bold text-primary shrink-0">{{ f.price | gfPrice }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
                 </div>
               } @else {
                 <div class="flex items-center gap-3 opacity-40">
@@ -112,7 +117,7 @@
                     <p class="text-sm font-semibold text-primary truncate">{{ h.name }}</p>
                     <p class="text-xs text-stone-400">{{ nightsCount(trip) }} nights</p>
                   </div>
-                  <p class="text-sm font-bold text-primary shrink-0">${{ h.pricePerNight }}<span class="text-[10px] text-stone-400 font-normal">/night</span></p>
+                  <p class="text-sm font-bold text-primary shrink-0">{{ h.pricePerNight | gfPrice }}<span class="text-[10px] text-stone-400 font-normal">/night</span></p>
                 </div>
               } @else {
                 <div class="flex items-center gap-3 opacity-40">
@@ -132,7 +137,7 @@
                     <p class="text-sm font-semibold text-primary truncate">{{ car.model }}</p>
                     <p class="text-xs text-stone-400">{{ car.agency }}</p>
                   </div>
-                  <p class="text-sm font-bold text-primary shrink-0">${{ car.pricePerDay }}<span class="text-[10px] text-stone-400 font-normal">/day</span></p>
+                  <p class="text-sm font-bold text-primary shrink-0">{{ car.pricePerDay | gfPrice }}<span class="text-[10px] text-stone-400 font-normal">/day</span></p>
                 </div>
               } @else {
                 <div class="flex items-center gap-3 opacity-40">
@@ -148,7 +153,7 @@
             <div class="px-5 py-4 border-t border-stone-100 flex items-center justify-between">
               <div>
                 <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Total Estimate</p>
-                <p class="text-xl font-bold text-primary">${{ trip.totalEstimate }}</p>
+                <p class="text-xl font-bold text-primary">{{ trip.totalEstimate | gfPrice }}</p>
               </div>
               @if (!compareMode()) {
                 <button (click)="openCity(trip)"
@@ -294,8 +299,8 @@
                   @if (trip.flight; as f) {
                     <p class="text-sm font-semibold text-primary">{{ f.depart }} → {{ f.arrive }}</p>
                     <p class="text-xs text-stone-400">{{ f.duration }} · {{ f.stops }}</p>
-                    <p class="text-sm font-bold text-primary mt-1">${{ flightTotal(trip) }}</p>
-                    <p class="text-[10px] text-stone-400">(${{ f.price }}/pp)</p>
+                    <p class="text-sm font-bold text-primary mt-1">{{ flightTotal(trip) | gfPrice }}</p>
+                    <p class="text-[10px] text-stone-400">({{ f.price | gfPrice }}/pp)</p>
                   } @else {
                     <span class="text-xs text-stone-300 italic">Skipped</span>
                   }
@@ -315,8 +320,8 @@
                 <td class="px-6 py-4 text-center">
                   @if (trip.hotel; as h) {
                     <p class="text-sm font-semibold text-primary">{{ h.name }}</p>
-                    <p class="text-xs text-stone-400">${{ h.pricePerNight }}/night · {{ nightsCount(trip) }} nights</p>
-                    <p class="text-sm font-bold text-primary mt-1">${{ hotelTotal(trip) }}</p>
+                    <p class="text-xs text-stone-400">{{ h.pricePerNight | gfPrice }}/night · {{ nightsCount(trip) }} nights</p>
+                    <p class="text-sm font-bold text-primary mt-1">{{ hotelTotal(trip) | gfPrice }}</p>
                   } @else {
                     <span class="text-xs text-stone-300 italic">Skipped</span>
                   }
@@ -336,8 +341,8 @@
                 <td class="px-6 py-4 text-center">
                   @if (trip.car; as car) {
                     <p class="text-sm font-semibold text-primary">{{ car.model }}</p>
-                    <p class="text-xs text-stone-400">{{ car.agency }} · ${{ car.pricePerDay }}/day</p>
-                    <p class="text-sm font-bold text-primary mt-1">${{ carTotal(trip) }}</p>
+                    <p class="text-xs text-stone-400">{{ car.agency }} · {{ car.pricePerDay | gfPrice }}/day</p>
+                    <p class="text-sm font-bold text-primary mt-1">{{ carTotal(trip) | gfPrice }}</p>
                   } @else {
                     <span class="text-xs text-stone-300 italic">Skipped</span>
                   }
@@ -357,7 +362,7 @@
                 <td class="px-6 py-5 text-center">
                   <p class="text-2xl font-bold"
                     [class]="bestValue()?.id === trip.id ? 'text-green-600' : 'text-primary'">
-                    ${{ trip.totalEstimate }}
+                    {{ trip.totalEstimate | gfPrice }}
                   </p>
                   @if (bestValue()?.id === trip.id) {
                     <p class="text-[10px] text-green-600 font-bold uppercase tracking-widest mt-0.5">Cheapest</p>

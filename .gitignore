@@ -4,6 +4,12 @@ dist/
 *.log
 .DS_Store
 
+# Vercel
+.vercel
+
+# Local persistence fallback (Blob is used in production)
+backend/src/data/.store/
+
 # API keys — never commit
 .env
 backend/.env

@@ -6,7 +6,8 @@ import {
   FlightResponse, HotelResponse, SavedDestination, SavedTrip
 } from './models';
 
-const API = 'http://localhost:4000/api';
+// Relative path: same-origin in production (Vercel), proxied to :4000 in local dev.
+const API = '/api';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {

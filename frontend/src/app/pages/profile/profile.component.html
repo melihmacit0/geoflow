@@ -12,15 +12,12 @@
         </div>
       }
       <nav class="space-y-1">
-        <a class="flex items-center gap-3 py-3 text-slate-900 font-bold border-l-4 border-slate-900 pl-4" href="#account">
+        <button type="button" (click)="scrollTo('account')" class="w-full text-left flex items-center gap-3 py-3 text-slate-900 font-bold border-l-4 border-slate-900 pl-4">
           <span class="material-symbols-outlined text-[20px]">person</span><span>Account</span>
-        </a>
-        <a class="flex items-center gap-3 py-3 text-slate-500 pl-5 hover:bg-slate-100 hover:text-slate-900 transition-all" href="#preferences">
+        </button>
+        <button type="button" (click)="scrollTo('preferences')" class="w-full text-left flex items-center gap-3 py-3 text-slate-500 pl-5 hover:bg-slate-100 hover:text-slate-900 transition-all">
           <span class="material-symbols-outlined text-[20px]">travel_explore</span><span>Travel Preferences</span>
-        </a>
-        <a class="flex items-center gap-3 py-3 text-slate-500 pl-5 hover:bg-slate-100 hover:text-slate-900 transition-all" href="#history">
-          <span class="material-symbols-outlined text-[20px]">history</span><span>Travel History</span>
-        </a>
+        </button>
       </nav>
     </div>
     <div class="px-6 mt-8">
@@ -34,7 +31,7 @@
   <main class="md:ml-64 flex-1 p-8 md:p-12 max-w-[1024px]">
     <header class="mb-12">
       <h1 class="font-h1 text-h1 text-primary mb-2">Account Settings</h1>
-      <p class="text-body-lg text-outline">Manage your profile, preferences, and travel history across the GeoFlow network.</p>
+      <p class="text-body-lg text-outline">Manage your profile and travel preferences across the GeoFlow network.</p>
     </header>
 
     <div class="space-y-12">
@@ -108,24 +105,6 @@
         </div>
       </section>
 
-      <!-- Travel History -->
-      <section id="history" class="bg-white p-8 border border-slate-200 shadow-[0_20px_40px_-15px_rgba(15,44,92,0.04)]">
-        <div class="mb-8">
-          <h2 class="font-h3 text-h3 text-primary mb-1">Saved Destinations</h2>
-          <p class="text-sm text-outline">Your global footprint over time</p>
-        </div>
-        <div class="flex gap-4 flex-wrap">
-          @for (d of saved(); track d.code) {
-            <div class="bg-slate-50 border border-slate-200 px-4 py-3 rounded flex flex-col items-center gap-2 hover:border-primary transition-colors">
-              <span class="text-2xl">{{ d.flag }}</span>
-              <span class="font-label-caps text-[10px] text-primary">{{ d.name }}</span>
-              <span class="text-[10px] text-outline">${{ d.cheapestFlight }}</span>
-            </div>
-          } @empty {
-            <p class="text-sm text-outline">No saved destinations yet.</p>
-          }
-        </div>
-      </section>
     </div>
     <div class="h-20"></div>
   </main>
