@@ -49,6 +49,7 @@ export interface CountryDetail {
   intro?: string | null;
   didYouKnow?: string | null;
   highlights?: Highlight[] | null;
+  culture?: CityCulture | null;
   facts: CountryFacts;
   comparison?: ComparisonMetrics;
   cheapestFlight?: number | null;

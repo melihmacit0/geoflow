@@ -10,7 +10,7 @@ import { amadeus, getCached, setCache, mapOffer, fetchLiveHotels } from './amade
 import { fetchLiveFlights, fetchLiveHotelsTP } from './travelpayoutsClient.js';
 import { fetchDuffelFlights } from './duffelClient.js';
 import { fetchLiveHotelsRapidAPI } from './hotelApiClient.js';
-import { getCityCulture } from './gemmaClient.js';
+import { getCityCulture, getCountryCulture } from './gemmaClient.js';
 import * as store from './store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -186,13 +186,15 @@ app.get('/api/countries/:code', async (req, res) => {
   const country = list.find((c) => c.code === code);
   if (!country) return res.status(404).json({ error: 'Country not found' });
 
-  // Attach curated cultural content if available
+  // Attach curated cultural content if available; otherwise AI-generated.
   const curated = destinations.find((d) => d.code === code);
+  const culture = await getCountryCulture(code, country.name);
   res.json({
     ...country,
     intro: curated?.intro || null,
     didYouKnow: curated?.didYouKnow || null,
     highlights: curated?.highlights || null,
+    culture,
     cheapestFlight: curated?.cheapestFlight ?? country.cheapestFlight ?? null,
     comparison: curated?.comparison || null,
     facts: curated?.facts || {

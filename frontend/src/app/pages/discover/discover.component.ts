@@ -2,7 +2,7 @@ import {
   AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { ApiService } from '../../core/api.service';
 import { CountrySummary } from '../../core/models';
@@ -21,10 +21,13 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
 
   private api = inject(ApiService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private currency = inject(CurrencyService);
 
   private map?: L.Map;
   private markerLayer = L.layerGroup();
+  private markersByCode = new Map<string, L.Marker>();
+  private searchTerm = '';
 
   countries = signal<CountrySummary[]>([]);
 
@@ -45,6 +48,12 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
 
     this.markerLayer.addTo(this.map);
     this.load();
+
+    // React to ?q=… from the top-nav search box (fires on every new search).
+    this.route.queryParamMap.subscribe((p) => {
+      this.searchTerm = (p.get('q') || '').trim();
+      this.applySearch();
+    });
   }
 
   ngOnDestroy(): void {
@@ -55,11 +64,27 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
     this.api.getCountries().subscribe((list) => {
       this.countries.set(list);
       this.renderMarkers(list);
+      this.applySearch();
     });
+  }
+
+  /** Fly the map to the country matching the current search term. */
+  private applySearch(): void {
+    const q = this.searchTerm.toLowerCase();
+    if (!q || !this.map || !this.countries().length) return;
+    const match =
+      this.countries().find((c) => c.code.toLowerCase() === q) ||
+      this.countries().find((c) => c.name.toLowerCase().startsWith(q)) ||
+      this.countries().find((c) => c.name.toLowerCase().includes(q));
+    if (!match) return;
+    this.map.flyTo([match.lat, match.lng], 5, { duration: 1 });
+    const marker = this.markersByCode.get(match.code);
+    if (marker) setTimeout(() => marker.openTooltip(), 650);
   }
 
   private renderMarkers(list: CountrySummary[]): void {
     this.markerLayer.clearLayers();
+    this.markersByCode.clear();
     list.forEach((c) => {
       const icon = L.divIcon({
         className: 'geoflow-marker',
@@ -76,6 +101,7 @@ export class DiscoverComponent implements AfterViewInit, OnDestroy {
         { direction: 'top', offset: [0, -8] }
       );
       marker.on('click', () => this.router.navigate(['/country', c.code]));
+      this.markersByCode.set(c.code, marker);
     });
   }
 

@@ -5,9 +5,10 @@
       <span class="text-xl md:text-2xl font-black tracking-tighter text-primary-container">GeoFlow</span>
     </div>
     <div class="hidden md:flex items-center gap-12 tracking-tight font-medium">
-      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#how">How it works</a>
-      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#features">Features</a>
-      <a class="text-slate-500 hover:text-primary-container transition-colors" href="#about">About</a>
+      <!-- top → middle → bottom: feature cards (#features), value section (#how), CTA (#about) -->
+      <button type="button" (click)="scrollTo('features')" class="text-slate-500 hover:text-primary-container transition-colors">How it works</button>
+      <button type="button" (click)="scrollTo('how')" class="text-slate-500 hover:text-primary-container transition-colors">Features</button>
+      <button type="button" (click)="scrollTo('about')" class="text-slate-500 hover:text-primary-container transition-colors">About</button>
     </div>
     <div class="flex items-center gap-3 md:gap-6">
       @if (user(); as u) {

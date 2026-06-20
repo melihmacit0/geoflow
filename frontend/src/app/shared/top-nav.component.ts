@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { ApiService } from '../core/api.service';
+import { CountrySummary } from '../core/models';
 
 /** Shared TopAppBar used across the discovery / details / saved / compare shells. */
 @Component({
@@ -17,14 +19,29 @@ import { AuthService } from '../core/auth.service';
         <a routerLink="/" class="text-xl md:text-2xl font-bold tracking-tighter text-primary-container shrink-0">GeoFlow</a>
         @if (showSearch) {
           <div class="relative w-[420px] hidden lg:block">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <button type="button" (click)="search()" aria-label="Search" class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-container transition-colors z-10">search</button>
             <input
-              [(ngModel)]="query"
-              (keyup.enter)="search()"
+              [ngModel]="query"
+              (ngModelChange)="onSearchInput($event)"
+              (focus)="onSearchInput(query)"
+              (keyup.enter)="onEnter()"
+              (blur)="hideSuggestionsSoon()"
               class="w-full h-10 pl-12 pr-4 bg-slate-50 border-none rounded-full focus:ring-1 focus:ring-primary/20 text-sm placeholder:text-slate-400"
-              placeholder="Search countries, cities, or interests..."
+              placeholder="Search a country…"
               type="text"
             />
+            @if (showSuggestions() && suggestions().length) {
+              <div class="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-[120]">
+                @for (c of suggestions(); track c.code) {
+                  <button type="button" (mousedown)="pickSuggestion(c)"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 text-left transition-colors">
+                    <span class="text-lg leading-none">{{ c.flag }}</span>
+                    <span class="flex-1 text-sm text-primary truncate">{{ c.name }}</span>
+                    <span class="text-[10px] text-slate-400 font-semibold tracking-wider">{{ c.code }}</span>
+                  </button>
+                }
+              </div>
+            }
           </div>
         }
       </div>
@@ -88,14 +105,27 @@ import { AuthService } from '../core/auth.service';
         </a>
         @if (showSearch) {
           <div class="relative mt-2">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <button type="button" (click)="search()" aria-label="Search" class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-container transition-colors z-10">search</button>
             <input
-              [(ngModel)]="query"
-              (keyup.enter)="search(); mobileOpen.set(false)"
+              [ngModel]="query"
+              (ngModelChange)="onSearchInput($event)"
+              (keyup.enter)="onEnter()"
               class="w-full h-10 pl-12 pr-4 bg-slate-50 border border-slate-200 rounded-full text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-primary/20"
-              placeholder="Search destinations..."
+              placeholder="Search a country…"
               type="text"
             />
+            @if (showSuggestions() && suggestions().length) {
+              <div class="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-[120]">
+                @for (c of suggestions(); track c.code) {
+                  <button type="button" (mousedown)="pickSuggestion(c)"
+                    class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 text-left transition-colors">
+                    <span class="text-lg leading-none">{{ c.flag }}</span>
+                    <span class="flex-1 text-sm text-primary truncate">{{ c.name }}</span>
+                    <span class="text-[10px] text-slate-400 font-semibold tracking-wider">{{ c.code }}</span>
+                  </button>
+                }
+              </div>
+            }
           </div>
         }
       </div>
@@ -106,9 +136,14 @@ export class TopNavComponent {
   @Input() showSearch = true;
   query = '';
   mobileOpen = signal(false);
+  suggestions = signal<CountrySummary[]>([]);
+  showSuggestions = signal(false);
 
   private auth = inject(AuthService);
+  private api = inject(ApiService);
   private router = inject(Router);
+  private allCountries: CountrySummary[] = [];
+  private loaded = false;
   user = this.auth.user;
 
   initials(name: string): string {
@@ -118,6 +153,50 @@ export class TopNavComponent {
       .slice(0, 2)
       .join('')
       .toUpperCase();
+  }
+
+  /** Lazily load the country list the first time the user interacts with search. */
+  private ensureCountries(): void {
+    if (this.loaded) return;
+    this.loaded = true;
+    this.api.getCountries().subscribe((list) => (this.allCountries = list));
+  }
+
+  onSearchInput(value: string): void {
+    this.query = value;
+    this.ensureCountries();
+    const q = value.trim().toLowerCase();
+    if (!q) { this.suggestions.set([]); this.showSuggestions.set(false); return; }
+    const matches = this.allCountries
+      .filter((c) => c.name.toLowerCase().includes(q) || c.code.toLowerCase() === q)
+      .sort((a, b) => {
+        const aStart = a.name.toLowerCase().startsWith(q) ? 0 : 1;
+        const bStart = b.name.toLowerCase().startsWith(q) ? 0 : 1;
+        return aStart - bStart || a.name.localeCompare(b.name);
+      })
+      .slice(0, 6);
+    this.suggestions.set(matches);
+    this.showSuggestions.set(matches.length > 0);
+  }
+
+  pickSuggestion(c: CountrySummary): void {
+    this.query = '';
+    this.suggestions.set([]);
+    this.showSuggestions.set(false);
+    this.mobileOpen.set(false);
+    this.router.navigate(['/country', c.code]);
+  }
+
+  /** Enter picks the top suggestion, or falls back to a map search. */
+  onEnter(): void {
+    const top = this.suggestions()[0];
+    if (top) { this.pickSuggestion(top); return; }
+    this.search();
+    this.mobileOpen.set(false);
+  }
+
+  hideSuggestionsSoon(): void {
+    setTimeout(() => this.showSuggestions.set(false), 150);
   }
 
   search(): void {

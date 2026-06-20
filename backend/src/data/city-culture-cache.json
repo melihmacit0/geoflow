@@ -2238,5 +2238,565 @@
         "pronunciation": "ser-voh"
       }
     ]
+  },
+  "C:JP": {
+    "tagline": "Where ancient traditions meet neon futures",
+    "intro": "Japan offers a unique blend of hyper-modern technology and serene, centuries-old customs. From buzzing metropolitan hubs to tranquil mountain temples, it is an accessible yet profound adventure for any student traveler.",
+    "didYouKnow": "Japan is made up of over 6,800 islands, with the four largest being Honshu, Hokkaido, Kyushu, and Shikoku.",
+    "highlights": [
+      {
+        "title": "Mount Fuji",
+        "note": "Iconic, snow-capped dormant volcano perfect for hiking."
+      },
+      {
+        "title": "Kyoto Temples",
+        "note": "Hundreds of stunning shrines and Zen gardens."
+      },
+      {
+        "title": "Shibuya Crossing",
+        "note": "The world's busiest, most vibrant pedestrian scramble."
+      },
+      {
+        "title": "Akihabara",
+        "note": "The global epicenter of anime, manga, and gaming."
+      }
+    ],
+    "bestTime": "Mar – May and Sep – Nov",
+    "food": {
+      "intro": "Japanese cuisine is renowned for its focus on seasonal ingredients and precise presentation. You will find everything from budget-friendly street food to world-class dining.",
+      "dishes": [
+        {
+          "name": "Sushi",
+          "note": "Fresh raw fish served over vinegared rice."
+        },
+        {
+          "name": "Ramen",
+          "note": "Flavorful noodle soup with various savory toppings."
+        },
+        {
+          "name": "Takoyaki",
+          "note": "Savory octopus-filled batter balls, a street food classic."
+        },
+        {
+          "name": "Onigiri",
+          "note": "Portable rice balls wrapped in crisp nori seaweed."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Japan’s history spans from early imperial rule to a long period of isolation under the shogunate, followed by rapid industrialization. Today, it stands as a global leader in technology while deeply honoring its cultural roots. Its historical significance lies in its ability to adapt external influences while maintaining a distinct national identity.",
+      "periods": [
+        {
+          "era": "Heian Period",
+          "description": "A golden age of art, poetry, and literature. Court life flourished, defining much of classical Japanese culture."
+        },
+        {
+          "era": "Edo Period",
+          "description": "Two centuries of isolation under the Tokugawa Shogunate. This era fostered stability and the growth of urban merchant classes."
+        },
+        {
+          "era": "Modern Era",
+          "description": "Following the Meiji Restoration, Japan modernized rapidly. It transitioned from a feudal society to a global economic powerhouse."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Tokugawa Ieyasu",
+          "role": "Founder of the last shogunate"
+        },
+        {
+          "name": "Oda Nobunaga",
+          "role": "Key unifier of feudal Japan"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Get a Rail Pass",
+        "note": "Purchase a JR Pass before arriving for unlimited travel on most trains."
+      },
+      {
+        "title": "Cash is King",
+        "note": "Always carry yen as many smaller shops and shrines don't accept cards."
+      },
+      {
+        "title": "Etiquette Matters",
+        "note": "Avoid eating while walking and always keep your voice low on public transit."
+      },
+      {
+        "title": "Use Convenience Stores",
+        "note": "Konbini like 7-Eleven offer high-quality, affordable meals 24/7."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Konnichiwa",
+        "meaning": "Hello",
+        "pronunciation": "kon-nee-chee-wah"
+      },
+      {
+        "phrase": "Arigatou gozaimasu",
+        "meaning": "Thank you",
+        "pronunciation": "ah-ree-gah-toh go-zy-mah-soo"
+      },
+      {
+        "phrase": "Sumimasen",
+        "meaning": "Excuse me / Sorry",
+        "pronunciation": "soo-mee-mah-sen"
+      },
+      {
+        "phrase": "Oishii",
+        "meaning": "Delicious",
+        "pronunciation": "oy-shee"
+      }
+    ]
+  },
+  "C:PT": {
+    "tagline": "Sun-drenched coastlines and historic soulful streets",
+    "intro": "Portugal is a vibrant hub where centuries-old traditions meet a youthful, creative energy. Students will love its affordable nightlife, stunning Atlantic landscapes, and welcoming local culture.",
+    "didYouKnow": "Portugal is the world's largest producer of cork, providing over 50% of the global supply.",
+    "highlights": [
+      {
+        "title": "Belém Tower",
+        "note": "Iconic fortress guarding the mouth of the Tagus River."
+      },
+      {
+        "title": "Alfama District",
+        "note": "Lisbon's oldest neighborhood with labyrinthine medieval streets."
+      },
+      {
+        "title": "Pena Palace",
+        "note": "A colorful, romanticist castle perched atop the Sintra mountains."
+      },
+      {
+        "title": "Douro Valley",
+        "note": "Breathtaking terraced vineyards following a winding river."
+      }
+    ],
+    "bestTime": "May – September",
+    "food": {
+      "intro": "Portuguese cuisine is defined by fresh Atlantic seafood and legendary pastries. It is hearty, affordable, and deeply rooted in local regional traditions.",
+      "dishes": [
+        {
+          "name": "Pastel de Nata",
+          "note": "Creamy, crispy egg custard tart dusted with cinnamon."
+        },
+        {
+          "name": "Bacalhau",
+          "note": "Traditional salt cod prepared in hundreds of unique ways."
+        },
+        {
+          "name": "Francesinha",
+          "note": "A massive, meat-filled sandwich smothered in secret beer sauce."
+        },
+        {
+          "name": "Polvo à Lagareiro",
+          "note": "Tender roasted octopus served with plenty of olive oil."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Portugal boasts one of the oldest borders in Europe, evolving from a Roman province into a global maritime empire. Its history is marked by the Age of Discovery, a devastating earthquake, and a return to democracy in the 20th century. Today, it stands as a culturally rich nation bridging the Atlantic and Europe.",
+      "periods": [
+        {
+          "era": "Age of Discovery",
+          "description": "Portugal led the world in maritime exploration during the 15th and 16th centuries. Explorers mapped new sea routes to Africa, India, and the Americas."
+        },
+        {
+          "era": "The Earthquake of 1755",
+          "description": "A massive earthquake and subsequent tsunami leveled most of Lisbon. This tragedy prompted a major reconstruction that shaped the city's modern layout."
+        },
+        {
+          "era": "Carnation Revolution",
+          "description": "In 1974, a peaceful military coup ended decades of authoritarian rule. This movement restored democracy and civil liberties to the Portuguese people."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Vasco da Gama",
+          "role": "Explorer who first reached India by sea"
+        },
+        {
+          "name": "Fernando Pessoa",
+          "role": "Renowned modernist poet and writer"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Wear Good Shoes",
+        "note": "The famous Portuguese limestone pavements are notoriously slippery and steep."
+      },
+      {
+        "title": "Validate Transit Tickets",
+        "note": "Always validate your transport passes to avoid hefty on-the-spot fines."
+      },
+      {
+        "title": "Eat the Bread",
+        "note": "If a waiter puts bread and olives on your table, they are not free."
+      },
+      {
+        "title": "Travel by Train",
+        "note": "The national rail network is affordable and covers almost every major city."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Olá",
+        "meaning": "Hello",
+        "pronunciation": "oh-LAH"
+      },
+      {
+        "phrase": "Obrigado",
+        "meaning": "Thank you",
+        "pronunciation": "oh-bree-GAH-doo"
+      },
+      {
+        "phrase": "Por favor",
+        "meaning": "Please",
+        "pronunciation": "poor fah-VOR"
+      },
+      {
+        "phrase": "Uma cerveja, por favor",
+        "meaning": "A beer, please",
+        "pronunciation": "OO-ma ser-VAY-zhah, poor fah-VOR"
+      }
+    ]
+  },
+  "C:MA": {
+    "tagline": "Where ancient traditions meet desert magic",
+    "intro": "Morocco offers a sensory explosion of vibrant souks, breathtaking landscapes, and centuries of preserved heritage. It is an affordable and accessible gateway to North African culture perfect for adventurous students.",
+    "didYouKnow": "The world's oldest continuously operating university, the University of Al Quaraouiyine, was founded in Fez in 859 AD by a woman named Fatima al-Fihri.",
+    "highlights": [
+      {
+        "title": "Marrakech Souks",
+        "note": "Labyrinthine markets filled with spices and crafts."
+      },
+      {
+        "title": "Sahara Desert",
+        "note": "Iconic camel treks under endless starlit skies."
+      },
+      {
+        "title": "Chefchaouen",
+        "note": "The mesmerizing Blue City tucked in mountains."
+      },
+      {
+        "title": "Hassan II Mosque",
+        "note": "Stunning architectural masterpiece perched over the sea."
+      }
+    ],
+    "bestTime": "Mar – May and Sept – Nov",
+    "food": {
+      "intro": "Moroccan cuisine is a flavorful fusion of Berber, Arab, and Mediterranean influences. Street food is cheap, delicious, and essential for any student budget.",
+      "dishes": [
+        {
+          "name": "Tagine",
+          "note": "Slow-cooked savory stew served in a conical clay pot."
+        },
+        {
+          "name": "Couscous",
+          "note": "Steamed semolina granules served with vegetables and meat."
+        },
+        {
+          "name": "Pastilla",
+          "note": "Flaky meat pie dusted with sugar and cinnamon."
+        },
+        {
+          "name": "Mint Tea",
+          "note": "Sweet, refreshing tea poured from a high distance."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Morocco’s history is defined by its strategic position as a crossroads between Africa and Europe. Successive Berber dynasties, Islamic caliphates, and colonial influences have layered the country with distinct cultural markers. Today, it stands as a unique kingdom that preserves its royal traditions alongside modern development.",
+      "periods": [
+        {
+          "era": "Ancient Beginnings",
+          "description": "The region was originally inhabited by indigenous Berber tribes who established early trade networks. Phoenician and Roman influence later shaped coastal city layouts."
+        },
+        {
+          "era": "Islamic Golden Age",
+          "description": "The arrival of Islam brought profound architectural and cultural shifts under powerful dynasties. This era established Morocco as a center for scholarship and trade."
+        },
+        {
+          "era": "Modern Morocco",
+          "description": "Following French and Spanish colonial rule in the 20th century, Morocco gained independence in 1956. It is currently a constitutional monarchy focused on tourism and growth."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Ibn Battuta",
+          "role": "Famed medieval scholar and world explorer"
+        },
+        {
+          "name": "Idris I",
+          "role": "Founder of the first Moroccan dynasty"
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress Respectfully",
+        "note": "Keep shoulders and knees covered to respect local norms."
+      },
+      {
+        "title": "Haggling Etiquette",
+        "note": "Always negotiate prices in markets with a friendly smile."
+      },
+      {
+        "title": "Water Safety",
+        "note": "Stick to bottled water to avoid digestive issues."
+      },
+      {
+        "title": "Use Official Taxis",
+        "note": "Ensure the meter is running before starting your ride."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Salam",
+        "meaning": "Hello",
+        "pronunciation": "sah-lahm"
+      },
+      {
+        "phrase": "Shukran",
+        "meaning": "Thank you",
+        "pronunciation": "shook-ran"
+      },
+      {
+        "phrase": "La, shukran",
+        "meaning": "No, thank you",
+        "pronunciation": "lah shook-ran"
+      },
+      {
+        "phrase": "Afak",
+        "meaning": "Please",
+        "pronunciation": "ah-fak"
+      }
+    ]
+  },
+  "C:YE": {
+    "tagline": "The ancient cradle of Arabian civilization",
+    "intro": "Yemen is a land of dramatic, otherworldly landscapes and ancient architecture that feels like stepping back in time. From towering mud-brick skyscrapers to the mystical allure of the Indian Ocean, it offers a profound, raw cultural experience for the intrepid student explorer.",
+    "didYouKnow": "The Old City of Sana'a is one of the oldest continuously inhabited cities in the world, featuring iconic 'gingerbread' houses decorated with intricate geometric white plaster patterns.",
+    "highlights": [
+      {
+        "title": "Old City of Sana'a",
+        "note": "A UNESCO site with 2,500-year-old traditional mud-brick architecture."
+      },
+      {
+        "title": "Socotra Island",
+        "note": "An alien-looking landscape famous for rare Dragon Blood trees."
+      },
+      {
+        "title": "Shibam",
+        "note": "Often called the Manhattan of the Desert for its high-rises."
+      },
+      {
+        "title": "Wadi Dawan",
+        "note": "A breathtaking canyon region dotted with ancient oasis villages."
+      }
+    ],
+    "bestTime": "Oct – Feb",
+    "food": {
+      "intro": "Yemeni cuisine is a vibrant blend of spices, slow-cooked meats, and fresh breads deeply rooted in tribal tradition.",
+      "dishes": [
+        {
+          "name": "Saltah",
+          "note": "A hearty meat stew topped with foaming fenugreek froth."
+        },
+        {
+          "name": "Fahsa",
+          "note": "Spicy, shredded lamb stew served bubbling in a stone bowl."
+        },
+        {
+          "name": "Bint al-Sahn",
+          "note": "A delicate honey-drenched layered pastry served as a treat."
+        },
+        {
+          "name": "Mandi",
+          "note": "Tender meat and rice cooked in an underground tandoor oven."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Yemen has served as the crossroads of ancient trade, flourishing for millennia as the center of the frankincense and spice routes. Its history is defined by powerful kingdoms like the Sabaeans, the influence of early Islamic caliphates, and a fierce spirit of independence. This rich tapestry remains etched into the country's unique architectural and tribal landscape today.",
+      "periods": [
+        {
+          "era": "Ancient Kingdoms",
+          "description": "Known as Arabia Felix, this era saw the rise of the Sabaean civilization. They built massive irrigation systems and controlled the lucrative incense trade."
+        },
+        {
+          "era": "Islamic Golden Age",
+          "description": "Yemen became a pivotal center for Islamic learning and trade during the medieval period. Elaborate mosques and city-states flourished under various local dynasties."
+        },
+        {
+          "era": "Modern Era",
+          "description": "After centuries of colonial and imperial interest, Yemen unified in 1990. The nation continues to navigate its complex heritage and modern political challenges."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Queen of Sheba",
+          "role": "Legendary ruler of the ancient Sabaean kingdom."
+        },
+        {
+          "name": "Imam Yahya",
+          "role": "Twentieth-century leader who asserted Yemen's sovereign independence."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress Conservatively",
+        "note": "Both men and women should dress modestly to respect local cultural norms."
+      },
+      {
+        "title": "Photography Etiquette",
+        "note": "Always ask for permission before taking photos of people or military sites."
+      },
+      {
+        "title": "Social Interaction",
+        "note": "Accepting tea is a standard gesture of hospitality that shouldn't be refused."
+      },
+      {
+        "title": "Travel Documentation",
+        "note": "Ensure all tribal permits and travel documents are current and accessible."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Salam Alaykum",
+        "meaning": "Peace be upon you",
+        "pronunciation": "sah-lam ah-lay-koom"
+      },
+      {
+        "phrase": "Shukran",
+        "meaning": "Thank you",
+        "pronunciation": "shoo-kran"
+      },
+      {
+        "phrase": "Afwan",
+        "meaning": "You are welcome",
+        "pronunciation": "af-wan"
+      },
+      {
+        "phrase": "Na'am",
+        "meaning": "Yes",
+        "pronunciation": "na-am"
+      }
+    ]
+  },
+  "GXF": {
+    "tagline": "The mud-brick heart of Wadi Hadhramaut",
+    "intro": "Seiyun is a mesmerizing oasis city located in the vast Hadhramaut valley, renowned for its stunning, traditional mud-brick architecture. It offers adventurous students a unique glimpse into ancient Arabian heritage, vibrant souqs, and desert culture.",
+    "didYouKnow": "The Seiyun Palace, one of the world's largest mud-brick buildings, was constructed without the use of steel or cement.",
+    "highlights": [
+      {
+        "title": "Seiyun Palace",
+        "note": "A massive, multi-story structure built entirely from mud-brick."
+      },
+      {
+        "title": "Old City Souq",
+        "note": "A bustling market filled with local crafts and spices."
+      },
+      {
+        "title": "Sultan's Mosque",
+        "note": "A beautiful example of traditional Hadhrami religious architecture."
+      },
+      {
+        "title": "Wadi Hadhramaut",
+        "note": "The dramatic desert valley surrounding this historic oasis city."
+      }
+    ],
+    "bestTime": "Nov – Feb",
+    "food": {
+      "intro": "The local cuisine is defined by flavorful desert spices and traditional slow-cooking methods using clay ovens.",
+      "dishes": [
+        {
+          "name": "Mandi",
+          "note": "Meat and rice cooked in a deep underground pit."
+        },
+        {
+          "name": "Bint al-Sahn",
+          "note": "Honey-drenched layered bread served as a sweet delicacy."
+        },
+        {
+          "name": "Saltah",
+          "note": "A hearty, bubbling stew served in a stone bowl."
+        },
+        {
+          "name": "Hadhrami Tea",
+          "note": "Sweet, spiced black tea enjoyed throughout the day."
+        }
+      ]
+    },
+    "history": {
+      "overview": "Seiyun has been a vital trade hub in the Hadhramaut region for centuries, connecting incense routes to the wider world. Its history is shaped by powerful sultanates and the deep influence of the Kathiri dynasty. Today, it remains a center for traditional preservation in the Arabian Peninsula.",
+      "periods": [
+        {
+          "era": "Ancient Origins",
+          "description": "The city thrived as a strategic stop along the ancient Incense Route. Trade in frankincense and myrrh fueled the early growth of Hadhrami settlements."
+        },
+        {
+          "era": "Kathiri Sultanate",
+          "description": "Seiyun became the seat of power for the Kathiri Sultans in the 19th century. They transformed the city into an administrative and architectural center."
+        },
+        {
+          "era": "Modern Era",
+          "description": "The city has navigated significant political shifts while retaining its ancient cultural identity. It now serves as a hub for regional trade and cultural tourism."
+        }
+      ],
+      "figures": [
+        {
+          "name": "Sultan Ali bin Mansour",
+          "role": "Powerful ruler of the Kathiri Sultanate."
+        },
+        {
+          "name": "Abu Bakr bin Shihab",
+          "role": "Prominent Hadhrami scholar and intellectual leader."
+        }
+      ]
+    },
+    "tips": [
+      {
+        "title": "Dress Code",
+        "note": "Dress modestly by keeping shoulders and knees covered at all times."
+      },
+      {
+        "title": "Photography",
+        "note": "Always ask permission before taking photos of local people or women."
+      },
+      {
+        "title": "Water Safety",
+        "note": "Drink only bottled or purified water to avoid stomach issues."
+      },
+      {
+        "title": "Local Customs",
+        "note": "Use your right hand for eating and shaking hands with others."
+      }
+    ],
+    "phrases": [
+      {
+        "phrase": "Salam Alaykum",
+        "meaning": "Peace be upon you",
+        "pronunciation": "Sah-laam ah-lay-kum"
+      },
+      {
+        "phrase": "Shukran",
+        "meaning": "Thank you",
+        "pronunciation": "Shook-ran"
+      },
+      {
+        "phrase": "Afwan",
+        "meaning": "You're welcome",
+        "pronunciation": "Af-wan"
+      },
+      {
+        "phrase": "Kayfa halak?",
+        "meaning": "How are you?",
+        "pronunciation": "Kay-fa ha-lak"
+      }
+    ]
   }
 }

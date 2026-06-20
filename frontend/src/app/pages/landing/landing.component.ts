@@ -13,4 +13,12 @@ import { FooterComponent } from '../../shared/footer.component';
 export class LandingComponent {
   private auth = inject(AuthService);
   user = this.auth.user;
+
+  /** Smooth-scroll to an in-page section (offset for the fixed top nav). */
+  scrollTo(id: string): void {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
 }

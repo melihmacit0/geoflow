@@ -1,6 +1,7 @@
-// Gemini 1.5 Flash cultural content generator with file-based caching.
-// Each city's content is generated once on first request and stored in
-// src/data/city-culture-cache.json — subsequent requests are instant.
+// Gemini cultural-content generator with file-based caching.
+// Cities are keyed by IATA; countries by "C:<code>". Each entry is generated
+// once on first request and stored in src/data/city-culture-cache.json —
+// subsequent requests are instant.
 
 import fs from 'fs';
 import path from 'path';
@@ -30,23 +31,12 @@ function isComplete(entry) {
   return entry && entry.food && entry.history && typeof entry.history === 'object' && entry.tips && entry.phrases;
 }
 
-export async function getCityCulture(iata, cityName, countryName) {
-  if (cache[iata] && isComplete(cache[iata])) return cache[iata];
-
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return cache[iata] ?? null;
-
-  try {
-    const { GoogleGenerativeAI } = await import('@google/generative-ai');
-    const model = new GoogleGenerativeAI(apiKey).getGenerativeModel({ model: 'gemini-flash-lite-latest' });
-
-    const prompt = `You are a travel guide writer. Write detailed cultural content about ${cityName}, ${countryName} for a travel app aimed at students.
-
-Return ONLY valid JSON with no markdown, no backticks, no extra text:
+// Shared JSON schema the model must return (identical for cities and countries).
+const SCHEMA = `Return ONLY valid JSON with no markdown, no backticks, no extra text:
 {
   "tagline": "a short evocative phrase (5-8 words)",
-  "intro": "2-3 sentences about what makes this city special for travelers",
-  "didYouKnow": "one surprising or fascinating fact about this city",
+  "intro": "2-3 sentences about what makes this place special for travelers",
+  "didYouKnow": "one surprising or fascinating fact",
   "highlights": [
     { "title": "Well-known landmark or experience", "note": "very short description" },
     { "title": "Well-known landmark or experience", "note": "very short description" },
@@ -64,7 +54,7 @@ Return ONLY valid JSON with no markdown, no backticks, no extra text:
     ]
   },
   "history": {
-    "overview": "3-4 sentences summarising the city's overall historical arc and significance",
+    "overview": "3-4 sentences summarising the overall historical arc and significance",
     "periods": [
       { "era": "short era label, e.g. 'Ancient Origins'", "description": "2 sentences about this period" },
       { "era": "short era label, e.g. 'Medieval Era'",    "description": "2 sentences about this period" },
@@ -89,16 +79,43 @@ Return ONLY valid JSON with no markdown, no backticks, no extra text:
   ]
 }`;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text().trim()
-      .replace(/^```json?\s*/i, '').replace(/\s*```$/, '');
+async function generate(subject) {
+  const { GoogleGenerativeAI } = await import('@google/generative-ai');
+  const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+    .getGenerativeModel({ model: 'gemini-flash-lite-latest' });
 
-    const data = JSON.parse(text);
+  const prompt = `You are a travel guide writer. Write detailed cultural content about ${subject} for a travel app aimed at students.\n\n${SCHEMA}`;
+  const result = await model.generateContent(prompt);
+  const text = result.response.text().trim()
+    .replace(/^```json?\s*/i, '').replace(/\s*```$/, '');
+  return JSON.parse(text);
+}
+
+export async function getCityCulture(iata, cityName, countryName) {
+  if (cache[iata] && isComplete(cache[iata])) return cache[iata];
+  if (!process.env.GEMINI_API_KEY) return cache[iata] ?? null;
+  try {
+    const data = await generate(`${cityName}, ${countryName}`);
     cache[iata] = data;
     saveCache();
     return data;
   } catch (err) {
     console.error(`Gemini error for ${iata} (${cityName}):`, err.message);
+    return null;
+  }
+}
+
+export async function getCountryCulture(code, countryName) {
+  const key = `C:${code}`;
+  if (cache[key] && isComplete(cache[key])) return cache[key];
+  if (!process.env.GEMINI_API_KEY) return cache[key] ?? null;
+  try {
+    const data = await generate(`the country of ${countryName}`);
+    cache[key] = data;
+    saveCache();
+    return data;
+  } catch (err) {
+    console.error(`Gemini error for country ${code} (${countryName}):`, err.message);
     return null;
   }
 }

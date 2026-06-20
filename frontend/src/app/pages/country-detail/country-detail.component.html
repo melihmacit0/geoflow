@@ -71,86 +71,124 @@
         </div>
       </div>
 
-      <!-- Airports header + search -->
-      <div class="px-7 pb-3 border-b border-stone-100 shrink-0">
-        <div class="flex items-center justify-between mb-3">
-          <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-            Airports
-            @if (!citiesLoading() && cities().length) {
-              <span class="text-stone-300 ml-1">({{ cities().length }})</span>
+      <!-- Scrollable body: country culture + airports -->
+      <div class="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+
+        <!-- About / Culture (curated, else AI-generated) -->
+        @if (c.intro || c.didYouKnow || c.highlights?.length || c.culture) {
+          <div class="px-7 py-5 space-y-4 border-b border-stone-100">
+            <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">About {{ c.name }}</p>
+
+            @if (c.intro || c.culture?.intro) {
+              <p class="text-sm text-stone-600 leading-relaxed">{{ c.intro || c.culture?.intro }}</p>
             }
-          </p>
-          @if (citiesLoading()) {
-            <span class="material-symbols-outlined text-stone-300 text-base animate-spin">progress_activity</span>
-          }
-        </div>
-        <div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-lg border border-stone-100">
-          <span class="material-symbols-outlined text-stone-400 text-lg">search</span>
-          <input
-            type="text"
-            placeholder="Search city or IATA code…"
-            class="flex-1 bg-transparent text-sm text-primary placeholder:text-stone-400 focus:outline-none"
-            [value]="searchQuery()"
-            (input)="searchQuery.set($any($event.target).value)"
-          />
-          @if (searchQuery()) {
-            <button (click)="searchQuery.set('')" class="text-stone-400 hover:text-stone-600 transition-colors">
-              <span class="material-symbols-outlined text-base">close</span>
-            </button>
-          }
-        </div>
-      </div>
 
-      <!-- Scrollable airport list -->
-      <div class="flex-1 overflow-y-auto custom-scrollbar px-7 py-4">
-        @if (citiesLoading()) {
-          <div class="flex items-center justify-center py-16 text-stone-300">
-            <span class="material-symbols-outlined animate-spin text-4xl">progress_activity</span>
-          </div>
-        } @else if (filteredCities.length === 0) {
-          <div class="text-center py-16 text-stone-400 text-sm">
-            @if (cities().length === 0) {
-              No airports found for this country.
-            } @else {
-              No results for "{{ searchQuery() }}"
+            @if (c.didYouKnow || c.culture?.didYouKnow) {
+              <div class="flex gap-3 p-3 rounded-xl bg-surface-container border border-stone-100">
+                <span class="material-symbols-outlined text-base shrink-0" [style.color]="c.accent || '#2D4677'">lightbulb</span>
+                <p class="text-xs text-stone-600 leading-relaxed">{{ c.didYouKnow || c.culture?.didYouKnow }}</p>
+              </div>
             }
-          </div>
-        } @else {
-          <div class="space-y-2">
-            @for (city of filteredCities; track city.iata) {
-              <button
-                (click)="openCity(city.iata)"
-                class="w-full flex items-center gap-4 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md hover:border-stone-200 transition-all text-left group">
 
-                <!-- Icon -->
-                <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors"
-                  [style.background]="(c.accent || '#2D4677') + '18'"
-                  [style.color]="c.accent || '#2D4677'">
-                  <span class="material-symbols-outlined text-lg">
-                    {{ city.type === 'large_airport' ? 'flight' : 'local_airport' }}
-                  </span>
-                </div>
+            @if ((c.highlights?.length ? c.highlights : c.culture?.highlights); as hs) {
+              <div class="grid grid-cols-2 gap-2">
+                @for (h of hs; track h.title) {
+                  <div class="p-3 rounded-lg border border-stone-100 bg-white">
+                    <p class="text-xs font-semibold text-primary leading-tight">{{ h.title }}</p>
+                    <p class="text-[11px] text-stone-400 mt-0.5">{{ h.note }}</p>
+                  </div>
+                }
+              </div>
+            }
 
-                <!-- City info -->
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-primary text-sm truncate">{{ city.city }}</p>
-                  <p class="text-[11px] text-stone-400 truncate">{{ city.name }}</p>
-                </div>
-
-                <!-- Badges + arrow -->
-                <div class="flex items-center gap-2 shrink-0">
-                  <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-stone-500">
-                    {{ city.iata }}
-                  </span>
-                  @if (city.type === 'large_airport') {
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Major</span>
+            @if (c.culture?.food?.dishes?.length) {
+              <div>
+                <p class="text-[11px] font-bold text-stone-500 mb-2">Local flavors</p>
+                <div class="flex flex-wrap gap-2">
+                  @for (d of c.culture!.food!.dishes; track d.name) {
+                    <span class="text-[11px] px-2.5 py-1 rounded-full bg-surface-container text-stone-600">{{ d.name }}</span>
                   }
-                  <span class="material-symbols-outlined text-stone-300 text-lg group-hover:text-primary transition-colors">chevron_right</span>
                 </div>
-              </button>
+              </div>
             }
           </div>
         }
+
+        <!-- Airports header + search (sticky within scroll) -->
+        <div class="px-7 pt-4 pb-3 border-b border-stone-100 bg-white sticky top-0 z-10">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+              Pick a city to book
+              @if (!citiesLoading() && cities().length) {
+                <span class="text-stone-300 ml-1">({{ cities().length }})</span>
+              }
+            </p>
+            @if (citiesLoading()) {
+              <span class="material-symbols-outlined text-stone-300 text-base animate-spin">progress_activity</span>
+            }
+          </div>
+          <div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-lg border border-stone-100">
+            <span class="material-symbols-outlined text-stone-400 text-lg">search</span>
+            <input
+              type="text"
+              placeholder="Search city or IATA code…"
+              class="flex-1 bg-transparent text-sm text-primary placeholder:text-stone-400 focus:outline-none"
+              [value]="searchQuery()"
+              (input)="searchQuery.set($any($event.target).value)"
+            />
+            @if (searchQuery()) {
+              <button (click)="searchQuery.set('')" class="text-stone-400 hover:text-stone-600 transition-colors">
+                <span class="material-symbols-outlined text-base">close</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Airport list -->
+        <div class="px-7 py-4">
+          @if (citiesLoading()) {
+            <div class="flex items-center justify-center py-16 text-stone-300">
+              <span class="material-symbols-outlined animate-spin text-4xl">progress_activity</span>
+            </div>
+          } @else if (filteredCities.length === 0) {
+            <div class="text-center py-16 text-stone-400 text-sm">
+              @if (cities().length === 0) {
+                No airports found for this country.
+              } @else {
+                No results for "{{ searchQuery() }}"
+              }
+            </div>
+          } @else {
+            <div class="space-y-2">
+              @for (city of filteredCities; track city.iata) {
+                <button
+                  (click)="openCity(city.iata)"
+                  class="w-full flex items-center gap-4 p-4 rounded-xl border border-stone-100 bg-white hover:shadow-md hover:border-stone-200 transition-all text-left group">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors"
+                    [style.background]="(c.accent || '#2D4677') + '18'"
+                    [style.color]="c.accent || '#2D4677'">
+                    <span class="material-symbols-outlined text-lg">
+                      {{ city.type === 'large_airport' ? 'flight' : 'local_airport' }}
+                    </span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-semibold text-primary text-sm truncate">{{ city.city }}</p>
+                    <p class="text-[11px] text-stone-400 truncate">{{ city.name }}</p>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-stone-500">
+                      {{ city.iata }}
+                    </span>
+                    @if (city.type === 'large_airport') {
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Major</span>
+                    }
+                    <span class="material-symbols-outlined text-stone-300 text-lg group-hover:text-primary transition-colors">chevron_right</span>
+                  </div>
+                </button>
+              }
+            </div>
+          }
+        </div>
       </div>
 
     } @else if (loading()) {
