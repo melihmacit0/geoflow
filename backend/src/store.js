@@ -24,6 +24,12 @@ export function storeMode() {
   return useBlob ? 'blob' : 'local';
 }
 
+// Last storage error message (for diagnostics via /api/health).
+let lastError = null;
+export function lastStoreError() {
+  return lastError;
+}
+
 let blobMod;
 async function blob() {
   return (blobMod ??= await import('@vercel/blob'));
@@ -54,7 +60,8 @@ export async function readDoc(key, fallback) {
       if (!res.ok) return clone(fallback);
       return await res.json();
     } catch (err) {
-      console.error(`store.readDoc(${key}) error:`, err.message);
+      lastError = `readDoc(${key}): ${err.message}`;
+      console.error('store.' + lastError);
       return clone(fallback);
     }
   }
@@ -87,7 +94,8 @@ export async function writeDoc(key, data) {
     return true;
   } catch (err) {
     // Never let a storage failure hang the request — log and report failure.
-    console.error(`store.writeDoc(${key}) error:`, err.message);
+    lastError = `writeDoc(${key}): ${err.message}`;
+    console.error('store.' + lastError);
     return false;
   }
 }

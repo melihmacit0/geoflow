@@ -536,6 +536,6 @@ app.delete('/api/trips/:id', auth, async (req, res) => {
   res.json({ ok: true });
 });
 
-app.get('/api/health', (req, res) => res.json({ ok: true, store: store.storeMode() }));
+app.get('/api/health', (req, res) => res.json({ ok: true, store: store.storeMode(), lastError: store.lastStoreError() }));
 
 export default app;
