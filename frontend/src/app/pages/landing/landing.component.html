@@ -1,29 +1,29 @@
 <!-- Marketing TopAppBar -->
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm shadow-blue-900/5">
-  <div class="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center h-16 md:h-20">
     <div class="flex items-center gap-2">
-      <span class="text-2xl font-black tracking-tighter text-primary-container">GeoFlow</span>
+      <span class="text-xl md:text-2xl font-black tracking-tighter text-primary-container">GeoFlow</span>
     </div>
     <div class="hidden md:flex items-center gap-12 tracking-tight font-medium">
       <a class="text-slate-500 hover:text-primary-container transition-colors" href="#how">How it works</a>
       <a class="text-slate-500 hover:text-primary-container transition-colors" href="#features">Features</a>
       <a class="text-slate-500 hover:text-primary-container transition-colors" href="#about">About</a>
     </div>
-    <div class="flex items-center gap-6">
+    <div class="flex items-center gap-3 md:gap-6">
       @if (user(); as u) {
-        <a routerLink="/discover" class="text-slate-500 hover:text-primary-container transition-all font-medium">Hi, {{ u.name.split(' ')[0] }}</a>
-        <a routerLink="/discover" class="bg-primary-container text-white px-6 py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium">Open Map</a>
+        <a routerLink="/discover" class="hidden md:block text-slate-500 hover:text-primary-container transition-all font-medium">Hi, {{ u.name.split(' ')[0] }}</a>
+        <a routerLink="/discover" class="bg-primary-container text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium text-sm md:text-base">Open Map</a>
       } @else {
-        <a routerLink="/signin" class="text-slate-500 hover:text-primary-container transition-all font-medium">Sign In</a>
-        <a routerLink="/discover" class="bg-primary-container text-white px-6 py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium">Get Started</a>
+        <a routerLink="/signin" class="hidden md:block text-slate-500 hover:text-primary-container transition-all font-medium">Sign In</a>
+        <a routerLink="/discover" class="bg-primary-container text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg hover:bg-primary transition-all active:scale-95 font-medium text-sm md:text-base">Get Started</a>
       }
     </div>
   </div>
 </nav>
 
-<main class="pt-20">
+<main class="pt-16 md:pt-20">
   <!-- Hero -->
-  <section class="relative min-h-[820px] flex flex-col items-center justify-center overflow-hidden py-section-gap">
+  <section class="relative min-h-screen md:min-h-[820px] flex flex-col items-center justify-center overflow-hidden py-section-gap">
     <div class="absolute inset-0 z-0 opacity-[0.07] pointer-events-none bg-cover bg-center"
       style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7jw7FQKa0q9j2Fpfqqy2DrWX8xQ7lHkNzq5tFzoIq2JzbnLv2Ez2SkiVBmnl_6ffo_dlCOONkX85Q304IOH2tmAZfmscUD81NrPMEUdLfIDbjKRMs5E3ehly4wcGybktiYk6J6B1OIrAYjf-DEHs_qrqRhb-fh6SKx2kUoOjfxzKgq2LwvL7-fFL2wutIJ6BzIpgCUGYanJnFuL3n-T_yUCsDQjRUX89xnOvCCml9ORRSNcTrBav3hsIGaLdFC1Ytx08OhvL67mkb');">
     </div>
@@ -33,9 +33,9 @@
         Plan your next journey on a single map — culture, history, and flights in one place.
         Experience the world through a lens of professional precision and boundless curiosity.
       </p>
-      <div class="flex flex-wrap gap-4 justify-center pt-8">
-        <a routerLink="/discover" class="bg-primary-container text-white px-10 py-4 rounded-xl font-semibold shadow-lg shadow-primary-container/20 hover:-translate-y-0.5 transition-all">Start Exploring</a>
-        <a routerLink="/compare" class="bg-white border border-outline-variant text-primary px-10 py-4 rounded-xl font-semibold hover:bg-surface-container transition-all">Compare Destinations</a>
+      <div class="flex flex-wrap gap-3 md:gap-4 justify-center pt-6 md:pt-8">
+        <a routerLink="/discover" class="bg-primary-container text-white px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold shadow-lg shadow-primary-container/20 hover:-translate-y-0.5 transition-all text-sm md:text-base">Start Exploring</a>
+        <a routerLink="/compare" class="bg-white border border-outline-variant text-primary px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold hover:bg-surface-container transition-all text-sm md:text-base">Compare Destinations</a>
       </div>
     </div>
 

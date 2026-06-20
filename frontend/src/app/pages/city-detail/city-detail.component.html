@@ -1,0 +1,758 @@
+<gf-top-nav></gf-top-nav>
+
+<main class="fixed top-16 left-0 right-0 bottom-0 flex flex-col lg:flex-row overflow-hidden">
+  <!-- Map: mobile = collapsible top strip; desktop = fixed left 55% panel -->
+  <section class="relative bg-surface-container shrink-0 overflow-hidden transition-[height] duration-300 lg:flex-none lg:w-[55%] lg:!h-full"
+    [class]="showMapMobile() ? 'h-52' : 'h-0'">
+    <div #mapEl class="w-full h-full"></div>
+    <button (click)="back()"
+      class="hidden lg:flex absolute top-4 left-4 z-[500] items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md text-sm font-medium text-primary hover:bg-white transition-all">
+      <span class="material-symbols-outlined text-base">arrow_back</span>
+      {{ city()?.countryName }}
+    </button>
+  </section>
+
+  <!-- Info panel: mobile = flex-1 fills space; desktop = right 45% -->
+  <aside class="flex-1 min-h-0 lg:flex-none lg:w-[45%] lg:h-full bg-white shadow-[-10px_0_30px_-15px_rgba(15,44,92,0.15)] flex flex-col border-l border-stone-100">
+
+    @if (city(); as c) {
+      <!-- Header -->
+      <div class="px-4 md:px-7 pt-4 md:pt-5 pb-0 shrink-0">
+        <!-- Mobile top bar: back + map toggle -->
+        <div class="lg:hidden flex items-center justify-between mb-3">
+          <button (click)="back()" class="flex items-center gap-1 text-sm text-stone-500 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-base">arrow_back</span> {{ c.countryName }}
+          </button>
+          <button (click)="toggleMapMobile()" class="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full bg-surface-container text-primary hover:bg-slate-200 transition-colors">
+            <span class="material-symbols-outlined text-sm">map</span>
+            {{ showMapMobile() ? 'Hide Map' : 'View Map' }}
+          </button>
+        </div>
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="font-h2 text-h2 text-primary">{{ c.city }}</h1>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-container text-stone-500">{{ c.iata }}</span>
+              <span class="text-xs text-stone-400">{{ c.countryName }}</span>
+              @if (c.type === 'large_airport') {
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Major Airport</span>
+              }
+            </div>
+          </div>
+          @if (c.culture?.bestTime) {
+            <div class="text-right shrink-0">
+              <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Best Time</p>
+              <p class="text-sm font-semibold text-primary">{{ c.culture!.bestTime }}</p>
+            </div>
+          }
+        </div>
+        @if (c.culture?.tagline) {
+          <p class="text-sm italic text-stone-400 mt-1">{{ c.culture!.tagline }}</p>
+        }
+      </div>
+
+      <!-- Tabs -->
+      <div class="px-7 mt-4 flex gap-6 border-b border-stone-100 shrink-0">
+        @for (t of [['culture','auto_stories'],['book','book_online']]; track t[0]) {
+          <button (click)="switchTab($any(t[0]))"
+            class="pb-3 flex items-center gap-1.5 text-sm font-medium whitespace-nowrap transition-colors shrink-0"
+            [class]="tab() === t[0] ? 'text-primary border-b-2 border-primary' : 'text-stone-400 hover:text-stone-600'">
+            <span class="material-symbols-outlined text-base">{{ t[1] }}</span>
+            {{ t[0] === 'book' ? 'Book Trip' : 'Culture' }}
+          </button>
+        }
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar">
+
+        <!-- ══ CULTURE TAB ══════════════════════════════════════════════════ -->
+        @if (tab() === 'culture') {
+          <div class="px-7 py-6 space-y-5">
+            @if (c.culture; as culture) {
+
+              <!-- Culture sub-nav -->
+              <div class="flex gap-1 bg-surface-container p-1 rounded-xl">
+                @for (s of [['overview','explore'],['food','restaurant'],['history','history_edu'],['tips','lightbulb']]; track s[0]) {
+                  <button (click)="cultureSub.set($any(s[0]))"
+                    class="flex-1 flex items-center justify-center gap-1 py-2 text-xs font-medium rounded-lg transition-all"
+                    [class]="cultureSub() === s[0] ? 'bg-white text-primary shadow-sm' : 'text-stone-400 hover:text-stone-700'">
+                    <span class="material-symbols-outlined text-sm">{{ s[1] }}</span>
+                    {{ s[0] | titlecase }}
+                  </button>
+                }
+              </div>
+
+              <!-- ── Overview ── -->
+              @if (cultureSub() === 'overview') {
+                <p class="text-on-surface-variant leading-relaxed text-sm">{{ culture.intro }}</p>
+
+                <div class="p-5 bg-[#FDF6E3] rounded-xl border border-yellow-200 flex gap-3">
+                  <span class="material-symbols-outlined text-yellow-500 shrink-0">lightbulb</span>
+                  <div>
+                    <p class="text-[10px] font-bold text-yellow-700 uppercase tracking-widest mb-1">Did You Know?</p>
+                    <p class="text-sm text-stone-700 leading-snug">{{ culture.didYouKnow }}</p>
+                  </div>
+                </div>
+
+                <section>
+                  <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Top Highlights</h2>
+                  <div class="grid grid-cols-2 gap-3">
+                    @for (h of culture.highlights; track h.title) {
+                      <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <p class="font-semibold text-primary text-sm">{{ h.title }}</p>
+                        <p class="text-xs text-stone-500 mt-0.5">{{ h.note }}</p>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
+
+              <!-- ── Food & Drink ── -->
+              @if (cultureSub() === 'food') {
+                @if (culture.food) {
+                  <p class="text-on-surface-variant leading-relaxed text-sm">{{ culture.food.intro }}</p>
+                  <section>
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Must-Try Dishes</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                      @for (d of culture.food.dishes; track d.name) {
+                        <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg flex flex-col gap-1">
+                          <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-primary text-base">restaurant</span>
+                            <p class="font-semibold text-primary text-sm">{{ d.name }}</p>
+                          </div>
+                          <p class="text-xs text-stone-500">{{ d.note }}</p>
+                        </div>
+                      }
+                    </div>
+                  </section>
+                } @else {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">restaurant</span>
+                    <p class="text-stone-400 text-sm">Food content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
+              <!-- ── History ── -->
+              @if (cultureSub() === 'history') {
+                @if (culture.history) {
+                  <div class="p-5 bg-[#F0F4FF] border border-blue-100 rounded-xl flex gap-3">
+                    <span class="material-symbols-outlined text-primary shrink-0">history_edu</span>
+                    <p class="text-sm text-on-surface-variant leading-relaxed">{{ culture.history.overview }}</p>
+                  </div>
+
+                  @if (culture.history.periods?.length) {
+                    <section>
+                      <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Historical Periods</h2>
+                      <div class="relative pl-5 space-y-4">
+                        <div class="absolute left-[7px] top-2 bottom-2 w-px bg-stone-200"></div>
+                        @for (period of culture.history.periods; track period.era) {
+                          <div class="relative flex gap-4">
+                            <div class="shrink-0 w-3.5 h-3.5 rounded-full border-2 border-primary bg-white mt-0.5 z-10 -ml-5"></div>
+                            <div class="pb-1">
+                              <p class="font-semibold text-primary text-sm mb-0.5">{{ period.era }}</p>
+                              <p class="text-xs text-stone-500 leading-relaxed">{{ period.description }}</p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </section>
+                  }
+
+                  @if (culture.history.figures?.length) {
+                    <section>
+                      <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Notable Figures</h2>
+                      <div class="grid grid-cols-2 gap-3">
+                        @for (fig of culture.history.figures; track fig.name) {
+                          <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg flex gap-3 items-start">
+                            <span class="material-symbols-outlined text-primary text-base shrink-0">person</span>
+                            <div>
+                              <p class="font-semibold text-primary text-sm">{{ fig.name }}</p>
+                              <p class="text-xs text-stone-500 mt-0.5">{{ fig.role }}</p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </section>
+                  }
+                } @else {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">history_edu</span>
+                    <p class="text-stone-400 text-sm">History content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
+              <!-- ── Tips ── -->
+              @if (cultureSub() === 'tips') {
+                @if (culture.tips?.length) {
+                  <section class="space-y-3">
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Travel Tips</h2>
+                    @for (tip of culture.tips; track tip.title) {
+                      <div class="flex gap-3 p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <span class="material-symbols-outlined text-green-500 shrink-0 text-base">check_circle</span>
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ tip.title }}</p>
+                          <p class="text-xs text-stone-500 mt-0.5">{{ tip.note }}</p>
+                        </div>
+                      </div>
+                    }
+                  </section>
+                }
+
+                @if (culture.phrases?.length) {
+                  <section class="space-y-3">
+                    <h2 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Useful Phrases</h2>
+                    @for (p of culture.phrases; track p.phrase) {
+                      <div class="p-4 bg-surface-container-lowest border border-stone-100 rounded-lg">
+                        <div class="flex items-center justify-between gap-2">
+                          <p class="font-semibold text-primary text-sm">"{{ p.phrase }}"</p>
+                          @if (p.pronunciation) {
+                            <span class="text-[10px] text-stone-400 italic shrink-0">{{ p.pronunciation }}</span>
+                          }
+                        </div>
+                        <p class="text-xs text-stone-500 mt-1">{{ p.meaning }}</p>
+                      </div>
+                    }
+                  </section>
+                }
+
+                @if (!culture.tips?.length && !culture.phrases?.length) {
+                  <div class="flex flex-col items-center justify-center py-14 text-center">
+                    <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">lightbulb</span>
+                    <p class="text-stone-400 text-sm">Tips content unavailable for this city.</p>
+                  </div>
+                }
+              }
+
+              <p class="text-[11px] text-stone-400 italic border-t border-stone-100 pt-4">
+                Cultural content generated by Gemini AI. Verify details before travel.
+              </p>
+
+            } @else {
+              <div class="flex flex-col items-center justify-center py-16 text-center">
+                <span class="material-symbols-outlined text-4xl text-stone-300 mb-3">auto_stories</span>
+                <p class="text-stone-400 text-sm">Cultural content unavailable.</p>
+                <p class="text-stone-300 text-xs mt-1">Add your GEMINI_API_KEY to enable AI-generated content.</p>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- ══ BOOK TRIP TAB ════════════════════════════════════════════════ -->
+        @if (tab() === 'book') {
+
+          <!-- Step progress indicator -->
+          <div class="flex items-center px-6 pt-5 pb-4 border-b border-stone-100 shrink-0">
+            @for (s of [{k:'flight',l:'Flight'},{k:'hotel',l:'Hotel'},{k:'car',l:'Car'},{k:'summary',l:'Summary'}]; track s.k; let i = $index, last = $last) {
+              <button (click)="goBackToStep($any(s.k))"
+                class="flex items-center gap-1.5 shrink-0 transition-colors"
+                [class]="i < bookStepIndex() ? 'cursor-pointer' : 'cursor-default pointer-events-none'">
+                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all shrink-0"
+                  [class]="bookStepIndex() === i ? 'border-primary bg-primary text-white' : bookStepIndex() > i ? 'border-primary bg-blue-50 text-primary' : 'border-stone-200 text-stone-300'">
+                  @if (bookStepIndex() > i) {
+                    <span class="material-symbols-outlined leading-none" style="font-size:14px">check</span>
+                  } @else { {{ i + 1 }} }
+                </div>
+                <span class="text-xs font-medium"
+                  [class]="bookStepIndex() >= i ? 'text-primary' : 'text-stone-300'">{{ s.l }}</span>
+              </button>
+              @if (!last) {
+                <div class="flex-1 h-px mx-2 min-w-2 transition-colors"
+                  [class]="bookStepIndex() > i ? 'bg-primary' : 'bg-stone-200'"></div>
+              }
+            }
+          </div>
+
+          <div class="overflow-y-auto custom-scrollbar flex-1">
+
+            <!-- ── Step 1: Flight ── -->
+            @if (bookStep() === 'flight') {
+              <div class="px-6 py-5 space-y-4">
+                <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Flight</p>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      [class]="flightSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
+                      {{ flightSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <!-- Departure airport picker -->
+                    <div class="relative">
+                      <button (click)="showOriginPicker.set(!showOriginPicker())"
+                        class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs hover:border-primary transition-colors">
+                        <span class="material-symbols-outlined text-sm text-stone-400">flight_takeoff</span>
+                        <span class="font-semibold text-primary">{{ origin() }}</span>
+                        <span class="text-stone-400">→ {{ c.iata }}</span>
+                        <span class="material-symbols-outlined text-xs text-stone-300">expand_more</span>
+                      </button>
+                      @if (showOriginPicker()) {
+                        <div class="absolute top-9 left-0 z-50 bg-white border border-stone-200 rounded-xl shadow-xl w-72 p-3 space-y-2">
+                          <div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-lg">
+                            <span class="material-symbols-outlined text-stone-400 text-base">search</span>
+                            <input #originInput
+                              type="text"
+                              placeholder="City or IATA code…"
+                              class="flex-1 bg-transparent text-xs focus:outline-none text-primary placeholder:text-stone-400"
+                              [value]="originSearch()"
+                              (input)="onOriginInput($any($event.target).value)"
+                              autofocus />
+                          </div>
+                          @if (originResults().length) {
+                            <div class="space-y-0.5 max-h-52 overflow-y-auto">
+                              @for (ap of originResults(); track ap.iata) {
+                                <button (click)="selectOrigin(ap)"
+                                  class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface-container text-left transition-colors">
+                                  <span class="text-xs font-bold text-primary w-9 shrink-0 bg-surface-container px-1.5 py-0.5 rounded text-center">{{ ap.iata }}</span>
+                                  <div class="min-w-0">
+                                    <p class="text-xs font-semibold text-primary truncate">{{ ap.city }}</p>
+                                    <p class="text-[10px] text-stone-400 truncate">{{ ap.name }}</p>
+                                  </div>
+                                </button>
+                              }
+                            </div>
+                          } @else if (originSearch().length >= 2) {
+                            <p class="text-xs text-stone-400 text-center py-3">No airports found</p>
+                          } @else {
+                            <p class="text-[10px] text-stone-400 text-center py-2">Type to search airports…</p>
+                          }
+                        </div>
+                      }
+                    </div>
+
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">calendar_today</span>
+                      <input type="date" [value]="departureDate()"
+                        (change)="departureDate.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
+                    </div>
+                    <button (click)="fetchFlights()"
+                      class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary/90 transition-colors ml-auto">
+                      @if (flightsLoading()) {
+                        <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+                      } @else {
+                        <span class="material-symbols-outlined text-sm">search</span>
+                      }
+                      Search
+                    </button>
+                  </div>
+
+                  <!-- Passenger selector -->
+                  <div class="pt-3 border-t border-stone-100 space-y-2">
+                    <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Passengers</p>
+                    <div class="flex gap-3">
+                      <div class="flex items-center justify-between flex-1 bg-white border border-stone-200 rounded-xl px-3 py-2">
+                        <div>
+                          <p class="text-xs font-semibold text-primary">Adults</p>
+                          <p class="text-[10px] text-stone-400">Age 12+</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <button (click)="adults.set(adults() > 1 ? adults() - 1 : 1)"
+                            class="w-6 h-6 rounded-full border border-stone-200 flex items-center justify-center text-stone-500 hover:border-primary hover:text-primary transition-all font-bold text-sm leading-none">−</button>
+                          <span class="text-sm font-bold text-primary w-4 text-center">{{ adults() }}</span>
+                          <button (click)="adults.set(adults() + 1)"
+                            class="w-6 h-6 rounded-full border border-stone-200 flex items-center justify-center text-stone-500 hover:border-primary hover:text-primary transition-all font-bold text-sm leading-none">+</button>
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between flex-1 bg-white border border-stone-200 rounded-xl px-3 py-2">
+                        <div>
+                          <p class="text-xs font-semibold text-primary">Children</p>
+                          <p class="text-[10px] text-stone-400">Age 2–11</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <button (click)="children.set(children() > 0 ? children() - 1 : 0)"
+                            class="w-6 h-6 rounded-full border border-stone-200 flex items-center justify-center text-stone-500 hover:border-primary hover:text-primary transition-all font-bold text-sm leading-none">−</button>
+                          <span class="text-sm font-bold text-primary w-4 text-center">{{ children() }}</span>
+                          <button (click)="children.set(children() + 1)"
+                            class="w-6 h-6 rounded-full border border-stone-200 flex items-center justify-center text-stone-500 hover:border-primary hover:text-primary transition-all font-bold text-sm leading-none">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  @for (f of ['cheapest','fastest','direct']; track f) {
+                    <button (click)="flightFilter.set($any(f))"
+                      [class]="flightFilter() === f ? 'bg-primary text-white border-primary' : 'bg-white text-stone-500 border-stone-200 hover:border-primary hover:text-primary'"
+                      class="px-4 py-1.5 rounded-full text-xs font-medium border transition-all capitalize">{{ f }}</button>
+                  }
+                </div>
+
+                <div class="space-y-3" [class.opacity-50]="flightsLoading()">
+                  @for (f of filteredFlights; track f.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all flex items-center gap-4">
+                      <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-stone-400 text-lg">flight_takeoff</span>
+                      </div>
+                      <div class="flex-1 grid grid-cols-3 items-center text-sm">
+                        <div>
+                          <p class="font-bold text-primary text-base">{{ f.depart }}</p>
+                          <p class="text-[10px] text-stone-400">{{ f.from }}</p>
+                        </div>
+                        <div class="text-center">
+                          <p class="text-[11px] text-stone-400">{{ f.duration }}</p>
+                          <div class="h-px bg-stone-200 my-0.5"></div>
+                          <p class="text-[10px] font-bold text-primary uppercase">{{ f.stops }}</p>
+                        </div>
+                        <div class="text-right">
+                          <p class="font-bold text-primary text-base">{{ f.arrive }}</p>
+                          <p class="text-[10px] text-stone-400">{{ f.to }}</p>
+                        </div>
+                      </div>
+                      <div class="shrink-0 border-l border-stone-100 pl-4 flex flex-col items-end gap-2">
+                        <div class="text-right">
+                          <p class="font-bold text-lg text-primary">${{ f.price }}<span class="text-[10px] text-stone-400 font-normal">/pp</span></p>
+                          @if (adults() + children() > 1) {
+                            <p class="text-xs text-stone-500">${{ flightTotal(f.price) }} total</p>
+                          }
+                        </div>
+                        <button (click)="selectFlight(f)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors">
+                          Select →
+                        </button>
+                      </div>
+                    </div>
+                  }
+                  @if (!flightsLoading() && filteredFlights.length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">No flights found. Try a different date.</p>
+                  }
+                </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip flight
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            }
+
+            <!-- ── Step 2: Hotel ── -->
+            @if (bookStep() === 'hotel') {
+              <div class="px-6 py-5 space-y-4">
+                @if (selectedFlight(); as sf) {
+                  <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
+                      <div>
+                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · {{ sf.duration }}</p>
+                        <p class="text-xs text-stone-500">{{ sf.stops }} · ${{ sf.price }}</p>
+                      </div>
+                    </div>
+                    <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
+                  </div>
+                }
+
+                <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest space-y-3">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Hotel</p>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      [class]="hotelSource().startsWith('live') ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'">
+                      {{ hotelSource().startsWith('live') ? 'LIVE' : 'SAMPLE' }}
+                    </span>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">login</span>
+                      <input type="date" [value]="checkIn()" (change)="checkIn.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">logout</span>
+                      <input type="date" [value]="checkOut()" (change)="checkOut.set($any($event.target).value)"
+                        class="bg-transparent focus:outline-none cursor-pointer text-xs" />
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">group</span>
+                      {{ passengerLabel }}
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-stone-200 rounded-full text-xs">
+                      <span class="material-symbols-outlined text-sm text-stone-400">bed</span>
+                      {{ rooms() }} room{{ rooms() > 1 ? 's' : '' }}
+                    </div>
+                    <button (click)="fetchHotels()"
+                      class="flex items-center gap-1 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-primary/90 transition-colors ml-auto">
+                      @if (hotelsLoading()) {
+                        <span class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+                      } @else {
+                        <span class="material-symbols-outlined text-sm">search</span>
+                      }
+                      Search
+                    </button>
+                  </div>
+                </div>
+
+                <div class="space-y-3" [class.opacity-50]="hotelsLoading()">
+                  @for (h of hotels(); track h.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ h.name }}</p>
+                          <p class="text-[11px] text-stone-400">{{ h.chain }} · {{ h.type }}</p>
+                        </div>
+                        <div class="text-right shrink-0 ml-3">
+                          <p class="font-bold text-primary text-base">${{ h.pricePerNight }}<span class="text-[10px] text-stone-400 font-normal">/room</span></p>
+                          @if (rooms() > 1) {
+                            <p class="text-xs text-stone-500">${{ h.pricePerNight * rooms() }} · {{ rooms() }} rooms</p>
+                          } @else {
+                            <p class="text-[10px] text-stone-400">per night</p>
+                          }
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-stone-500">⭐ {{ h.rating }} ({{ h.reviews }}) · {{ h.address }}</span>
+                        <button (click)="selectHotel(h)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors shrink-0 ml-2">
+                          Select →
+                        </button>
+                      </div>
+                    </div>
+                  }
+                  @if (!hotelsLoading() && hotels().length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">No hotels found. Try different dates.</p>
+                  }
+                </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip hotel
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            }
+
+            <!-- ── Step 3: Car ── -->
+            @if (bookStep() === 'car') {
+              <div class="px-6 py-5 space-y-4">
+                <div class="space-y-2">
+                  @if (selectedFlight(); as sf) {
+                    <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-base">flight_takeoff</span>
+                        <p class="text-xs font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }} · ${{ sf.price }}</p>
+                      </div>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
+                    </div>
+                  }
+                  @if (selectedHotel(); as sh) {
+                    <div class="p-3 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-base">hotel</span>
+                        <p class="text-xs font-semibold text-primary">{{ sh.name }} · ${{ sh.pricePerNight }}/night</p>
+                      </div>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary font-medium hover:underline shrink-0">Change</button>
+                    </div>
+                  }
+                </div>
+
+                <p class="text-xs font-bold text-stone-500 uppercase tracking-widest">Choose a Car</p>
+
+                <div class="space-y-3" [class.opacity-50]="carsLoading()">
+                  @for (car of cars(); track car.id) {
+                    <div class="p-4 rounded-xl border border-stone-100 hover:border-primary/30 hover:shadow-md transition-all">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <p class="font-semibold text-primary text-sm">{{ car.model }}</p>
+                          <p class="text-[11px] text-stone-400">{{ car.agency }} · {{ car.category }}</p>
+                        </div>
+                        <div class="text-right shrink-0 ml-3">
+                          <p class="font-bold text-primary text-base">${{ car.pricePerDay }}</p>
+                          <p class="text-[10px] text-stone-400">per day</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-stone-500">{{ car.transmission }} · {{ car.seats }} seats · {{ car.pickupLocation }}</span>
+                        <button (click)="selectCar(car)"
+                          class="text-xs font-bold bg-primary text-white px-3 py-1 rounded-full hover:bg-primary/90 transition-colors shrink-0 ml-2">
+                          Select →
+                        </button>
+                      </div>
+                    </div>
+                  }
+                  @if (!carsLoading() && cars().length === 0) {
+                    <p class="text-center text-stone-400 text-sm py-8">Loading car options...</p>
+                  }
+                </div>
+
+                <div class="flex justify-center pt-2 pb-1">
+                  <button (click)="skipStep()"
+                    class="flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors">
+                    Skip car rental
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            }
+
+            <!-- ── Step 4: Summary ── -->
+            @if (bookStep() === 'summary') {
+              <div class="px-6 py-5 space-y-4">
+                <h2 class="text-sm font-bold text-primary">Your Trip to {{ c.city }}</h2>
+
+                @if (selectedFlight(); as sf) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">flight_takeoff</span> Flight
+                      </p>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ sf.depart }} → {{ sf.arrive }}</p>
+                        <p class="text-xs text-stone-500">{{ sf.duration }} · {{ sf.stops }}</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">{{ passengerLabel }} · ${{ sf.price }}/pp</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ flightTotal(sf.price) }}</p>
+                    </div>
+                  </div>
+                }
+
+                @if (selectedHotel(); as sh) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">hotel</span> Hotel · {{ nightsCount() }} nights · {{ rooms() }} room{{ rooms() > 1 ? 's' : '' }}
+                      </p>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ sh.name }}</p>
+                        <p class="text-xs text-stone-500">{{ checkIn() }} – {{ checkOut() }}</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ sh.pricePerNight * nightsCount() * rooms() }}</p>
+                    </div>
+                  </div>
+                }
+
+                @if (selectedCar(); as car) {
+                  <div class="p-4 rounded-xl border border-stone-100 bg-surface-container-lowest">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">directions_car</span> Car · {{ nightsCount() }} days
+                      </p>
+                      <button (click)="goBackToStep('car')" class="text-xs text-primary hover:underline">Change</button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex-1">
+                        <p class="text-sm font-semibold text-primary">{{ car.model }}</p>
+                        <p class="text-xs text-stone-500">{{ car.agency }} · {{ car.transmission }}</p>
+                      </div>
+                      <p class="font-bold text-lg text-primary">${{ car.pricePerDay * nightsCount() }}</p>
+                    </div>
+                  </div>
+                }
+
+                <!-- Total estimate -->
+                <div class="p-4 rounded-xl bg-primary text-white flex items-center justify-between">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-widest opacity-80">Estimated Total</p>
+                    <p class="text-[10px] opacity-60">Prices confirmed on partner sites</p>
+                  </div>
+                  <p class="text-2xl font-bold">${{ totalEstimate() }}</p>
+                </div>
+
+                <!-- Book Now deep links -->
+                <section class="space-y-2">
+                  <p class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Complete Your Bookings</p>
+                  @if (selectedFlight(); as sf) {
+                    <a [href]="sf.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">flight_takeoff</span>
+                        <span class="text-sm font-semibold text-primary">Book Flight</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">flight_takeoff</span>
+                        <span class="text-sm text-stone-400">Flight skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('flight')" class="text-xs text-primary font-medium hover:underline">Add</button>
+                    </div>
+                  }
+                  @if (selectedHotel(); as sh) {
+                    <a [href]="sh.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">hotel</span>
+                        <span class="text-sm font-semibold text-primary">Book Hotel</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">hotel</span>
+                        <span class="text-sm text-stone-400">Hotel skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('hotel')" class="text-xs text-primary font-medium hover:underline">Add</button>
+                    </div>
+                  }
+                  @if (selectedCar(); as car) {
+                    <a [href]="car.deepLink" target="_blank" rel="noopener"
+                      class="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-colors">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">directions_car</span>
+                        <span class="text-sm font-semibold text-primary">Book Car</span>
+                      </div>
+                      <span class="material-symbols-outlined text-primary">north_east</span>
+                    </a>
+                  } @else {
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border border-stone-100 bg-surface-container-lowest opacity-50">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-stone-400">directions_car</span>
+                        <span class="text-sm text-stone-400">Car rental skipped</span>
+                      </div>
+                      <button (click)="goBackToStep('car')" class="text-xs text-primary font-medium hover:underline">Add</button>
+                    </div>
+                  }
+                </section>
+
+                <!-- Save Trip -->
+                <button (click)="toggleSaveTrip()" [disabled]="tripSaveLoading()"
+                  class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 font-semibold text-sm transition-all"
+                  [class]="tripSaved()
+                    ? 'border-red-300 bg-red-50 text-red-500 hover:bg-red-100'
+                    : 'border-primary/30 bg-primary/5 text-primary hover:bg-primary/10'">
+                  @if (tripSaveLoading()) {
+                    <span class="material-symbols-outlined text-base animate-spin">progress_activity</span>
+                    Saving...
+                  } @else if (tripSaved()) {
+                    <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1">favorite</span>
+                    Trip Saved — Remove
+                  } @else {
+                    <span class="material-symbols-outlined text-base">bookmark_add</span>
+                    Save This Trip
+                  }
+                </button>
+                @if (tripSaveError()) {
+                  <p class="text-xs text-red-500 text-center -mt-1">{{ tripSaveError() }}</p>
+                }
+
+                <p class="text-[11px] text-stone-400 italic">
+                  Prices are indicative. GeoFlow does not process bookings — you will be redirected to partner sites.
+                </p>
+              </div>
+            }
+
+          </div>
+        }
+
+      </div>
+    } @else if (loading()) {
+      <div class="flex-1 flex items-center justify-center text-stone-400">
+        <span class="material-symbols-outlined animate-spin">progress_activity</span>
+      </div>
+    }
+  </aside>
+</main>

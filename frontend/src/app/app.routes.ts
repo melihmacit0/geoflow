@@ -12,15 +12,17 @@ export const routes: Routes = [
   },
   {
     path: 'discover',
-    loadComponent: () =>
-      import('./pages/discover/discover.component').then((m) => m.DiscoverComponent)
+    loadComponent: () => import('./pages/discover/discover.component').then((m) => m.DiscoverComponent)
   },
   {
     path: 'country/:code',
     loadComponent: () =>
-      import('./pages/country-detail/country-detail.component').then(
-        (m) => m.CountryDetailComponent
-      )
+      import('./pages/country-detail/country-detail.component').then((m) => m.CountryDetailComponent)
+  },
+  {
+    path: 'country/:code/city/:iata',
+    loadComponent: () =>
+      import('./pages/city-detail/city-detail.component').then((m) => m.CityDetailComponent)
   },
   {
     path: 'saved',

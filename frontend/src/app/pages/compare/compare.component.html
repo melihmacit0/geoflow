@@ -1,124 +1,198 @@
 <gf-top-nav></gf-top-nav>
 
 <main class="pt-16 h-screen flex flex-col">
-  <!-- Header strip -->
-  <div class="px-8 py-4 bg-white flex flex-wrap gap-4 items-center justify-between z-20 border-b border-surface-container">
-    <div class="flex items-center gap-4 flex-wrap">
-      <h1 class="font-h3 text-h3 text-primary">Comparing {{ selected().length }} destination{{ selected().length === 1 ? '' : 's' }}</h1>
-      <div class="flex gap-2 flex-wrap">
-        @for (c of selected(); track c.code) {
-          <span class="px-3 py-1 text-white text-label-caps rounded-full flex items-center gap-1" [style.background]="c.accent">
-            {{ c.name }}
-            <button (click)="removeCountry(c.code)" class="material-symbols-outlined text-sm hover:opacity-70">close</button>
-          </span>
-        }
-      </div>
+
+  <!-- ── Not logged in ── -->
+  @if (!isLoggedIn) {
+    <div class="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
+      <span class="material-symbols-outlined text-5xl text-stone-200">compare_arrows</span>
+      <h2 class="text-xl font-bold text-primary">Sign in to compare your saved trips</h2>
+      <p class="text-stone-400 text-sm max-w-sm">Save trips from city pages first, then come back here to see them compared side by side.</p>
+      <a routerLink="/signin"
+        class="mt-2 bg-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">
+        Sign In
+      </a>
     </div>
-    <div class="flex items-center gap-6 relative">
-      <button (click)="showPicker.set(!showPicker())" class="flex items-center gap-2 text-primary font-semibold hover:opacity-70 transition-opacity">
-        <span class="material-symbols-outlined">add</span><span class="text-body-md">Add another</span>
-      </button>
-      @if (showPicker()) {
-        <div class="absolute top-10 right-20 z-[600] bg-white border border-outline-variant rounded-lg shadow-xl py-2 w-56 max-h-72 overflow-y-auto custom-scrollbar">
-          @for (c of available; track c.code) {
-            <button (click)="add(c.code)" class="w-full text-left px-4 py-2 hover:bg-surface-container-low flex items-center gap-3 text-sm">
-              <span>{{ c.flag }}</span><span class="text-primary font-medium">{{ c.name }}</span>
-            </button>
-          } @empty {
-            <p class="px-4 py-2 text-xs text-outline">All destinations added.</p>
+
+  <!-- ── Loading ── -->
+  } @else if (loading()) {
+    <div class="flex-1 flex items-center justify-center">
+      <span class="material-symbols-outlined animate-spin text-3xl text-stone-300">progress_activity</span>
+    </div>
+
+  <!-- ── No saved trips ── -->
+  } @else if (noTrips() && selected().length === 0) {
+    <div class="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
+      <span class="material-symbols-outlined text-5xl text-stone-200">luggage</span>
+      <h2 class="text-xl font-bold text-primary">No saved trips yet</h2>
+      <p class="text-stone-400 text-sm max-w-sm">Book a trip on any city page and save it — your destinations will appear here for comparison.</p>
+      <a routerLink="/discover"
+        class="mt-2 bg-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors">
+        Explore Destinations
+      </a>
+    </div>
+
+  <!-- ── Main compare view ── -->
+  } @else {
+
+    <!-- Header strip -->
+    <div class="px-8 py-4 bg-white flex flex-wrap gap-4 items-center justify-between z-20 border-b border-surface-container">
+      <div class="flex items-center gap-4 flex-wrap">
+        <h1 class="font-h3 text-h3 text-primary">
+          Comparing {{ selected().length }} destination{{ selected().length === 1 ? '' : 's' }}
+        </h1>
+        <div class="flex gap-2 flex-wrap">
+          @for (c of selected(); track c.code) {
+            <span class="px-3 py-1 text-white text-label-caps rounded-full flex items-center gap-1"
+              [style.background]="c.accent">
+              {{ c.flag }} {{ c.name }}
+              <button (click)="removeCountry(c.code)"
+                class="material-symbols-outlined text-sm hover:opacity-70 leading-none">close</button>
+            </span>
           }
         </div>
-      }
-      <button (click)="clearAll()" class="text-slate-400 font-medium hover:text-error transition-colors">Clear all</button>
+      </div>
+      <div class="flex items-center gap-6 relative">
+        <button (click)="showPicker.set(!showPicker())"
+          class="flex items-center gap-2 text-primary font-semibold hover:opacity-70 transition-opacity">
+          <span class="material-symbols-outlined">add</span>
+          <span class="text-body-md">Add another</span>
+        </button>
+        @if (showPicker()) {
+          <div class="absolute top-10 right-20 z-[600] bg-white border border-outline-variant rounded-lg shadow-xl py-2 w-56 max-h-72 overflow-y-auto custom-scrollbar">
+            @for (c of available; track c.code) {
+              <button (click)="add(c.code)"
+                class="w-full text-left px-4 py-2 hover:bg-surface-container-low flex items-center gap-3 text-sm">
+                <span>{{ c.flag }}</span>
+                <span class="text-primary font-medium">{{ c.name }}</span>
+              </button>
+            } @empty {
+              <p class="px-4 py-2 text-xs text-outline">All destinations added.</p>
+            }
+          </div>
+        }
+        <button (click)="clearAll()" class="text-slate-400 font-medium hover:text-error transition-colors">Clear all</button>
+        <a routerLink="/saved" class="flex items-center gap-1 text-sm text-stone-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-base">bookmark</span>
+          Manage trips
+        </a>
+      </div>
     </div>
-  </div>
 
-  <!-- Map -->
-  <section class="h-[45%] w-full relative bg-surface-container-low">
-    <div #mapEl class="w-full h-full"></div>
-  </section>
+    <!-- Map -->
+    <section class="h-[40%] w-full relative bg-surface-container-low">
+      <div #mapEl class="w-full h-full"></div>
+    </section>
 
-  <!-- Comparison table -->
-  <section class="flex-1 bg-white border-t border-surface-container overflow-auto custom-scrollbar">
-    @if (selected().length) {
-      <div class="px-8 py-6 min-w-[700px]">
-        <table class="w-full border-collapse">
-          <thead>
-            <tr>
-              <th class="w-1/4 pb-6 text-left"><p class="text-label-caps text-slate-400">METRICS</p></th>
-              @for (c of selected(); track c.code) {
-                <th class="pb-6 px-4">
-                  <div class="flex flex-col items-center text-center gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="text-xl">{{ c.flag }}</span>
-                      <h3 class="font-h3 text-h3 text-primary">{{ c.name }}</h3>
-                    </div>
-                    <div class="w-full h-16 rounded-lg overflow-hidden">
-                      <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
-                    </div>
-                  </div>
+    <!-- Comparison table -->
+    <section class="flex-1 bg-white border-t border-surface-container overflow-auto custom-scrollbar">
+      @if (selected().length) {
+        <div class="px-8 py-6 min-w-[700px]">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr>
+                <th class="w-1/4 pb-6 text-left">
+                  <p class="text-label-caps text-slate-400">METRICS</p>
                 </th>
-              }
-            </tr>
-          </thead>
-          <tbody class="text-body-md">
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Cheapest flight</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center">
-                  <span [class]="isCheapestFlight(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.cheapestFlight }}</span>
-                </td>
-              }
-            </tr>
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Flight duration</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center">
-                  <span [class]="isFastest(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">{{ c.comparison.flightDuration }}</span>
-                </td>
-              }
-            </tr>
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Best season</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center text-primary">{{ c.comparison.bestSeason }}</td>
-              }
-            </tr>
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Top cultural draw</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center italic text-slate-500">{{ c.comparison.culturalDraw }}</td>
-              }
-            </tr>
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Estimated daily budget</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center">
-                  <span [class]="isCheapestBudget(c) ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold' : 'text-primary'">${{ c.comparison.dailyBudget }}</span>
-                </td>
-              }
-            </tr>
-            <tr class="border-t border-surface-container-low">
-              <td class="py-4 font-semibold text-slate-600">Visa requirement</td>
-              @for (c of selected(); track c.code) {
-                <td class="py-4 text-center text-primary">{{ c.comparison.visa }}</td>
-              }
-            </tr>
-            <tr>
-              <td></td>
-              @for (c of selected(); track c.code) {
-                <td class="py-8 px-4">
-                  <button (click)="open(c.code)" class="w-full py-3 text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md" [style.background]="c.accent">Pick {{ c.name }}</button>
-                </td>
-              }
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    } @else {
-      <div class="text-center py-16">
-        <p class="text-on-surface-variant">No destinations selected. Add some to compare.</p>
-      </div>
-    }
-  </section>
+                @for (c of selected(); track c.code) {
+                  <th class="pb-6 px-4">
+                    <div class="flex flex-col items-center text-center gap-2">
+                      <div class="flex items-center gap-2">
+                        <span class="text-xl">{{ c.flag }}</span>
+                        <h3 class="font-h3 text-h3 text-primary">{{ c.name }}</h3>
+                      </div>
+                      @if (c.image) {
+                        <div class="w-full h-16 rounded-lg overflow-hidden">
+                          <img class="w-full h-full object-cover" [src]="c.image" [alt]="c.name" />
+                        </div>
+                      }
+                    </div>
+                  </th>
+                }
+              </tr>
+            </thead>
+            <tbody class="text-body-md">
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Cheapest flight</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center">
+                    @if (c.cheapestFlight) {
+                      <span [class]="isCheapestFlight(c)
+                        ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold'
+                        : 'text-primary'">${{ c.cheapestFlight }}</span>
+                    } @else {
+                      <span class="text-stone-300">—</span>
+                    }
+                  </td>
+                }
+              </tr>
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Flight duration</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center">
+                    @if (c.comparison?.flightDuration) {
+                      <span [class]="isFastest(c)
+                        ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold'
+                        : 'text-primary'">{{ c.comparison!.flightDuration }}</span>
+                    } @else {
+                      <span class="text-stone-300">—</span>
+                    }
+                  </td>
+                }
+              </tr>
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Best season</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center text-primary">{{ c.comparison?.bestSeason ?? '—' }}</td>
+                }
+              </tr>
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Top cultural draw</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center italic text-slate-500">{{ c.comparison?.culturalDraw ?? '—' }}</td>
+                }
+              </tr>
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Est. daily budget</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center">
+                    @if (c.comparison?.dailyBudget) {
+                      <span [class]="isCheapestBudget(c)
+                        ? 'bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold'
+                        : 'text-primary'">${{ c.comparison!.dailyBudget }}/day</span>
+                    } @else {
+                      <span class="text-stone-300">—</span>
+                    }
+                  </td>
+                }
+              </tr>
+              <tr class="border-t border-surface-container-low">
+                <td class="py-4 font-semibold text-slate-600">Visa</td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-4 text-center text-primary">{{ c.comparison?.visa ?? '—' }}</td>
+                }
+              </tr>
+              <tr>
+                <td></td>
+                @for (c of selected(); track c.code) {
+                  <td class="py-8 px-4">
+                    <button (click)="open(c.code)"
+                      class="w-full py-3 text-white font-bold rounded-lg hover:opacity-90 transition-all shadow-md"
+                      [style.background]="c.accent">
+                      Explore {{ c.name }}
+                    </button>
+                  </td>
+                }
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="text-center py-16 text-stone-400 text-sm">
+          All destinations removed. Use "Add another" to start comparing.
+        </div>
+      }
+    </section>
+  }
+
 </main>

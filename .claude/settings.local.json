@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(ConvertTo-String *)",
+      "Bash(sed \"s/.*code: '\\\\\\\\\\([A-Z]*\\\\\\\\\\)'.*/\\\\\\\\1/\")",
+      "Bash(sed 's/,$//')",
+      "Bash(Select-String -Path \"C:\\\\Users\\\\barir\\\\OneDrive\\\\Masaüstü\\\\geoflow-main\\\\geoflow-main\\\\backend\\\\src\\\\server.js\" -Pattern \"hotels|cars\")",
+      "Bash(Select-Object LineNumber, Line)",
+      "Bash(Select-String -Path \"C:\\\\Users\\\\barir\\\\OneDrive\\\\Masaüstü\\\\geoflow-main\\\\geoflow-main\\\\frontend\\\\src\\\\app\\\\app.routes.ts\" -Pattern \"hotels|cars\")",
+      "Bash(npm install *)",
+      "Bash(node -e \"const d=require\\('/dev/stdin'\\);console.log\\(d.version\\)\")",
+      "Bash(node *)",
+      "WebSearch"
+    ]
+  }
+}
