@@ -5,10 +5,9 @@
       <span class="text-xl md:text-2xl font-black tracking-tighter text-primary-container">GeoFlow</span>
     </div>
     <div class="hidden md:flex items-center gap-12 tracking-tight font-medium">
-      <!-- top → middle → bottom: feature cards (#features), value section (#how), CTA (#about) -->
-      <button type="button" (click)="scrollTo('features')" class="text-slate-500 hover:text-primary-container transition-colors">How it works</button>
-      <button type="button" (click)="scrollTo('how')" class="text-slate-500 hover:text-primary-container transition-colors">Features</button>
-      <button type="button" (click)="scrollTo('about')" class="text-slate-500 hover:text-primary-container transition-colors">About</button>
+      <button class="text-slate-500 hover:text-primary-container transition-colors" (click)="scrollTo('features')">Features</button>
+      <button class="text-slate-500 hover:text-primary-container transition-colors" (click)="scrollTo('how')">How it works</button>
+      <button class="text-slate-500 hover:text-primary-container transition-colors" (click)="scrollTo('about')">About</button>
     </div>
     <div class="flex items-center gap-3 md:gap-6">
       @if (user(); as u) {
@@ -24,7 +23,7 @@
 
 <main class="pt-16 md:pt-20">
   <!-- Hero -->
-  <section class="relative min-h-screen md:min-h-[820px] flex flex-col items-center justify-center overflow-hidden py-section-gap">
+  <section class="relative flex flex-col items-center justify-center overflow-hidden py-24 md:py-36">
     <div class="absolute inset-0 z-0 opacity-[0.07] pointer-events-none bg-cover bg-center"
       style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7jw7FQKa0q9j2Fpfqqy2DrWX8xQ7lHkNzq5tFzoIq2JzbnLv2Ez2SkiVBmnl_6ffo_dlCOONkX85Q304IOH2tmAZfmscUD81NrPMEUdLfIDbjKRMs5E3ehly4wcGybktiYk6J6B1OIrAYjf-DEHs_qrqRhb-fh6SKx2kUoOjfxzKgq2LwvL7-fFL2wutIJ6BzIpgCUGYanJnFuL3n-T_yUCsDQjRUX89xnOvCCml9ORRSNcTrBav3hsIGaLdFC1Ytx08OhvL67mkb');">
     </div>
@@ -39,34 +38,42 @@
         <a routerLink="/saved" [queryParams]="{ compare: 1 }" class="bg-white border border-outline-variant text-primary px-8 md:px-10 py-3.5 md:py-4 rounded-xl font-semibold hover:bg-surface-container transition-all text-sm md:text-base">Compare Destinations</a>
       </div>
     </div>
+  </section>
 
-    <!-- Feature cards -->
-    <div id="features" class="relative z-10 max-w-7xl mx-auto px-gutter mt-section-gap grid grid-cols-1 md:grid-cols-3 gap-gutter">
-      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
-        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
-          <span class="material-symbols-outlined text-primary text-3xl">public</span>
-        </div>
-        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Interactive Map Discovery</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant">Navigate the globe with fluid, high-fidelity mapping that surfaces hidden gems and cultural landmarks.</p>
+  <!-- Features -->
+  <section id="features" class="bg-surface-container-lowest py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-gutter">
+      <div class="text-center mb-14">
+        <span class="font-label-caps text-label-caps text-secondary uppercase">What we offer</span>
+        <h2 class="font-h1 text-h1 text-primary mt-3">Everything in one place</h2>
       </div>
-      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
-        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
-          <span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="bg-white p-stack-lg border border-outline-variant rounded-xl hover:border-secondary transition-all group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg mb-stack-md group-hover:bg-secondary-container transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl">public</span>
+          </div>
+          <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Interactive Map Discovery</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">Navigate the globe with fluid, high-fidelity mapping that surfaces hidden gems and cultural landmarks.</p>
         </div>
-        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Cultural Insights</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant">Deep dive into history and local traditions with our curated editorial guides for every destination.</p>
-      </div>
-      <div class="bg-surface-container-lowest p-stack-lg border border-outline-variant hover:border-secondary transition-all group">
-        <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-stack-md group-hover:bg-secondary-container transition-colors">
-          <span class="material-symbols-outlined text-primary text-3xl">flight</span>
+        <div class="bg-white p-stack-lg border border-outline-variant rounded-xl hover:border-secondary transition-all group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg mb-stack-md group-hover:bg-secondary-container transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl">menu_book</span>
+          </div>
+          <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Cultural Insights</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">Deep dive into history and local traditions with our curated editorial guides for every destination.</p>
         </div>
-        <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Real-Time Flights</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant">Instant connectivity data at your fingertips, allowing you to bridge cities across the world seamlessly.</p>
+        <div class="bg-white p-stack-lg border border-outline-variant rounded-xl hover:border-secondary transition-all group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg mb-stack-md group-hover:bg-secondary-container transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl">flight</span>
+          </div>
+          <h3 class="font-h3 text-h3 text-primary mb-stack-sm">Real-Time Flights</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">Instant connectivity data at your fingertips, allowing you to bridge cities across the world seamlessly.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Visual content -->
+  <!-- How it works -->
   <section id="how" class="max-w-7xl mx-auto px-gutter py-section-gap">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
       <div class="space-y-stack-lg">
@@ -105,7 +112,7 @@
     </div>
   </section>
 
-  <!-- Final CTA -->
+  <!-- About / Final CTA -->
   <section id="about" class="bg-primary text-white py-section-gap">
     <div class="max-w-7xl mx-auto px-gutter text-center space-y-stack-lg">
       <h2 class="font-h1 text-h1">Ready for your next chapter?</h2>
